@@ -1,0 +1,332 @@
+---
+title: "Chapter 1.1 Limits and Continuity"
+output:
+  pdf_document:
+    toc: true
+---
+
+```{r; setup}
+require(plotrix)
+```
+
+# Limits from graphs
+
+## 1. graph 1
+
+For the function $g(x)$ graphed here, find the following limits or explain
+why they do not exist.
+
+```{r problem 1; setup, fig.width=4, fig.height=3, echo=F}
+plot(x <- seq(0, .96, by=.01), x, col="blue",
+    bty="n", type='l',
+    xlim=c(-.05, 4), ylim=c(-.05, 2),
+    xlab="", ylab=""
+)
+lines(c(1, 2), c(0, 1), col="blue")
+lines(c(2.06, 2.94), c(1, 0.06), col="blue")
+lines(c(3.06, 4), c(0.06, 1), col="blue")
+points(1, 1, pch=1, col="blue")
+points(1, 0, pch=16, col="blue")
+points(2, 1, pch=16, col="blue")
+points(3, 1, pch=16, col="blue")
+points(3, 0, pch=1, col="blue")
+lines(c(0, 3), c(1, 1), col="red", lty=2)
+```
+
+---
+
+### A. $\lim_{x \rightarrow 1}{g(x)}$
+
+The limit does not exist. As $x$ approaches 1 from the right, $g(x)$ approaches
+0, As $x$ approaches 1 from the left, $g(x)$ approaches 1. There is no single
+limit $L$ that all values of $g(x)$ approaches, as x approahces 1.
+
+### B. $\lim_{x \rightarrow 2}{g(x)}$
+
+L = 2. The limit is defined on both sides.
+
+### C. $\lim_{x \rightarrow 3}{g(x)}$
+
+L = 0. The limit is defined for both sides. Even though the function defines
+$g(x) = 1$ at $x = 3$, The limit of $g(x)$ approaches 0 as $x$ approaches 3.
+
+---
+
+## 2. Graph 2
+
+For the function $f(x)$ graphed here, find the following limits or explain why
+they do not exist.
+
+```{r problem 2; setup, fig.width=4, fig.height=3, echo=F}
+plot(x <- seq(-3, -2.06, by=.01), x + 2, col="blue",
+     bty="n", type="l",
+     xlim=c(-3,2), ylim=c(-2, 2),
+     xlab="", ylab="")
+lines(c(-1.94, -1.06), c(-.06, -.94), col="blue")
+lines(c(-.94, -.06), c(-1, -1), col="blue")
+lines(c(.06, 2), c(1, 1), col="blue")
+points(0, -1, pch=1, col="blue")
+points(0, 1, pch=16, col="blue")
+points(-1, -1, pch=16, col="blue")
+points(-2, 0, pch=1, col="blue")
+```
+
+---
+
+### A. $\lim_{t \rightarrow -2}{f(t)}$
+
+L=0. The limit is defined on both sides.
+
+### B. $\lim_{t \rightarrow -1}{f(t)}$
+
+L=-1. The limit is defined on both sides.
+
+### C. $\lim_{t \rightarrow 0}{f(t)}$
+
+The limit does not exist because the limit is different for each side.
+
+---
+
+## 3. Graph 3
+
+Which of the following statements about the function $y = f(x)$ graphed here are
+true, and which are false?
+
+```{r problem 3; setup, fig.width=4, fig.height=3, echo=F}
+plot(x <- seq(-1, -.06, by=.01), x, col="blue",
+     bty="n", type="l",
+     xlim=c(-1.5,1.5), ylim=c(-1.5, 1.5),
+     xlab="", ylab="")
+abline(h=0, col="gray")
+abline(v=0, col="gray")
+lines(c(.06, .94), c(-.06, -.96), col="blue")
+lines(c(1, 2), c(0, 1), col="blue")
+points(-1, -1, pch=16, col="blue")
+points(0, 0, pch=1, col="blue")
+points(0, 1, pch=16, col="blue")
+points(1, -1, pch=1, col="blue")
+points(1, 0, pch=16, col="blue")
+points(2, 1, pch=16, col="blue")
+```
+
+---
+
+### A. $\lim_{x \rightarrow 0}{f(x)}$ exists
+
+True, This limit exists, because approaching the value $x = 0$ from both sides
+gives the same result $L = 0$.
+
+### B. $\lim_{x \rightarrow 0}{f(x) = 0}$
+
+True
+
+### C. $\lim_{x \rightarrow 0}{f(x) = 1}$
+
+False, this is the true value, but the limit is $L = 0$.
+
+### D. $\lim_{x \rightarrow 1}{f(x) = 1}$
+
+False
+
+### E. $\lim_{x \rightarrow 1}{f(x) = 0}$
+
+False, this limit is undefined becuase approaching $x$ from either side of 1
+gives different results.
+
+### F. $\lim_{x \rightarrow x_0}{f(x)}$ exists at every point $x_0$ in (-1, 1)
+
+True. Disregarding $x=1$, which is not part of the interval.
+
+---
+
+## 4. Graph 4
+
+Which of the following statements about the function $y = f(x)$ graphed here are
+true, and which are false?
+
+```{r problem 4; setup, fig.width=4, fig.height=3, echo=F}
+#xlim <- c(-1.5, 3.5)
+#ylim <- c(-2.5, 1.5)
+#x <- seq(-1, -.06, by=.01)
+#plot(x, x, col="blue",
+#     bty="n", type="l",
+#     xlim=xlim, ylim=ylim,
+#     xlab="", ylab="")
+#abline(h=0, col="gray")
+#abline(v=0, col="gray")
+plot(c(-10,10), c(-10,10), type="n",
+     bty="n", xlab="", ylab="")
+plotrix::draw.ellipse(c(0, 0), c(0,0), 5.2, 8.8, lwd=1,
+    segment=c(0, -45), nv=c(3,4), arc.only=T)
+#lines(c(1, 2), c(0, 1), col="blue")
+#points(-1, -1, pch=16, col="blue")
+#points(0, 0, pch=1, col="blue")
+#points(0, 1, pch=16, col="blue")
+#points(1, -1, pch=1, col="blue")
+#points(1, 0, pch=16, col="blue")
+#points(2, 1, pch=16, col="blue")
+```
+
+---
+
+### A. $\lim_{x \rightarrow 2}{f(x)}$ does not exist.
+
+False. The limit exists as $L = 1$ even though the function defines f(2)=0.
+
+### B. $\lim_{x \rightarrow 2}{f(x)} = 2$
+
+False. The limit $L = 1$ as $x \rightarrow 2$.
+
+### C. $\lim_{x \rightarrow 1}{f(x)}$ does not exist.
+
+True. As you approach $x \rightarrow 1$ from either side, the limit is
+different.
+
+### D. $\lim_{x \rightarrow x_0}{f(x)}$ exists at every point $x_0$ in (-1, 1)
+
+True.
+
+### E. $\lim_{x \rightarrow x_0}{f(x)}$ exists at every point $x_0$ in (1, 3)
+
+True.
+
+---
+
+# Existence of limits
+
+In Exercises 5 and 6, explain why the limits do not exist.
+
+## 5. $\lim_{x \rightarrow 0}{\frac{x}{|x|}}$
+
+```{r problem 5; setup, echo=F}
+plot(x <- seq(-1, 1, by=.01), x / abs(x), type='l', col="blue")
+```
+
+As you approach $x \rightarrow 0$ from either side you get different results.
+
+---
+
+## 6. $\lim_{x \rightarrow 1}{\frac{1}{x - 1}}$
+
+```{r problem 6; setup, echo=F}
+plot(x <- seq(0, 2, by=.01), 1 / (x - 1), type='l', col="blue")
+```
+
+The function $f(x)$ is not defined at $x=1$. When approaching from the left you
+go to $-\infty$ and when you approach from the right you go to
+$\infty$.
+
+---
+
+## 7. The existence of limits
+
+Suppose that a function $f(x) is defined for all real values of $x$ except
+$x = x_0$. Can anything be said about the existence of
+$\lim_{x \rightarrow x_0}{f(x)}$? Give reasons for your answer.
+
+---
+
+The existence of $\lim_{x \rightarrow x_0}{f(x)}$ does not depend on whether
+$f(x_0)$ is defined.
+
+The limit exists if and only if the values of $f(x)$ get arbitrarily close to
+some number $L$ as $x$ gets arbitrarily close to $x_0$, from both
+sides---regarless of whether $f(x_0)$ is defined.
+
+---
+
+## 8. The existence of limits
+
+Suppose that a function $f(x)$ is defined for all $x$ in [-1, 1]. Can anything
+be said about the existence of $\lim_{x \rightarrow 0}{f(x)}$? Give reasons for
+your answer.
+
+---
+
+As stated above, the existence of a limit at a particular point does not depend on whether the
+function is defined at that point. The limit's existence depends on getting
+arbitrarily close to some number $L$, as you get close to $x_0$.
+
+---
+
+## 9. The existence of limits
+
+If $\lim_{x \rightarrow 1}{f(x)} = 5$, must $f$ be defined at $x=1$? If it is,
+must $f(1) = 5$? Can we conclude _anything_ about the values of $f$ at $x = 1$?
+Explain.
+
+Answer is the same as above. Additionally, $f(1)$ does not have to equal $5$ in
+order for the limit $L = 5$. The reason is the same as above.
+
+---
+
+## 10. The existence of limits
+
+If $f(1) = 5$, must $\lim_{x \rightarrow 1}{f(x)}$ exist? If it does, then must
+$\lim_{x \rightarrow 1}{f(x)} = 5$? Can we conclude _anything_ about
+$\lim_{x \rightarrow 1}{f(x)}$? Explain.
+
+---
+
+This is the same answer as above.
+
+---
+
+# Calculator/Grapher exercises---Estimating limits
+
+## 11. Let $f(x) = (x^2 - 9)/(x + 3)$
+
+a) __CALCULATOR__ Make a table of the values of $f$ at the points
+   $x = -3.1, -3.01, -3.001$, and so on as far as your calculator can go. Then
+   estimate $\lim_{x \rightarrow -3}{f(x)}$. What estimate do you arrive at if
+   you evaluate $f$ at $x = -2.9, -2.99, -2.999, \ldots$ instead?
+
+b) __GRAPHER__ Support your conclusions in (a) by graphing $f$ near $x_0 = -3$.
+
+c) Find $\lim_{x \rightarrow -3}{f(x)}$ algebraically.
+
+---
+
+### A. Table
+
+```{r problem 11; table, echo=F}
+x.rt <- c(-3.1, -3.01, -3.001, -3.0001,
+          -3.00001, -3.000001, -3.0000001,
+          -3.00000001, -3.000000001, -3.0000000001)
+x.lt <- c(-2.9, -2.99, -2.999, -2.9999,
+          -2.99999, -2.999999, -2.9999999,
+          -2.99999999, -2.999999999,
+          -2.9999999999)
+f <- function(x) (x^2 - 9)/(x + 3)
+f.x.rt <- f(x.rt)
+f.x.lt <- f(x.lt)
+knitr::kable(data.frame(
+    X = x.rt,
+    f = f.x.rt), caption="From the right")
+knitr::kable(data.frame(
+    X = x.lt,
+    f = f.x.lt), caption="From the left")
+```
+
+### B. Graph
+
+```{r problem 11; graph, echo=F}
+x <- seq(-3.1, -2.9, by=.001)
+plot(x, f(x), pch=19, cex=.02)
+points(-3, -6, cex=.8, col="blue")
+```
+
+There is a hole at $f(-3) = -6$.
+
+---
+
+## 12. Let $g(x) = (x^2 - 2) / (x - sqrt(2))$
+
+a) __CALCULATOR__ Make a table of the values of $g$ at the points
+   $x = 1.4, 1.41, 1.414, \ldots$, and so on through successive decimal
+   approximations of $\sqrt{2}$. Estimate $\lim_{x \rightarrow \sqrt{2}}{g(x)}$.
+
+b) __GRAPHER__ Support your conclusion in (a) by graphing $g$ near
+   $x_0 = \sqrt{2}$.
+
+c) Find $\lim_{x \rightarrow \sqrt{2}}{g(x)}$ algebraically.
