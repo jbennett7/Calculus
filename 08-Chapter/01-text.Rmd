@@ -1,0 +1,24 @@
+---
+output: pdf_document
+title: "Chapter 8 Infinite Series"
+---
+
+## 8.1 Limits of Sequences of Numbers
+
+### Definitions and notation
+
+An __infinite sequence__ (or __sequence__) of numbers is a function whose domain
+is the set of integers greater than or equal to some integer $n_0$.
+
+Usually $n_0$ is 1 and the domain of the sequence is the set of positive
+integers. But sometimes we want to start sequences elsewhere. We take $n_0 = 0$
+when we begin Newton's method. We might take $n_0 = 3$ if we were defining a
+sequence of $n$-sided polygons.
+
+Sequences are defined the way other functions are, some typical rules being
+
+$$
+\begin{aligned}
+a(n) = \sqrt{n},\ \ \ & a(n) = (-1)^{n+1}\frac{1}{n},\ & a(n) = \frac{n - 1}{n}
+\end{aligned}
+$$

@@ -1,0 +1,752 @@
+---
+output: pdf_document
+title: "Exercises 8.1"
+---
+
+```{r setup, include=F}
+require(tidyverse)
+options(repos=c("https://mirrors.nics.utk.edu/cran/"))
+if(!require(ggforce)){
+    install.packages('ggforce')
+    require(ggforce)
+}
+```
+
+# Finding Terms of a Sequence
+
+Each of Exercises 1--6 gives a formula for the $n$th term $a_n$ of a sequence
+$\{a_n\}$. Find the values of $a_1, a_2, a_3,$ and $a_4$.
+
+1.  $a_n = \frac{1 - n}{n^2}$
+
+$$
+\begin{aligned}
+a_1 &= \frac{1 - 1}{1^2} = 0\\
+a_2 &= \frac{1 - 2}{2^2} = -\frac{1}{4}\\
+a_3 &= \frac{1 - 3}{3^2} = -\frac{2}{9}\\
+a_4 &= \frac{1 - 4}{4^2} = -\frac{3}{16}
+\end{aligned}
+$$
+
+2. $a_n = \frac{1}{n!}$
+
+$$
+\begin{aligned}
+a_1 &= \frac{1}{1!} = 1\\
+a_2 &= \frac{1}{2!} = \frac{1}{2}\\
+a_3 &= \frac{1}{3!} = \frac{1}{6}\\
+a_4 &= \frac{1}{4!} = \frac{1}{24}
+\end{aligned}
+$$
+
+3. $a_n = \frac{(-1)^{n+1}}{2n - 1}$
+
+$$
+\begin{aligned}
+a_1 &= \frac{(-1)^{1 + 1}}{2(1) - 1} = \frac{1}{1} = 1\\
+a_2 &= \frac{(-1)^{2 + 1}}{2(2) - 1} = -\frac{1}{3}\\
+a_3 &= \frac{(-1)^{3 + 1}}{2(3) - 1} = \frac{1}{5}\\
+a_4 &= \frac{(-1)^{4 + 1}}{2(4) - 1} = -\frac{1}{7}
+\end{aligned}
+$$
+
+4. $a_n = 2 + (-1)^n$
+
+$$
+\begin{aligned}
+a_1 &= 2 + (-1)^1 = 1\\
+a_2 &= 2 + (-1)^2 = 3\\
+a_3 &= 2 + (-1)^3 = 1\\
+a_4 &= 2 + (-1)^4 = 3
+\end{aligned}
+$$
+
+5. $a_n = \frac{2^n}{2^{n + 1}}$
+
+$$
+\begin{aligned}
+a_1 &= \frac{2^1}{2^{1 + 1}} = \frac{1}{2}\\
+a_2 &= \frac{2^2}{2^{2 + 1}} = \frac{4}{8} = \frac{1}{2}\\
+a_3 &= \frac{2^3}{2^{3 + 1}} = \frac{8}{16} = \frac{1}{2}\\
+a_4 &= \frac{2^4}{2^{4 + 1}} = \frac{16}{32} = \frac{1}{2}
+\end{aligned}
+$$
+
+6. $a_n = \frac{2^n - 1}{2^n}$
+
+$$
+\begin{aligned}
+a_1 &= \frac{2^1 - 1}{2^1} = \frac{1}{2}\\
+a_2 &= \frac{2^2 - 1}{2^2} = \frac{3}{4}\\
+a_3 &= \frac{2^3 - 1}{2^3} = \frac{7}{8}\\
+a_4 &= \frac{2^4 - 1}{2^4} = \frac{15}{16}
+\end{aligned}
+$$
+
+Each of Exercises 7--12 gives the first term or two of a sequence along with a
+recursion formula for the remaining terms. Write out the first ten terms of the
+sequence.
+
+7. $a_1 = 1,\ \ a_{n + 1} = a_n + (1/2^n)$
+
+$$
+\begin{aligned}
+a_1 &= 1\\\\
+a_2 &= 1 + \frac{1}{2} = \frac{3}{2}\\\\
+a_3 &= \frac{3}{2} + \frac{1}{4} = \frac{7}{4}\\\\
+a_4 &= \frac{7}{4} + \frac{1}{8} = \frac{15}{8}\\\\
+a_5 &= \frac{15}{8} + \frac{1}{16} = \frac{31}{16}\\\\
+a_6 &= \frac{31}{16} + \frac{1}{32} = \frac{63}{32}\\\\
+a_7 &= \frac{63}{32} + \frac{1}{64} = \frac{127}{64}\\\\
+a_8 &= \frac{127}{64} + \frac{1}{128} = \frac{255}{128}\\\\
+a_9 &= \frac{255}{128} + \frac{1}{256} = \frac{511}{256}\\\\
+a_{10} &= \frac{511}{256} + \frac{1}{512} = \frac{1023}{512}
+\end{aligned}
+$$
+
+8. $a_1 = 1,\ \ a_{n + 1} = a_n / (n + 1)$
+
+$$
+\begin{aligned}
+a_1 &= 1\\\\
+a_2 &= 1 / (1 + 1) = \frac{1}{2}\\\\
+a_3 &= \frac{1}{2} / (2 + 1) = \frac{1}{6}\\\\
+a_4 &= \frac{1}{6} / (3 + 1) = \frac{1}{24}\\\\
+a_5 &= \frac{1}{24} / (4 + 1) = \frac{1}{120}\\\\
+a_6 &= \frac{1}{120} / (5 + 1) = \frac{1}{720}\\\\
+a_7 &= \frac{1}{720} / (6 + 1) = \frac{1}{5,040}\\\\
+a_8 &= \frac{1}{5040} / (7 + 1) = \frac{1}{40,320}\\\\
+a_9 &= \frac{1}{40,320} / (8 + 1) = \frac{1}{362,880}\\\\
+a_{10} &= \frac{1}{362,880} / (9 + 1) = \frac{1}{3,628,800}
+\end{aligned}
+$$
+
+9. $a_1 = 2,\ \ a_{n+1} = (-1)^{n+1} a_n / 2$
+
+$$
+\begin{aligned}
+a_1 &= 2\\\\
+a_2 &= (-1)^{1 + 1}\ \frac{2}{2} = 1\\\\
+a_3 &= (-1)^{2 + 1}\ \frac{1}{2} = -\frac{1}{2}\\\\
+a_4 &= (-1)^{3 + 1} \cdot -\frac{1}{2} / 2 = -\frac{1}{4}\\\\
+a_5 &= (-1)^{4 + 1} \cdot -\frac{1}{4} / 2 = \frac{1}{8}\\\\
+a_6 &= (-1)^{5 + 1} \cdot \frac{1}{8} / 2 = \frac{1}{16}\\\\
+a_7 &= (-1)^{6 + 1} \cdot \frac{1}{16} / 2 = -\frac{1}{32}\\\\
+a_8 &= (-1)^{7 + 1} \cdot -\frac{1}{32} / 2 = -\frac{1}{64}\\\\
+a_9 &= (-1)^{8 + 1} \cdot -\frac{1}{64} / 2 = \frac{1}{128}\\\\
+a_{10} &= (-1)^{9 + 1} \cdot \frac{1}{128} / 2 = \frac{1}{256}
+\end{aligned}
+$$
+
+10. $a_1 = -2,\ \ a_{n+1} = n a_n / (n + 1)$
+
+$$
+\begin{aligned}
+a_1 &= -2\\\\
+a_2 &= 1 \cdot -2           / (1 + 1) = -1\\\\
+a_3 &= 2 \cdot -1           / (2 + 1) = -\frac{2}{3}\\\\
+a_4 &= 3 \cdot -\frac{2}{3} / (3 + 1) = -\frac{1}{2}\\\\
+a_5 &= 4 \cdot -\frac{1}{2} / (4 + 1) = -\frac{2}{5}\\\\
+a_6 &= 5 \cdot -\frac{2}{5} / (5 + 1) = -\frac{1}{3}\\\\
+a_7 &= 6 \cdot -\frac{1}{3} / (6 + 1) = -\frac{2}{7}\\\\
+a_8 &= 7 \cdot -\frac{2}{7} / (7 + 1) = -\frac{1}{4}\\\\
+a_9 &= 8 \cdot -\frac{1}{4} / (8 + 1) = -\frac{2}{9}\\\\
+a_{10} &= 9 \cdot -\frac{2}{9} / (9 + 1) = -\frac{1}{5}
+\end{aligned}
+$$
+
+11. $a_1 = a_2 = 1,\ a_{n+2} = a_{n+1} + a_n$
+
+$$
+\begin{aligned}
+a_1 &= 1\\\\
+a_2 &= 1\\\\
+a_3 &= 1 + 1 = 2\\\\
+a_4 &= 2 + 1 = 3\\\\
+a_5 &= 3 + 2 = 5\\\\
+a_6 &= 5 + 3 = 8\\\\
+a_7 &= 8 + 5 = 13\\\\
+a_8 &= 13 + 8 = 21\\\\
+a_9 &= 21 + 13 = 34\\\\
+a_{10} &= 34 + 21 = 55
+\end{aligned}
+$$
+
+12. $a_1 = 2, a_2 = -1, a_{n+2} = a_{n+1}/a_n$
+
+$$
+\begin{aligned}
+a_1 &= 2\\\\
+a_2 &= -1\\\\
+a_3 &= -\frac{1}{2}\\\\
+a_4 &= \frac{1}{2}\\\\
+a_5 &= -1\\\\
+a_6 &= -2\\\\
+a_7 &= 2\\\\
+a_8 &= -1\\\\
+a_9 &= -\frac{1}{2}\\\\
+a_{10} &= \frac{1}{2}
+\end{aligned}
+$$
+
+# Finding a Sequence's Formula
+
+In Exercises 13--22, find a formula for the $n$th term of the sequence.
+
+13. The sequence 1, -1, 1, -1, 1, ...
+
+> $a_n = (-1)^{n+1}, n \ge 1$
+
+14. The sequence -1, 1, -1, 1, -1, ...
+
+> $a_n = (-1)^{n}, n \ge 1$
+
+15. The sequence 1, -4, 9, -16, 25, ...
+
+> $a_n = (-1)^{n+1} \cdot n^2, n \ge 1$
+
+16. The sequence
+$1, -\frac{1}{4}, \frac{1}{9}, -\frac{1}{16}, \frac{1}{25}, ...$
+
+> $a_n = (-1)^{n+1} \cdot \left(\frac{1}{n}\right)^2, n \ge 1$
+
+17. The sequence $0, 3, 8, 15, 24, ...$
+
+> $a_n = n^2 - 1, n \ge 1$
+
+18. The sequence $-3, -2, -1, 0, 1, ...$
+
+> $a_n = -4 + n, n \ge 1$
+
+19. The sequence 1, 5, 9, 13, 17, ...
+
+> $a_n = 4n - 3, n \ge 1$
+
+20. The sequence 2, 6, 10, 14, 18, ...
+
+> $a_n = 4n - 2, n \ge 1$
+
+21. The sequence 1, 0, 1, 0, 1, ...
+
+> $a_n = \frac{1 + (-1)^{n+1}}{2}, n \ge 1$
+
+22. The sequence 0, 1, 1, 2, 2, 3, 3, 4, ...
+
+> $a_n = \frac{n}{2} + \frac{1 + (-1)^{n+1}}{4}$
+
+# Calculator Explorations of Limits
+
+In Exercises 23--26, experiment with a calculator to find a value of $N$ that
+will make the inequality hold for all $n > N$. Assuming that the inequality is
+the one from the formal definition of the limit of a sequence, what sequence is
+being considered in each case and what is its limit?
+
+23. $|\sqrt[n]{0.5} - 1| < 10^{-3}$
+
+```{r problem 23}
+p23 = new.env()
+p23$f <- function(n) abs(.5^(1/n) - 1)
+which((p23$f(1:1000) < 10^-3) == TRUE)[1]-1
+```
+
+---
+
+24. $|\sqrt[n]{n} - 1| < 10^{-3}$
+
+```{r problem 24}
+p24 = new.env()
+p24$f <- function(n) abs(n^(1/n) - 1)
+which((p24$f(1:1000) < 10^-3) == TRUE)[1]-1
+```
+
+---
+
+25. $(0.9)^n < 10^{-3}$
+
+```{r problem 25}
+p25 = new.env()
+p25$f <- function(n) 0.9^n
+which((p25$f(1:1000) < 10^-3) == TRUE)[1]-1
+```
+
+---
+
+26. $2^n / n! < 10^{-7}$
+
+```{r problem 26}
+p26 = new.env()
+p26$f <- function(n) 2^n / factorial(n)
+which((p26$f(1:1000) < 10^-7) == TRUE)[1]-1
+```
+
+---
+
+27. __Sequences generated by Newton's method.__ Newton's method, applied to a
+    differentiable function $f(x)$, begins with a starting value $x_0$ and
+    constructs from it a sequence of numbers $\{x_n\}$ that under favorable
+    circumstances converges to a zero of $f$. The recursion formula for the
+    sequence is
+
+$$
+x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)}.
+$$
+
+> a. Show that the recursion formula for $f(x) = x^2 - a, a > 0$, can be written
+> as $x_{n+1} = (x_n + a / x_n)/2$.
+
+> b. Starting with $x_0 = 1$ and $a = 3$, calculate successive terms of the
+> sequence until the display begins to repeat. What number is being
+> approximated? Explain.
+
+The derivative of the function is:
+
+$$
+f'(x) = 2x
+$$
+
+Then:
+
+$$
+\begin{aligned}
+x_{n+1} &= x_n - \frac{x_n^2 - a}{2x_n}\\
+  &= x_n - \frac{1}{2}x_n + \frac{a}{2x_n}\\
+  &= \frac{1}{2}x_n + \frac{a}{2x_n}\\
+  &= (x_n + a / x_n) / 2
+\end{aligned}
+$$
+
+```{r problem 27}
+p27 = new.env()
+p27$a = 3
+p27$n = 1:10
+p27$f <- function(x) x^2 - p27$a
+p27$df <- function(x) 2*x
+p27$xn <- function(x, i=1, tol=10^-2) {
+    ret = x - p27$f(x) / p27$df(x)
+    cat("Iteration", i, ":", ret, "\n")
+    if(abs(ret - x) < tol){
+        return(ret)
+    }
+    p27$xn(ret, i+1, tol)
+}
+(p27$result_3 = p27$xn(1))
+cat("Result is approximating the square root of 3:", sqrt(3), "\n")
+p27$a = 2
+(p27$result_2 = p27$xn(1))
+cat("Result is approximating the square root of 2:", sqrt(2), "\n")
+```
+
+---
+
+29. __Recursive definition of $\pi/2$.__
+If you start with $x_1 = 1$ and define the subsequent terms of $\{x_n\}$ by the
+rule $x_n = x_{n-1} + \cos{x_{n-1}}$, you generate a sequence that converges
+rapidly to $\pi/2$. (a) Try it. (b) Use the accompanying figure to explain why
+the convergence is so rapid.
+
+```{r problem 29 setup, echo=F}
+p29 = new.env()
+p29$graph_step <- function(theta, r=1){
+    bottom = seq(0, theta, length.out = 100)
+    top = seq(theta, pi/2, length.out = 100)
+    ray <- rbind(
+        tibble(
+            x = r * cos(bottom),
+            y = r * sin(bottom),
+            arc = "bottom_arc"
+        ),
+        tibble(
+            x = r * cos(top),
+            y = r * sin(top),
+            arc = "top_arc"
+        )
+    )
+
+    pt <- tibble(
+        x = r * cos(theta),
+        y = r * sin(theta)
+    )
+
+    cos_seg <- tibble(
+        x = c(0, cos(theta)),
+        y = c(sin(theta), sin(theta))
+    )
+
+    ggplot(ray, aes(x, y, color = arc)) +
+    geom_path(linewidth = .4) +
+    geom_point(data = pt, color = "black", size = 2) +
+    geom_segment(
+        data = cos_seg,
+        aes(x = x[1], y = y[1], xend = x[2], yend = y[2]),
+        inherit.aes = FALSE,
+        linetype = "dashed",
+        color = "red"
+    ) +
+    annotate("text", x = cos(theta)/2, y = sin(theta) + 0.05,
+        label = "cos(theta)", parse = TRUE, color = "red") +
+    geom_segment(
+        aes(x = 0, y = 0,
+            xend = r * cos(theta), yend = r * sin(theta)),
+        color = "black"
+    ) +
+    coord_equal(xlim = c(0, 1.2), ylim = c(0, 1.2)) +
+    theme_minimal() +
+    labs(title = bquote("Step from" ~ theta ~ "to" ~ theta + cos(theta)))
+}
+```
+
+```{r problem 29 a, warning=F, fig.width=3, fig.height=3}
+p29$f <- function(x, i=1, tol=10^-3) {
+    ret = x + cos(x)
+    print(p29$graph_step(x))
+    if(abs(ret - x) < tol){
+        return(ret)
+    }
+    #print(p29$graph_step(ret))
+    p29$f(ret, i+1, tol)
+}
+p29$f(1)
+```
+
+The reason it converges so rappidly to $\pi/2$ is because at each step $x_n$ is
+getting closer to $\pi/2$ by adding $\cos{x_{n-1}}$ to the previous amount.
+
+30. According to a front-article in the December 15, 1992, issue of
+    _The Wall Street Journal_, Ford Motor Company now uses about $7\frac{1}{4}$
+    hours of labor to produce stampings for the average vehicle, down from an
+    estimated 15 hours in 1980. The Japanese need only about $3\frac{1}{2}$
+    hours.
+
+    Ford's improvement since 1980 represents an average decrease of 6\% per
+    year. If that rate continues, then $n$ years from now Ford will use about
+
+$$
+S_n = 7.25(0.94)^n
+$$
+
+> hours of labour to produce stampings for the average vehicle. Assuming that the
+> Japanese continue to spend $3\frac{1}{2}$ hours per vehicle, how many more years
+> will it take Ford to catch up? Find out two ways:
+
+a. Find the first term fo the sequence $\{S_n\}$ that is less than or equal
+   to 3.5.
+
+b. __GRAPHER__ Graph $f(x) = 7.25(0.94)^x$ and use TRACE to find where the graph
+crosses the line $y = 3.5$.
+
+```{r problem 30}
+p30 <- new.env()
+p30$f <- function(n) 7.25*0.94^n
+p30$data <- tibble(
+    x = 1:20,
+    y = p30$f(x)
+)
+cat(trace.point <- which((p30$data$y <= 3.5) == TRUE)[1], "years\n")
+x_vals <- seq(0, 40, by = 0.1)
+df <- tibble(x = x_vals, y = p30$f(x_vals))
+(x_intercept <- log(3.5/7.25) / log(0.94))
+
+ggplot(p30$data, aes(x, y)) +
+  geom_path(linewidth = .3) +
+  geom_hline(yintercept = 3.5, color = "red",
+      linetype = "dashed", linewidth = .3) +
+  geom_point(x = x_intercept, y = 3.5, color = "red") +
+  theme_minimal()
+```
+
+# Theory and Examples
+
+```{r function to graph sequence, echo=F}
+graph_sequence <- function(f, n=1:1000){
+    df <- tibble(
+        x = n,
+        y = f(n)
+    )
+    ggplot(df, aes(x=x, y=y)) +
+        geom_path(linewidth = .3) +
+        theme_minimal()
+}
+```
+
+In Exercises 31--34, determine if the sequence is nondecreasing and if it is
+bounded from above.
+
+---
+
+31. $a_n = \frac{3n + 1}{n + 1}$
+
+> The sequence is nondecreasing because the numerator term is larger than the
+> denominator. It is bounded from above as shown.
+
+```{r problem 31, echo=F, fig.height=4, fig.width=5}
+graph_sequence(function(x) (3 * x + 1) / (x + 1))
+```
+
+---
+
+32. $a_n = \frac{(2n + 3)!}{(n + 1)!}$
+
+> The sequence is nondecreasing and unbounded.
+
+```{r problem 32, echo=F, fig.height=4, fig.width=4}
+graph_sequence(function(x) factorial(2*x+3) / factorial(x + 1), 1:5)
+```
+
+---
+
+33. $a_n = \frac{2^n 3^n}{n!}$
+
+> The sequence is not nondecreasing and is bounded above.
+
+```{r problem 33, echo=F}
+graph_sequence(function(x) 2^x * 3^x / factorial(x), 1:20)
+```
+
+---
+
+34. $a_n = 2 - \frac{2}{n} - \frac{1}{2^n}$
+
+> The sequence is nondecreasing and is bounded from above.
+
+```{r problem 34, echo=F}
+graph_sequence(function(x) 2 - 2/x - 1/2^x, 1:20)
+```
+
+Which of the sequences in Exercises 35--40 converge, and which diverge? Give
+reasons for your answers.
+
+---
+
+35. $a_n = 1 - \frac{1}{n}$
+
+> This sequence converges to 1 as shown below.
+
+```{r problem 35, echo=F}
+graph_sequence(function(x) 1 - 1/x)
+```
+
+---
+
+36. $a_n = n - 1/n$
+
+> This sequence diverges.
+
+```{r problem 36, echo=F}
+graph_sequence(function(x) x - 1/x)
+```
+
+---
+
+37. $a_n = \frac{2^n - 1}{2^n}$
+
+> This sequence converges to 1.
+
+```{r problem 37, echo=F}
+graph_sequence(function(x) (2^x - 1) / (2^x), 1:20)
+```
+
+---
+
+38. $a_n = \frac{2^n - 1}{3^n}$
+
+> This sequence converges to 0.
+
+```{r problem 38, echo=F}
+graph_sequence(function(x) (2^x - 1) / (3^x), 1:20)
+```
+
+---
+
+39. $a_n = ((-1)^n + 1)\left(\frac{n + 1}{n}\right)$
+
+> This sequence does not converge.
+
+```{r problem 39, echo=F}
+graph_sequence(function(x) ((-1)^x + 1)*((x+1)/x), 1:20)
+```
+
+---
+
+40. The first term of a sequence is $x_1 = \cos(1)$. The next terms are
+    $x_2 = x_1$, or $\cos(2)$, whichever is larger; and $x_3 = x_2$ or $\cos(3)$,
+    whichever is larger (farther to the right). In general,
+
+$$
+x_{n+1} = \max\{x_n, \cos(n + 1)\}.
+$$
+
+> The sequence converges.
+
+```{r problem 40, echo=F}
+p40 <- new.env()
+p40$f <- function(x=c(cos(1)), i=2, end=20){
+    ret = max(x, cos(i))
+    if(i == end){
+        return(c(x, ret))
+    }
+    p40$f(c(x, ret), i+1, end)
+}
+p40$df <- tibble(x = 1:100, y = p40$f(end=100))
+ggplot(p40$df, aes(x=x, y=y)) +
+    geom_path(linewidth = .3) +
+    theme_minimal()
+```
+
+---
+
+41. __Nonincreasing sequences.__ A sequence of numbers $\{a_n\}$ in which
+    $a_n \ge a_n+1$ for every $n$ is called a __nonincreasing sequence__. A
+    sequence $\{a_n\}$ is __bounded from below__ if there is a number $M$ with
+    $M \le a_n$ for every $n$. Such a number $M$ is called a __lower bound__ for
+    the sequence. Deduce from Theorem 1 that a nonincreasing sequence that is
+    bounded from below converges and that a nonincreasing sequence that is not
+    bounded from below diverges.
+
+From the chapter, Theorem 1 states:
+
+>> A nondecreasing sequence of real numbers converges if and only if it is
+>> bounded from above. If a nondecreasing sequence converges, it converges to
+>> its least upper bound.
+
+What the question wants is a definition of the opposite of Theorem 1:
+
+>> A nonincreasing sequence of real numbers converges if and only if it is bounded
+>> from below. If a nonincreasing sequence converges, it converges to its greatest
+>> lower bound.
+
+_(Continuation of Exercise 41.)_ Using the conclusion of Exercise 41, determine
+which of the sequences in Exercises 42--46 converge and which diverge.
+
+---
+
+42. $a_n = \frac{n + 1}{n}$
+
+> The sequence is nonincreasing and is bounded from below.
+
+```{r problem 42, echo=F}
+graph_sequence(function(x) (x + 1) / x, 1:20)
+```
+
+---
+
+43. $a_n = \frac{1 + \sqrt{2n}}{\sqrt{n}}$
+
+> The sequence is nonincreasing and is bounded from below.
+
+```{r problem 43, echo=F}
+graph_sequence(function(x) (1 + sqrt(2 * x)) / sqrt(x), 1:20)
+```
+
+---
+
+44. $a_n = \frac{1 - 4^n}{2^n}$
+
+> The sequence is nonincreasing and is not bounded from below.
+
+```{r problem 44, echo=F}
+graph_sequence(function(x) (1 - 4^x) / 2^x, 1:20)
+```
+
+---
+
+45. $a_n = \frac{4^{n+1} + 3^n}{4^n}$
+
+> The sequence is nonincreasing and is bounded from below.
+
+```{r problem 45, echo=F}
+graph_sequence(function(x) (4^(x+1) + 3^x) / 4^x, 1:20)
+```
+
+---
+
+46. $a_1 = 1, a_{n+1} = 2a_n - 3$
+
+> The sequence is not nonincreasing and is not bounded from below.
+
+```{r problem 46, echo=F}
+p46 <- new.env()
+p46$f <- function(x=1, i=1, end=20){
+    ret = 2 * x - 3
+    if(i == end){
+        return(c(x, ret))
+    }
+    p46$f(c(x, ret), i+1, end)
+}
+p46$df <- tibble(x = 1:100, y = p40$f(end=100))
+ggplot(p46$df, aes(x=x, y=y)) +
+    geom_path(linewidth = .3) +
+    theme_minimal()
+```
+
+---
+
+47. __The sequence $\{n/(n + 1)\}$ has a least upper bound of 1.__ Show that if
+    $M$ is a number less than 1, then the terms of $\{n/(n + 1)\}$ eventually
+    exceed $M$. That is, if $M < 1$ there is an integer $N$ such that
+    $n/(n+1) > M$ whenever $n > N$. Since $n/(n + 1) < 1$ for every $n$, this
+    proves that 1 is a least upper bound for $\{n/(n + 1)\}$.
+
+For $M < 1$:
+
+$$
+\frac{n}{n + 1} > M \Longleftrightarrow n > \frac{M}{1 - M}.
+$$
+
+Choose an integer $N > \frac{M}{1 - M}$. Then for all $n > N$, we have
+$\frac{n}{n+1} > M$.  Also note that $\frac{n}{n + 1} < 1$ for all $n$.
+
+Hence, for every $M < 1$, the sequence eventually exceeds $M$, but it never
+exceeds 1. Therefore, 1 is the least upper bound.
+
+```{r problem 47, echo=F}
+graph_sequence(function(x) x / (x + 1))
+```
+
+---
+
+48. __Uniqueness of least upper bounds.__ Show that if $M_1$ and $M_2$ are least
+    upper bounds for the sequence $\{a_n\}$, then $M_1 = M_2$. That is, a
+    sequence cannot have two different least upper bounds.
+
+> Let $M_1$ and $M_2$ both be least upper bounds (suprema) of the sequence
+> $\{a_n\}$. By definition of "least upper bound":
+> 
+> * Since $M_1$ is the least upper bound and $M_2$ is an upper bound, we must
+>   have $M_1 \ge M_2$. (If $M_1 > M_2$ then $M_2$ would be a smaller upper
+>   bound that $M_1$, contradicting that $M_1$ is least.)
+>
+> * Similarly, since $M_2$ is the least upper bound and $M_1$ is an upper bound,
+>   we must have $M_2 \le M_1$.
+>
+> Combining the two inequalities gives $M_1 \le M_2$ and $M_2 \le M_1$, so
+> $M_1 = M_2$.
+
+---
+
+49. Is it true that a sequence $\{a_n\}$ of positive numbers must converge if it
+    is bounded from above? Give reasons for your answer.
+
+---
+
+50. Prove that if $\{a_n\}$ is a convergent sequence, then to every positive
+    number $\epsilon$ there corresponds an integer $N$ such that for all $m$ and
+    $n$.
+
+$$
+m > N\ \ \text{and}\ \ n > N\ \ \Rightarrow\ \ |a_m - a_n| < \epsilon.
+$$
+
+---
+
+51. __Uniqueness of limits.__ Prove that limits of sequences are unique. That
+    is, show that if $L_1$ and $L_2$ are numbers such that $a_n \rightarrow L_1$
+    and $a_n \rightarrow L_2$, then $L_1 = L_2$.
+
+---
+
+52. __Limits and subsequences.__ Prove that if two subsequences of a sequence
+    $\{a_n\}$ have different limits $L_1 \ne L_2$, then $\{a_n\}$ diverges.
+
+---
+
+
