@@ -1,0 +1,283 @@
+---
+title: Preliminaries
+subtitle: 1 Real Numbers and the Real Line
+output: pdf_document
+toc: true
+header-includes:
+  - \usepackage{tcolorbox}
+  - \input{../helpers/columns.tex}
+---
+
+```{r setup, include=F}
+options(repos=c("https://mirrors.nics.utk.edu/cran/"))
+suppressMessages({
+    if(!require(tidyverse)){
+        install.packages("tidyverse")
+        require(tidyverse)
+    }
+    if(!require(intervals)){
+        install.packages('intervals')
+        require(intervals)
+    }
+})
+source('../helpers/graph_functions.R')
+```
+
+# Real Numbers and the Real Line
+
+Much of calculus is based on properties of the real number system. __Real
+numbers__ are numbers that can be expressed as decimals, such as:
+
+$$
+\begin{aligned}
+-\frac{3}{4} &= -0.75000\ldots\\\\
+\frac{1}{3} &= 0.33333\ldots\\\\
+\sqrt{2} &= 1.4142\ldots\\\\
+\end{aligned}
+$$
+
+The dots $\ldots$ in each case indicate that the sequence of decimal digits goes
+on forever.
+
+The real numbers can be represented geometrically as points on a number line
+called the __real line__.
+
+```{r real number line, echo=F, fig.height=2}
+c0.1 <- new.env()
+c0.1$df <- tibble(
+    x = c(-2, -1, -3/4, 0, 1/3, 1, sqrt(2), 2, 3, pi, 4),
+    y = rep(0, 11),
+    labels = c("-2", "-1", "-frac(3,4)", "0", "frac(1,3)", "1", "sqrt(2)",
+               "2", "3", "pi", "4")
+)
+
+ggplot(c0.1$df, aes(x, y)) +
+    geom_hline(yintercept = 0) +
+    #geom_segment(aes(xend = x, y = -0.05, yend = 0.05)) +
+    geom_text(aes(label = labels), vjust = 2.25, parse=T, size=2.8) +
+    geom_text(aes(label = rep('|', length(x)))) +
+    scale_y_continuous(breaks = NULL) +
+    xlab("") +
+    ylab("") +
+    theme(
+        panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank()
+    )
+        
+```
+
+The symbol $\mathbb{R}$ denotes either the real number system or, equivalently,
+the real line.
+
+# Properties of Real Numbers
+
+The properties of the real number system fall into three categories: algebraic
+properties, order properties, and completeness. The algebraic properties say
+that the real numbers can be added, subtracted, multiplied, and divided (except
+by 0) to produce more real numbers under the usual rules of arithmetic.
+_you can never divide by 0_.
+
+The order properties of real numbers are summarized in the following list.
+
+\begin{bluebox}
+
+\subsection{Rules for Inequalities}
+
+If $a, b,$ and $c$ are real numbers, then:
+
+1. $a < b \Rightarrow a + c < b + c$
+
+2. $a < b \Rightarrow a - c < b - c$
+
+3. $a < b \text{ and } c > 0 \Rightarrow ac < bc$
+
+4. $a < b \text{ and } c < 0 \Rightarrow bc < ac$
+   (Special case: $a < b \Rightarrow -b < -a$
+
+5. $a > 0 \Rightarrow \frac{1}{a} > 0$
+
+6. If $a$ and $b$ are both positive or both negative, then
+   $a < b \Rightarrow \frac{1}{b} < \frac{1}{a}$
+
+\end{bluebox}
+
+The symbol $\Rightarrow$ means "implies".
+
+Notice the rules for multiplying an inequality by a number. Multiplying by a
+positive number preserves the inequality; multiplying by a negative number
+reverses the inquality. Also, reciprocation reverses the inequality for numbers
+of the same sign.
+
+The completeness property of the real number system is deeper and harder to
+define precisely. Roughly speaking, it says that there are enough real numbers
+to "complete" the real number line, in the sense that there are no "holes" or
+"gaps" in it. Many of the theorems of calculus would fail if the real number
+system were not complete, and the nature of the connection is important. The
+topic is best saved for a more advanced course, however, and we will not pursue
+it.
+
+# Subsets of $\mathbb{R}$
+
+We distinguish three special subsets of real numbers.
+
+1. The __natural numbers__, namely $1, 2, 3, 4, \ldots$
+
+2. The __integers__, namely $0, \pm1, \pm2, \pm3, \pm4, \ldots$
+
+3. The __rational numbers__, namely the numbers that can be expressed in the
+   form of a fraction $m/n$, where $m$ and $n$ are integers and $n \ne 0$.
+   Examples are
+
+$$
+\frac{1}{3}, -\frac{4}{9}, \frac{200}{13}, \text{ and } 57 = \frac{57}{1}.
+$$
+
+The rational numbers are precisely the real numbers with decimal expansions that
+are either
+
+a. terminating (ending in an infinite string of zeros), for example,
+
+$$
+\frac{3}{4} = 0.75000\ldots = 0.75 \text{ or }
+$$
+
+b. repeating (ending with a block of digits that repeats over and over), for
+example
+
+$$
+\frac{23}{11} = 2.090909\ldots = 2.\overline{09}
+$$
+
+> The bar indicates the block of repeating digits.
+
+The set of rational numbers has all the algebraic and order properties of the
+real numbers but lacks the completeness property. For example, there is no
+rational number whose square is 2; there is a "hole" in the rational line where
+$\sqrt{2}$ should be.
+
+Real numbers are not rational are called __irrational numbers__. They are
+characterized by having nondetermining and non repeating deciam expansions.
+Examples are $\pi$, $\sqrt{2}$, $\sqrt[3]{5}$, and $\log_{10}{3}$.
+
+# Intervals
+
+A subset of the real line is called an __interval__ if it contains at least two
+numbers and contains all the real numbers lying between any two of its elements.
+For example, the set of all real numbers $x$ such that $x > 6$ is an interval,
+as is the set of all $x$ such taht $-2 \le x \le 5$. The set of all nonzero real
+numbers is not an interval; since 0 is absent, the set fails to contain every
+real number between $-1$ and $1$ (for example).
+
+Geometrically, intervals of numbers corresponding to line segments are
+__finite intervals__.
+
+A finite interval is said to be __closed__ if it contains both of its endpoints,
+__half-open__ if it contians one endpoint but not the other, and __open__ if it
+contains neither endpoint. THe endpoints are also called __boundary points__;
+they make up the interval's __boundary__. The remaining points of the interval
+are __interior points__ and together make up what is called the interval's
+__interior__.
+
+::: {.col data-latex="{0.3\textwidth}"}
+
+$(a,b)$
+
+:::
+
+::: {.col data-latex="{0.3\textwidth}"}
+
+$\{x|a < x < b\}$
+
+:::
+
+::: {.col data-latex="{0.3\textwidth}"}
+
+```{r open-open, fig.width=2, fig.height=2, echo=F}
+line.graph(Intervals(matrix(c(0, 5), ncol=2), closed=c(F,F)))
+```
+
+:::
+
+\
+
+::: {.col data-latex="{0.3\textwidth}"}
+
+$(a,b)$
+
+:::
+
+::: {.col data-latex="{0.3\textwidth}"}
+
+$\{x|a < x < b\}$
+
+:::
+
+::: {.col data-latex="{0.3\textwidth}"}
+
+```{r closed-closed, fig.width=2, fig.height=2, echo=F}
+line.graph(Intervals(matrix(c(0, 5), ncol=2), closed=c(F,F)))
+```
+
+:::
+
+# Solving Inequalities
+
+The process of finding the interval or intervals of numbers that satisfy an
+inequality in $x$ is called __solving__ the inequality.
+
+#### EXAMPLE 1
+
+Solve the following inequalities and graph their solution sets on the real line.
+
+a. $2x - 1 < x + 3$
+
+b. $-\frac{x}{3} < 2x + 1$
+
+c. $\frac{6}{x-1} \ge 5$
+
+##### Solution
+
+###### a.
+
+$$
+\begin{aligned}
+2x - 1 &< x + 3\\
+2x &< x + 4\\
+x &< 4
+\end{aligned}
+$$
+
+The solution set is the interval $(-\infty, 4)$ (Fig. 1a).
+
+###### b.
+
+$$
+\begin{aligned}
+-\frac{x}{3} &< 2x + 1\\
+-x &< 6x + 3\\
+0 &< 7x + 3\\
+-3 &< 7x\\
+-\frac{3}{7} &< x
+\end{aligned}
+$$
+
+The solution set is the interval $(-3/7, \infty)$ (Fig. 1b).
+
+###### c.
+
+The inequality $6/(x - 1) \ge 5$ can hold only if $x > 1$, because otherwise
+$6/(x - 1)$ is undefined or negative. Therefore, the inequality will be
+preserved if we multiply both sides by $(x - 1)$, and we have
+
+$$
+\begin{aligned}
+\frac{6}{x-1} &\ge 5\\
+6 &\ge 5x - 5\\
+11 &\ge 5x\\
+\frac{11}{5} &\ge x.
+\end{aligned}
+$$
+
+The solution set is the half-open interval $(1, 11/5]$ (Fig. 1c).
