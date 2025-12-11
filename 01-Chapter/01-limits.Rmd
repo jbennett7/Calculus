@@ -1,0 +1,60 @@
+---
+title: 1.1 Rate of change and limits
+output:
+  pdf_document:
+    toc: false
+    includes:
+      in_header: "preamble.tex"
+---
+
+# Speed
+
+A moving body's average speed over any particular time interval is the amount of
+distance covered during the interval divided by the length of the interval.
+
+__EXAMPLE 1__  A rock falls from the top of a 150-ft cliff. What is its average
+speed (a) during the first 2 sec of fall? (b) during the 1-sec interval between
+second 1 and second 2?
+
+__Solution__ Physical experiments show that a solid object dropped from rest to
+fall freely near the surface of the earth will fall
+
+$$
+y = 16t^2\ \text{ft}
+$$
+
+during the first $t$ sec. The average speed of the rock during a given time
+interval is the change in distance, $\delta y$, divided by the length of the
+time interval, $\delta t$.
+
+a) For the first 2 sec:
+
+$$
+\frac{\delta y}{\delta t} = \frac{16(2)^2 - 16(0)^2}{2 - 0}
+  = 32 \frac{\text{ft}}{\text{sec}}
+$$
+
+b) From second 1 to second 2:
+
+$$
+\frac{\delta y}{\delta t} = \frac{16(2)^2 - 16(1)^2}{2 - 1}
+  = 48 \frac{\text{ft}}{\text{sec}}
+$$
+
+\rule{\textwidth}{0.5pt}
+__Free fall__
+
+Near the surface of the earth, all bodies fall with the same constant
+acceleration. The distance a body falls after it is released from rest is a
+constant multiple of the squarte of the time elapsed. At least, that is what
+happens when the body falls in a vacuume, where there is no air to slow it down.
+The square-of-time rule also holds for dense, heavy objects like rocks, ball
+bearings, and steel tools during the first few seconds of their fall through
+air, before their velocities build up to where air resistance begins to matter.
+When air resistance is absent or insignificant and the only force acting on a
+falling body is the force of gravity, we call the way the body falls
+_free fall_.
+
+\rule{\textwidth}{0.5pt}
+
+

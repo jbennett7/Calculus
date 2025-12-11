@@ -1,0 +1,87 @@
+---
+output: pdf_document
+---
+
+```{r setup, include=F}
+options(repos=c("https://mirrors.nics.utk.edu/cran/"))
+if(!require(tidyverse)){
+    install.packages('tidyverse')
+    require(tidyverse)
+}
+```
+
+```{r graph functions, echo=F}
+function.graph <- function(f, layers=list(geom_point(size = 1)), n=1:5){
+    df <- tibble(
+        x = n,
+        y = f(x),
+        labels = paste0("a[", x, "]")
+    )
+    ggplot(df, aes(x=x, y=y)) + layers
+}
+
+function.dot <- function(f, n=1:5){
+    df <- tibble(
+        x = f(n),
+        y = 0,
+        labels = paste0("a[", n, "]")
+    )
+    ggplot(df, aes(x=x, y=y)) +
+    geom_hline(yintercept=0) +
+    geom_point(color = "blue", size = 2) +
+    ylab("") +
+    xlab("") +
+    coord_equal(xlim = c(min(df$x)-1, max(df$x)+1), ylim = c(-.3, .3)) +
+    geom_text(aes(label = labels), parse = TRUE, vjust = -1.5, size = 3) +
+    theme(
+        axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank(),
+    )
+}
+```
+
+```{r graph setups, echo=F}
+f <- list(
+    function(x) sqrt(x),
+    function(x) x^-1,
+    function(x) (-1)^(x+1) * x^-1,
+    function(x) (x - 1) / x,
+    function(x) (-1)^(x+1) * (x - 1) / x,
+    function(x) 3
+)
+f8.1.size <- c(3, 3)
+n <- list(
+    five = 1:5,
+    six = 1:6,
+    ten = 1:10
+)
+
+line.and.points <- list(
+    geom_line(color = "red"),
+    geom_point(color = "blue", size = 2),
+    theme_minimal()
+)
+
+test <- list(
+)
+
+#        geom_point(size = 3) +
+#        geom_text(aes(label = labels), parse = TRUE, vjust = -1.5, size = 3) +
+#        theme_minimal() +
+#        ylab("") +
+#        xlab("") +
+#        coord_equal(xlim = c(min(df$y)-1, max(df$y)+1), ylim = c(-.25, .25)) +
+#        theme(
+#            axis.text.y = element_blank(),
+#            axis.ticks.y = element_blank(),
+#            panel.grid.major.y = element_blank(),
+#            panel.grid.minor.y = element_blank())
+```
+
+```{r fig. 8.1, echo=F, fig.height=f8.1.size[1], fig.width=f8.1.size[2]}
+graphs <- lapply(f, function.graph, layers=test, n=n$five)
+dots <- lapply(f, function.dot)
+for(d in dots) print(d)
+```

@@ -1,0 +1,1056 @@
+---
+title: Exercies 1
+output: pdf_document
+toc: true
+---
+
+```{r setup, include=F}
+require(tidyverse)
+source('../helpers/graph_functions.R')
+```
+
+# Decimal Representations
+
+#### 1.
+
+Express $1/9$ as a repeating decimal, using a bar to indicate the repeating
+digits. What are the decimal representations of $2/9$? $3/9$? $8/9$?
+
+The pattern of numbers divded by 9.
+
+$$
+\begin{aligned}
+\frac{1}{9} &= 0.\overline{111}\\\\
+\frac{2}{9} &= 0.\overline{222}\\\\
+\frac{3}{9} &= 0.\overline{333}\\
+&\vdots\\
+\frac{8}{9} &= 0.\overline{888}\\\\
+\frac{9}{9} &= 1\\\\
+\frac{10}{9} &= 1.\overline{111}\\\\
+\frac{11}{9} &= 1.\overline{222}\\
+&\vdots\\
+\frac{18}{9} &= 2\\\\
+\frac{19}{9} &= 2.\overline{111}\\
+&\vdots
+\end{aligned}
+$$
+
+#### 2.
+
+Express $1/11$ as a repeating decimal, using a bar to indicate the repeating
+digits. What are the decimal representations of $2/11$? $3/11$? $9/11$?
+ 
+$$
+\begin{aligned}
+\frac{1}{11} &= 0.\overline{0909}\\\\
+\frac{2}{11} &= 0.\overline{1818}\\\\
+\frac{3}{11} &= 0.\overline{2727}\\\\
+\frac{4}{11} &= 0.\overline{3636}\\
+\vdots\\
+\frac{9}{11} &= 0.\overline{8181}\\\\
+\end{aligned}
+$$
+
+# Inequalities
+
+#### 3.
+
+If $2 < x < 6$, which of the following statements about $x$ are necessarily
+true, and which are not necessarily true?
+
+##### a.
+
+$0 < x < 4$
+
+> This is not necessarily true. The interval's minimum extends beyond the above
+> interval's minimum.
+
+##### b.
+
+$0 < x - 2 < 4$
+
+$$
+2 < x < 6
+$$
+
+> This is necessarily true. The interval is equal to the above interval.
+
+##### c.
+
+$1 < \frac{x}{2} < 3$
+
+$$
+\begin{aligned}
+1 < \frac{6}{x} < 3\\\\
+\frac{1}{6} < \frac{1}{x} < \frac{1}{2}\\\\
+6 > x > 2\\
+2 < x < 6
+\end{aligned}
+$$
+
+> This is necessarily true. When taking recipricals, we reverse the
+> inequalities.
+
+##### d.
+
+$1 < \frac{6}{x} < 3$
+
+$$
+\begin{aligned}
+\frac{1}{6} < \frac{1}{x} < \frac{1}{2}\\\\
+6 > x > 2\\
+2 < x < 6
+\end{aligned}
+$$
+
+> This is necessarily true. When taking recipricals, we reverse the
+> inequalities.
+
+##### e.
+
+$1 < \frac{6}{x} < 3$
+
+$$
+\begin{aligned}
+1 < \frac{6}{x} < 3\\\\
+\frac{1}{6} < \frac{1}{x} < \frac{1}{2}\\\\
+6 > x > 2\\
+2 < x < 6
+\end{aligned}
+$$
+
+> This is necessarily true.
+
+##### f.
+
+$|x - 4| < 2$
+
+$$
+\begin{aligned}
+-2 < x - 4 < 2\\\\
+2 < x < 6
+\end{aligned}
+$$
+
+> This is necessarily true.
+
+
+##### g.
+
+$-6 < -x < 2$
+
+$$
+\begin{aligned}
+-6 < -x < 2\\
+6 > x > -2\\
+-2 < x < 6
+\end{aligned}
+$$
+
+> This is not necessarily true. The interval's minimum extends past the above
+> interval's minimum.
+
+##### h.
+
+$-6 < -x < -2$
+
+$$
+\begin{aligned}
+-6 < -x < -2\\
+6 > x > 2\\
+2 < x < 6
+\end{aligned}
+$$
+
+> This is necessarily true.
+
+#### 4.
+
+If $-1 < y - 5 < 1$, which of the following statements about $y$ are necessarily
+true, and which are not necessarily true?
+
+$$
+\begin{aligned}
+-1 < y - 5 < 1\\
+4 < y < 6
+\end{aligned}
+$$
+
+##### a.
+
+$4 < y < 6$
+
+> This is necessarily true.
+
+##### b.
+
+$-6 < y < -4$
+
+> Not necessarily true.
+
+##### c.
+
+$y > 4$
+
+> necessarily true. It follows from 4 < y < 6.
+
+##### d.
+
+$y < 6$
+
+> necessarily true.
+
+##### e.
+
+$$
+\begin{aligned}
+0 < y - 4 < 2\\
+4 < y < 6
+\end{aligned}
+$$
+
+> necessarily true.
+
+##### f.
+
+$$
+\begin{aligned}
+2 < \frac{y}{2} < 3\\
+4 < y < 6
+\end{aligned}
+$$
+
+> necessarily true.
+
+##### g.
+
+$$
+\begin{aligned}
+\frac{1}{6} < \frac{1}{y} < \frac{1}{4}\\\\
+6 > y > 4\\
+4 < y < 6
+\end{aligned}
+$$
+
+> necessarily true
+
+##### h.
+
+$$
+|y - 5| < 1\\
+-1 < y - 6 < 1\\
+4 < y < 6
+$$
+
+> necessarily true
+
+In Exercises 5--12, solve the inequalities and graph the solution sets.
+
+#### 5.
+
+$-2x > 4$
+
+$$
+\begin{aligned}
+x < -8
+\end{aligned}
+$$
+
+```{r problem 5, echo=F, fig.height=3, fig.width=3}
+p5 <- Intervals(matrix(c(-20, -8), ncol=2), closed = c(F, F))
+plot(p5, xlim=c(-10,-8))
+```
+
+#### 6.
+
+$8 - 3x \ge 5$
+
+$$
+\begin{aligned}
+8 &\ge 5 + 3x\\
+3 &\ge 3x\\
+1 &\ge x
+\end{aligned}
+$$
+
+```{r problem 6, echo=F, fig.height=3, fig.width=3}
+p6 <- Intervals(matrix(c(1, 10), ncol=2), closed = c(T, F))
+plot(p6, xlim=c(1, 4))
+```
+
+#### 7.
+
+$5x - 3 \le 7 - 3x$
+
+$$
+\begin{aligned}
+5x - 3 &\le 7 - 3x\\
+8x &\le 10\\
+x &\le \frac{5}{4}
+\end{aligned}
+$$
+
+```{r problem 7, echo=F, fig.height=3, fig.width=3}
+p7 <- Intervals(matrix(c(-10, 5/4), ncol=2), closed = c(F, T))
+plot(p7, xlim=c(-1, 5/4))
+```
+
+#### 8.
+
+$3(2 - x) > 2(3 + x)$
+
+$$
+\begin{aligned}
+3(2 - x) &> 2(3 + x)\\
+6 - 3x &> 6 + 2x\\
+0 &> 5x\\
+x &< 0
+\end{aligned}
+$$
+
+```{r problem 8, echo=F, fig.height=3, fig.width=3}
+p8 <- Intervals(matrix(c(-10, 0), ncol=2), closed = c(F, F))
+plot(p8, xlim=c(-1, 0))
+```
+
+#### 9.
+
+$2x - \frac{1}{2} \ge 7x + \frac{7}{6}$
+
+$$
+\begin{aligned}
+2x - \frac{1}{2} &\ge 7x + \frac{7}{6}\\
+12x - 3 &\ge 42x + 7\\
+-30x &\ge 10\\
+x &\le -\frac{1}{3}
+\end{aligned}
+$$
+
+```{r problem 9, echo=F, fig.height=3, fig.width=3}
+p9 <- Intervals(matrix(c(-10, -1/3), ncol=2), closed = c(F, T))
+plot(p9, xlim = c(-1, -1/3))
+```
+
+#### 10.
+
+$\frac{6 - x}{4} < \frac{3x - 4}{2}$
+
+$$
+\begin{aligned}
+6 - x &< 6x - 8\\
+-7x &< -14\\
+x &> 2
+\end{aligned}
+$$
+
+```{r problem 10, echo=F, fig.height=3, fig.width=3}
+p10 <- Intervals(matrix(c(2, 10), ncol=2), closed = c(F, F))
+plot(p10, xlim = c(2, 5))
+```
+
+#### 11.
+
+$\frac{4}{5}(x - 2) < \frac{1}{3}(x - 6)$
+
+$$
+\begin{aligned}
+12(x - 2) &< 5(x - 6)\\
+12x - 24 &< 5x - 30\\
+7x &< -6\\
+x &< -\frac{6}{7}
+\end{aligned}
+$$
+
+```{r problem 11, echo=F, fig.height=3, fig.width=3}
+p11 <- Intervals(matrix(c(-10, -6/7), ncol=2), closed = c(F, F))
+plot(p11, xlim = c(-5, -6/7))
+```
+
+#### 12.
+
+$-\frac{x + 5}{2} \le \frac{12 + 3x}{4}$
+
+$$
+\begin{aligned}
+-2x - 10 &\le 12 + 3x\\
+-5x &\le 22\\
+x &\ge -\frac{22}{5}
+\end{aligned}
+$$
+
+```{r problem 12, echo=F, fig.height=3, fig.width=3}
+p12 <- Intervals(matrix(c(-22/5, 10), ncol=2), closed = c(T, F))
+plot(p12, xlim=c(-22/5, 1))
+```
+
+# Absolute Value
+
+Solve the equations in Exercises 13--18.
+
+#### 13.
+
+$|y| = 3$
+
+$$
+y = \pm3
+$$
+
+#### 14.
+
+$|y - 3| = 7$
+
+$$
+\begin{aligned}
+&y - 3 = 7 &\ \ & y - 3 = -7&\\
+&y = 10 &\ \ & y = -4&
+\end{aligned}
+$$
+
+#### 15.
+
+$|2t + 5| = 4$
+
+$$
+\begin{aligned}
+&2t + 5 = 4 &\ \ & 2t + 5 = -4&\\
+&t = -\frac{1}{2} &\ \ & t = -\frac{9}{2}&
+\end{aligned}
+$$
+
+#### 16.
+
+$|1 - t| = 1$
+
+$$
+\begin{aligned}
+&1 - t = 1 &\ \ & 1 - t = -1&\\
+&t = 0 &\ \ & t = 2&
+\end{aligned}
+$$
+
+#### 17.
+
+$|8 - 3x| = \frac{9}{2}$
+
+$$
+\begin{aligned}
+&8 - 3s = \frac{9}{2} &\ \ & 8 - 3s = -\frac{9}{2}&\\
+&16 - 6s = 9 &\ \ & 16 - 6s = -9&\\
+&s = \frac{7}{6} &\ \ & s = \frac{25}{6}&
+\end{aligned}
+$$
+
+#### 18.
+
+$\left|\frac{s}{2} - 1\right| = 1$
+
+$$
+\begin{aligned}
+&\frac{s}{2} - 1 = 1 &\ \ & \frac{s}{2} - 1 = -1&\\
+&s = 4 &\ \ & s = 0&
+\end{aligned}
+$$
+
+Solve the inequalities in Exercises 19--34, expressing the solution sets as
+intervals or unions of intervals. Also, graph each solution set on the real
+line.
+
+#### 19.
+
+$|x| < 2$
+
+$$
+\begin{aligned}
+-2 < x < 2\\\\
+(-2, 2)
+\end{aligned}
+$$
+
+```{r problem 19, echo=F, fig.height=3, fig.width=3}
+p19 <- Intervals(matrix(c(-2, 2), ncol=2), closed = c(F, F))
+plot(p19)
+```
+
+#### 20.
+
+$|x| \le 2$
+
+$$
+\begin{aligned}
+-2 \le x \le 2\\\\
+[-2, 2]
+\end{aligned}
+$$
+
+```{r problem 20, echo=F, fig.height=3, fig.width=3}
+p20 <- Intervals(matrix(c(-2, 2), ncol=2), closed = c(T, T))
+plot(p20)
+```
+
+#### 21.
+
+$|t - 1| \le 3$
+
+$$
+\begin{aligned}
+-3 \le t - 1 \le 3\\
+-2 \le t \le 4\\\\
+(-2, 4)
+\end{aligned}
+$$
+
+```{r problem 21, echo=F, fig.height=3, fig.width=3}
+p21 <- Intervals(matrix(c(-2, 4), ncol=2), closed = c(T, T))
+plot(p21)
+```
+
+#### 22.
+
+$|t + 2| < 1$
+
+$$
+\begin{aligned}
+-1 < t + 2 < 1\\
+-3 < t < -1\\\\
+(-3, -1)
+\end{aligned}
+$$
+
+```{r problem 22, echo=F, fig.height=3, fig.width=3}
+p22 <- Intervals(matrix(c(-3, -1), ncol=2), closed = c(F, F))
+plot(p22)
+```
+
+#### 23.
+
+$|3y - 7| < 4$
+
+$$
+\begin{aligned}
+-4 < 3y - 7 < 4\\
+3 < 3y < 11\\
+1 < y < \frac{11}{3}\\\\
+\left(1, \frac{11}{3}\right)
+\end{aligned}
+$$
+
+```{r problem 23, echo=F, fig.height=3, fig.width=3}
+p23 <- Intervals(matrix(c(1, 11/3), ncol=2), closed = c(F, F))
+plot(p23)
+```
+
+#### 24.
+
+$|2y + 5| < 1$
+
+$$
+\begin{aligned}
+-1 < 2y + 5 < 1\\
+-6 < 2y < -4\\
+-3 < y < -2\\\\
+(-3, -2)
+\end{aligned}
+$$
+
+```{r problem 24, echo=F, fig.height=3, fig.width=3}
+p24 <- Intervals(matrix(c(-3, -2), ncol=2), closed = c(F, F))
+plot(p24)
+```
+
+#### 25.
+
+$\left|\frac{z}{5} - 1\right| \le 1$
+
+$$
+\begin{aligned}
+-1 \le \frac{z}{5} - 1 \le 1\\
+-5 \le z \le 5\\\\
+[-5, 5]
+\end{aligned}
+$$
+
+```{r problem 25, echo=F, fig.height=3, fig.width=3}
+p25 <- Intervals(matrix(c(-5, 5), ncol=2), closed = c(F, F))
+plot(p25)
+```
+
+#### 26.
+
+$\left|\frac{3}{2}z - 1\right| \le 2$
+
+$$
+\begin{aligned}
+-2 \le \frac{3}{2}z - 1 \le 2\\
+-4 \le 3z - 2 \le 4\\
+-2 \le 3z \le 6\\
+-\frac{2}{3} \le z \le 2\\\\
+\left[-\frac{2}{3}, 2\right]
+\end{aligned}
+$$
+
+```{r problem 26, echo=F, fig.height=3, fig.width=3}
+p26 <- Intervals(matrix(c(-2/3, 2), ncol=2), closed = c(T, T))
+plot(p26)
+```
+
+#### 27.
+
+$\left|3 - \frac{1}{x}\right| < \frac{1}{2}$
+
+$$
+\begin{aligned}
+-\frac{1}{2} < 3 - \frac{1}{x} < \frac{1}{2}\\\\
+-1 < 6 - \frac{2}{x} < 1\\\\
+-7 < - \frac{2}{x} < -5\\\\
+-\frac{1}{7} > -\frac{x}{2} > -\frac{1}{5}\\\\
+7 < \frac{x}{2} < 5\\\\
+14 < x < 10\\
+10 > x > 14\\\\
+(10, 14)
+\end{aligned}
+$$
+
+```{r problem 27, echo=F, fig.height=3, fig.width=3}
+p27 <- Intervals(matrix(c(10, 14), ncol=2), closed = c(F, F))
+plot(p27)
+```
+
+#### 28.
+
+$\left|\frac{2}{x} - 4\right| < 3$
+
+$$
+\begin{aligned}
+-3 < \frac{2}{x} - 4 < 3\\\\
+1 < \frac{2}{x} < 7\\\\
+1 > \frac{x}{2} > \frac{1}{7}\\\\
+2 > x > \frac{1}{14}\\
+\frac{1}{14} < x < 2\\\\
+\left(\frac{1}{14}, 2\right)
+\end{aligned}
+$$
+
+```{r problem 28, echo=F, fig.height=3, fig.width=3}
+p28 <- Intervals(matrix(c(1/14, 2), ncol=2), closed = c(F, F))
+plot(p28)
+```
+
+#### 29.
+
+$|2s| \ge 4$
+
+$$
+\begin{aligned}
+&2s \le -4 &\ \ & 2s \ge 4&\\
+&s \le -2 &\ \ & s \ge 2&\\\\
+&(-\infty, -2)\cup(2, \infty)
+\end{aligned}
+$$
+
+```{r problem 29, echo=F, fig.height=3, fig.width=3}
+p29 <- Intervals(matrix(c(-20, 2, -2, 20), ncol=2), closed = c(T, T))
+plot(p29, xlim=c(-4, 4))
+```
+
+#### 30.
+
+$|s + 3| \ge \frac{1}{2}$
+
+$$
+\begin{aligned}
+&s + 3 \le \frac{1}{2} &\ \ & -(s + 3) \le \frac{1}{2}&\\\\
+&s \le -\frac{5}{2} &\ \ & s + 3 \ge -\frac{1}{2}&\\\\
+&s \le -\frac{5}{2} &\ \ & s \ge -\frac{7}{2}&\\\\
+&\left(-\infty, -\frac{7}{2}\right)\cup\left(\frac{5}{2}, \infty\right)
+\end{aligned}
+$$
+
+```{r problem 30, echo=F, fig.height=3, fig.width=3}
+p30 <- Intervals(matrix(c(-20, -5/2, -7/2, 20), ncol=2), closed = c(T, T))
+plot(p30, xlim=c(-4, -4/2))
+```
+
+#### 31.
+
+$|1 - x| > 1$
+
+$$
+\begin{aligned}
+&1 - x > 1 &\ \ & -(1 - x) > 1&\\
+&-x > 0 &\ \ & 1 - x > -1&\\
+&x < 0 &\ \ & -x > -2&\\
+&x < 0 &\ \ & x > 2\\\\
+&(-\infty, 0)\cup(2, \infty)
+\end{aligned}
+$$
+
+
+```{r problem 31, echo=F, fig.height=3, fig.width=3}
+p31 <- Intervals(matrix(c(-20, 2, 0, 20), ncol=2), closed = c(F, F))
+plot(p31, xlim=c(-1, 3))
+```
+
+#### 32.
+
+$|2 - 3x| > 5$
+
+$$
+\begin{aligned}
+&2 - 3x > 5 &\ \ & -(2 - 3x) > 5\\
+&-3x > 3 &\ \ & 2 - 3x > -5\\
+&3x < 3 &\ \ & -3x > -7\\
+&x < 1 &\ \ & x > \frac{7}{3}\\\\
+&\left(-\infty, 1\right)\cup\left(\frac{7}{3}, \infty\right)
+\end{aligned}
+$$
+
+```{r problem 32, echo=F, fig.height=3, fig.width=3}
+p32 <- Intervals(matrix(c(-20, 7/3, 1, 20), ncol=2), closed = c(F, F))
+plot(p32, xlim=c(2/3, 8/3))
+```
+
+#### 33.
+
+$\left|\frac{r + 1}{2}\right| \ge 1$
+
+$$
+\begin{aligned}
+&\frac{r + 1}{2} \ge 1 &\ \ & -\frac{r + 1}{2} \ge 1\\\\
+&r + 1 \ge 2 &\ \ & -(r + 1) \ge 2\\
+&r \ge 1 &\ \ & r + 1 \le -2\\
+&r \ge 1 &\ \ & r \le -3\\\\
+&(-\infty, -3)\cup(1, \infty)
+\end{aligned}
+$$
+
+```{r problem 33, echo=F, fig.height=3, fig.width=3}
+p33 <- Intervals(matrix(c(-20, 1, -3, 20), ncol=2), closed = c(F, F))
+plot(p33, xlim=c(-4, 2))
+```
+
+#### 34.
+
+$\left|\frac{3r}{5} - 1\right| > \frac{2}{5}$
+
+$$
+\begin{aligned}
+&\frac{3r}{5} - 1 > \frac{2}{5} &\ \ &
+  -\left(\frac{3r}{5} - 1\right) > \frac{2}{5}\\\\
+&\frac{3r}{5} > \frac{7}{5} &\ \ & \frac{3r}{5} < \frac{3}{5}\\\\
+&3r > 7 &\ \ & 3r < 3\\\\
+&r > \frac{7}{3} &\ \ & r < 1\\\\
+&\left(-\infty, 1\right)\cup\left(\frac{7}{3}, \infty\right)
+\end{aligned}
+$$
+
+```{r problem 34, echo=F, fig.height=3, fig.width=3}
+p34 <- Intervals(matrix(c(-20, 7/3, 1, 20), ncol=2), closed = c(F, F))
+plot(p34, xlim=c(0, 3))
+```
+
+# Quadratic Inequalities
+
+Solve the inequalities in Exercises 35--42. Express the solution sets as
+intervals or unions of intervals and graph them. Use the result
+$\sqrt{a^2} = |a|$ as appropriate.
+
+#### 35.
+
+$x^2 < 2$
+
+$$
+\begin{aligned}
+\sqrt{x^2} < \sqrt{2}\\
+|x| < \sqrt{2}\\
+-\sqrt{2} < x < \sqrt{2}
+\end{aligned}
+$$
+
+$$
+(-\sqrt{2}, \sqrt{2})
+$$
+
+```{r problem 35, echo=F, fig.height=3, fig.width=3}
+p35 <- Intervals(matrix(c(-sqrt(2), sqrt(2)), ncol=2), closed = c(F, F))
+plot(p35)
+```
+
+#### 36.
+
+$4 \le x^2$
+
+$$
+\begin{aligned}
+2 \le \sqrt{x^2}\\
+|x| \ge 2\\
+-2 < x < 2
+\end{aligned}
+$$
+
+$$
+(-2, 2)
+$$
+
+```{r problem 36, echo=F, fig.height=3, fig.width=3}
+p36 <- Intervals(matrix(c(-2, 2), ncol=2), closed = c(T, T))
+plot(p36)
+```
+
+#### 37.
+
+$4 < x^2 < 9$
+
+$$
+\begin{aligned}
+2 < \sqrt{x^2} < 3\\
+2 < |x| < 3\\
+(2 < x < 3)\cup(-2 > x > -3)
+\end{aligned}
+$$
+
+$$
+(-3, -2)\cup(2, 3)
+$$
+
+```{r problem 37, echo=F, fig.height=3, fig.width=3}
+p37 <- Intervals(matrix(c(2, -3, 3, -2), ncol=2), closed = c(F, F))
+plot(p37)
+```
+
+#### 38.
+
+$\frac{1}{9} < x^2 < \frac{1}{4}$
+
+$$
+\begin{aligned}
+\frac{1}{3} < \sqrt{x^2} < \frac{1}{2}\\
+\left(\frac{1}{3} < x < \frac{1}{2}\right) \cup
+  \left(-\frac{1}{3} > x > -\frac{1}{2}\right)
+\end{aligned}
+$$
+
+$$
+\left(\frac{1}{3}, \frac{1}{2}\right) \cup
+  \left(-\frac{1}{2}, -\frac{1}{3}\right)
+$$
+
+
+```{r problem 38, echo=F, fig.height=3, fig.width=3}
+p38 <- Intervals(matrix(c(1/3, -1/2, 1/2, -1/3), ncol=2), closed = c(F, F))
+plot(p38)
+```
+
+#### 39.
+
+$(x - 1)^2 < 4$
+
+$$
+\begin{aligned}
+\sqrt{(x - 1)^2} < 2\\
+|x - 1| < 2\\
+-2 < x - 1 < 2\\
+-1 < x < 3
+\end{aligned}
+$$
+
+$$
+(-1, 3)
+$$
+
+```{r problem 39, echo=F, fig.height=3, fig.width=3}
+p39 <- Intervals(matrix(c(-1, 3), ncol=2), closed = c(F, F))
+plot(p39)
+```
+
+#### 40.
+
+$(x + 3)^2 < 2$
+
+$$
+\begin{aligned}
+\sqrt{(x + 3)^2} < 2\\
+|x + 3| < \sqrt{2}\\
+-\sqrt{2} < x + 3 < \sqrt{2}\\
+-\sqrt{2} - 3 < x < \sqrt{2} - 3
+\end{aligned}
+$$
+
+$$
+(-\sqrt{2} - 3, \sqrt{2} - 3)
+$$
+
+```{r problem 40, echo=F, fig.height=3, fig.width=3}
+p40 <- Intervals(matrix(c(-sqrt(2)-3, sqrt(2)-3), ncol=2), closed = c(F, F))
+plot(p40)
+```
+
+#### 41.
+
+$x^2 - x < 0$
+
+$$
+x(x - 1) < 0
+$$
+
+Zeros occur at $x = 0$ and $x = 1$. This divides the real number line into the
+following intervals:
+
+$(-\infty, 0), (0, 1), (1, \infty)$
+
+Now we test each interval
+
+1. $(-\infty, 0)$: If $x = -1: (-1)^2 - (-1) = 2 \not< 0$
+
+2. $(0, 1)$: If $x = .5: (.5)^2 - (.5) = -.25 < 0$ This interval works.
+
+3. $(1, \infty)$: If $x = 1.5: (1.5)^2 - (1.5) = .75 \not< 0$
+
+$$
+(0,1)
+$$
+
+```{r problem 41, echo=F, fig.height=3, fig.width=3}
+p41 <- Intervals(matrix(c(0,1), ncol=2), closed = c(F, F))
+plot(p41)
+```
+
+#### 42.
+
+$x^2 - x - 2 \ge 0$
+
+$$
+(x - 2)(x + 1) \ge 0
+$$
+
+Intervals: $(-\infty, -1], [-1, 2], [2, \infty)$
+
+1. $(-\infty, -1)$: If $x = -1.5: (-1.5)^2 - (-1.5) - 2 = 1.75 \ge 0$ This
+   interval works.
+
+2. $(-2, 1)$: If $x = 0: 0^2 - 0 - 2 = -2 \not\ge 0$
+
+3. $(1, \infty)$: If $x = 1.5: 1.5^2 - 1.5 - 2 = -1.25 \not\ge 0$
+
+$$
+(-\infty, -1]
+$$
+
+```{r problem 42, echo=F, fig.height=3, fig.width=3}
+p42 <- Intervals(matrix(c(-20,-1), ncol=2), closed = c(F, F))
+plot(p42, xlim=c(-2, 0))
+```
+
+# Theory and Examples
+
+#### 43.
+
+Do not fall into the trap $|-a| = a$. For what real numbers $a$ is this equation
+true? For what real numbers is it false?
+
+> This fails when $a < 0$. For all negative real numbers, the equality fails.
+
+#### 44.
+
+Solve the equation $|x - 1| = 1 - x$.
+
+$$
+\begin{aligned}
+|x - 1| = \begin{cases}
+  x - 1, x \ge 1\\
+  1 - x, x < 1
+\end{cases}
+\end{aligned}
+$$
+
+for case 1: $x \ge 1$
+
+$$
+\begin{aligned}
+x - 1 = 1 - x\\
+2x = 2\\
+x = 1
+\end{aligned}
+$$
+
+For case 2: $x < 1$
+
+$$
+x - 1 = x - 1\\
+$$
+
+This is an __identity__ (true for all $x < 1$)
+
+$$
+(-\infty, 1]
+$$
+
+```{r problem 44, echo=F, fig.height=3, fig.width=3}
+p44 <- Intervals(matrix(c(-20,1), ncol=2), closed = c(F, T))
+plot(p44, xlim=c(-2, 1))
+```
+
+#### 45. A proof of the triangle inequality.
+
+Give the reason justifying each of the numbered steps in the following proof of
+the triangle inequality.
+
+$$
+\begin{aligned}
+|a + b|^2 &= (a + b)^2\\
+  &= a^2 + 2ab + b^2\\
+  &\le a^2 + 2|a||b| + b^2\\
+  &\le |a|^2 + 2|a||b| + |b|^2\\
+  &= (|a| + |b|)^2\\
+|a + b| &\le |a| + |b|
+\end{aligned}
+$$
+
+#### 46.
+
+Prove that $|ab| = |a||b|$ for any number $a$ and $b$.
+
+$$
+\begin{aligned}
+|ab| &= \sqrt{(ab)^2}\\
+  &= \sqrt{a^2} \times \sqrt{b^2}\\
+  &= |a||b|
+\end{aligned}
+$$
+
+#### 47.
+
+If $|x| \le 3$ and $x > -1/2$, what can you say about $x$?
+
+#### 48.
+
+Graph the inequality $|x| + |y| \le 1$.
+
+#### 49. GRAPHER
+
+##### a.
+
+Graph the functions $f(x) = x/2$ and $g(x) = 1 + (4/x)$ together to identify the
+values of $x$ for which
+
+$$
+\frac{x}{2} > 1 + \frac{4}{x}.
+$$
+
+##### b.
+
+Confirm your findings in (a) algebraically.
+
+#### 50. GRAPHER
+
+##### a.
+
+Graph the functions $f(x) = 3/(x - 1)$ and $g(x) = 2/(x + 1)$ together to
+identify the values of $x$ for which
+
+$$
+\frac{3}{x - 1} < \frac{2}{x + 1}.
+$$
+
+##### b.
+
+Confirm your findings in (a) algebraically.

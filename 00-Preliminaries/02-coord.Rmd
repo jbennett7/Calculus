@@ -1,0 +1,32 @@
+---
+title: "2 Coordinates, Lines, and Increments"
+output: pdf_documents
+toc: true
+---
+
+# Cartesian Coordinates in the Plane
+
+The positions of all points in th eplane can be measured with respect to two
+perpendicular real lines in the plane intersecting in the 0-point of each (Fig.
+5). These lines are called __coordinate axes__ in the plane. On the horizontal
+x-axis, numbers are denoted by $x$ and increase to the right. On the vertical
+y-axis, numbers are denoted by $y$ and increase upward. The point where $x$ and
+$y$ are both 0 is the __origin__ of the coordinate system, often denoted by the
+letter $O$.
+
+If $P$ is any point in the plane, we can draw lines through $P$ perpendicular to
+the two coordinate axes. If the lines meet the x-axis at $a$ and the y-axis at
+$b$, then $a$ is the __x-coordinate__ of $P$, and $b$ is the __y-coordinate__.
+The ordered pair $(a, b)$ is the point's __coordinate pair__. The x-coordinate
+of every point on the y-axis is 0. THe origin is the point $(0, 0)$.
+
+The origin divides the x-axis into the __positive x-axis__ to the right and the
+__negative x-axis__ to the left. It divides the y-axis into the __positive__ and
+__negative y-axis__ above and below. The axes divide the plane into four regions
+called __quadrants__, numbered counterclockwise as in Fig. 6.
+
+# A word about scales
+
+When we plot data in the coordinate plane or graph formulas whose variables have
+different units of measure, we do not need to use the same scale on the two
+axes. If we plot time vs. thrust for a rocket motor, for example, there

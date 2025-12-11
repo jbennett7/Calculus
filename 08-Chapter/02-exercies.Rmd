@@ -4,8 +4,11 @@ title: "Exercises 8.1"
 ---
 
 ```{r setup, include=F}
-require(tidyverse)
 options(repos=c("https://mirrors.nics.utk.edu/cran/"))
+if(!require(tidyverse)){
+    install.packages('tidyverse')
+    require(tidyverse)
+}
 if(!require(ggforce)){
     install.packages('ggforce')
     require(ggforce)
