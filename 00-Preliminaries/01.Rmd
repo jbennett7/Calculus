@@ -1,0 +1,455 @@
+---
+title: Preliminaries
+subtitle: Real Numbers and the Real Line
+output:
+  pdf_document:
+    toc: true
+    includes:
+      in_header: "../preamble.tex"
+---
+
+This section reviews real numbers, inequalities, intervals, and absolute values.
+
+# Real Numbers and the Real Line
+
+Much of calculus is based on properties of the real number system. __Real
+numbers__ are numbers that can be expressed as decimals, such as
+
+$$
+\begin{aligned}
+-\frac{3}{4} &= -0.75000...\\
+\frac{1}{3}  &=  0.33333...\\
+\sqrt{2}     &=  1.4142...\\
+\end{aligned}
+$$
+
+The dots $...$ in each case indicate that the sequence of decimal digits goes on forever. 
+
+The real numbers can be represented geometrically as points on a number line
+called the __real line__.
+
+```{r real-line, echo=F}
+points <- c(-2, -1, -3/4, 0, 1/3, 1, sqrt(2), 2, 3, pi, 4)
+labels <- c("-2", "-1", "-3/4", "0", "1/3", "1,", expression(sqrt(2)), "2", "3",
+            expression(pi), "4")
+
+plot(points, rep(0, length(points)), type = "n",
+     xlim = c(-2.5, 4.5), ylim = c(-1, 1),
+     axes = FALSE, xlab = "", ylab = "")
+
+abline(h=0)
+points(points, rep(0, length(points)), pch = "|")
+text(points, rep(-0.2, length(points)), labels = labels, cex = 0.7)
+```
+
+The symbol $\mathbb{R}$ donotes either the real number system or, equivalently,
+the real line.
+
+# Properties of Real Numbers
+
+The properties of the real number system fall into three categories: algebraic
+properties, order properties, and completeness. The algebraic properties say
+that the real numbers can be added, subtracted, multiplied, and divided (except
+by 0) to produce more real numbers under the usual rules of arithmetic. _You can
+never divide by 0_.
+
+The order properties of real numbers are summarized in the following list.
+
+\begin{tcolorbox}
+\textbf{Rules for Inequalities}
+
+If $a$, $b$, and $c$ are real numbers, then:
+
+\begin{enumerate}
+\item $a < b \Rightarrow a + c < b + c$
+\item $a < b \Rightarrow a - c < b - c$
+\item $a < b$ and $c > 0 \Rightarrow ac < bc$
+\item $a < b$ and $c < 0 \Rightarrow bc < ac$\newline
+      Special case: $a < b \Rightarrow -b < -a$
+\item $a > 0 \Rightarrow \frac{1}{a} > 0$
+\item If $a$ and $b$ are both positive or both negative, then $a < b \Rightarrow
+\frac{1}{b} < \frac{1}{a}$.
+\end{enumerate}
+\end{tcolorbox}
+
+The completeness property of the real number system is explored in Rudin's
+_"Principles of Mathematical Analysis"_. It is ddper and harder to define
+precisely. Roughly speaking, it says that there are enough real numbers to
+"complete" the real number line, in the sense that there are no "holes" or
+"gaps" in it. Many of the theorems of calculus would fail if the real number
+system were not complete, and the nature of the connection is important.
+
+# Subsets of $\mathbb{R}$
+
+We distinguish three special subsets of real numbers.
+
+1. The natural numbers: $1, 2, 3, 4, ...$
+2. The integers: $0, \pm1, \pm2, \pm3, ...$
+3. The rational numbers. Numbers that can be expressed in the form of a fraction
+   $m/n$, where $m$ and $n$ are integers and $n \ne 0$:
+
+$$
+\frac{1}{3}, -\frac{4}{9}, \frac{200}{13}, \text{and} 57 = \frac{57}{1}.
+$$
+
+> The rational numbers are precisely the real numbers with decimal expansions
+  that either
+> a) terminating (ending in an infinite string of zeros):
+
+$$
+\frac{3}{4} = 0.750000... = 0.75 \quad \text{or}
+$$
+
+> b) repeating (ending with a block of digits that repeats over and over):
+
+$$
+\frac{23}{11} = 2.090909... = 2.\overline{09}
+$$
+
+The set of rational numbers has all the algebraic and order properties of the
+real numbers but lacks the completeness property. For example, there is no
+rational number whose square is 2; there is a "hole" in the rational line where
+$\sqrt{2}$ should be.
+
+Real numbers that are not rational are called __irrational numbers__. They are
+characterized by having nonterminating and nonrepeating decimal expansions:
+$\pi$, $\sqrt{2}$, $\sqrt[3]{5}$, and $\log_{10}{3}$.
+
+# Intervals
+
+\begin{tcolorbox}
+\begin{itemize}
+\item $(a, b) \quad \{x \mid a < x < b\} \quad$
+    \intervalgraph{open}{open}{a}{b}
+\item $[a, b] \quad \{x \mid a \le x \le b\} \quad$
+    \intervalgraph{closed}{closed}{a}{b}
+\item $[a, b) \quad \{x \mid a \le x < b\} \quad$
+    \intervalgraph{closed}{open}{a}{b}
+\item $(a, b] \quad \{x \mid a < x \le b\} \quad$
+    \intervalgraph{open}{closed}{a}{b}
+\item $(a, \infty) \quad \{x \mid x > a\} \quad$
+    \intervalgraph{open}{inf}{a}{}
+\item $[a, \infty) \quad \{x \mid x \ge a\} \quad$
+    \intervalgraph{closed}{inf}{a}{}
+\item $(-\infty, b) \quad \{x \mid x < b\} \quad$
+    \intervalgraph{inf}{open}{}{b}
+\item $(-\infty, b] \quad \{x \mid x \le b\} \quad$
+    \intervalgraph{inf}{closed}{}{b}
+\item $(-\infty, \infty) \quad \mathbb{R}$ (set of all real numbers)
+    $\quad$ \intervalgraph{inf}{inf}{}{}
+\end{itemize}
+\end{tcolorbox}
+
+# Solving Inequalities
+
+## Example 1
+
+Solve the following inequalities and graph their solution sets on the real line.
+
+\begin{proof}
+Solutions
+a) $2x - 1 < x + 3$
+> \begin{solution}
+$$
+\begin{aligned}
+2x - 1 &< x + 3\\
+2x &< x + 4\\
+x &< 4
+\end{aligned}
+$$
+The solution set is the interval $(-\infty, 4)  \quad$
+\intervalgraph{inf}{open}{}{4}
+\end{solution}
+b) $-\frac{x}{3} < 2x + 1$
+> \begin{solution}
+$$
+\begin{aligned}
+-\frac{x}{3} &< 2x + 1\\
+-x &< 6x + 3\\
+0  &< 7x + 3\\
+-3 &< 7x\\
+-\frac{3}{7} &< x
+\end{aligned}
+$$
+The solution set is the interval $(-3/7, \infty) \quad$
+\intervalgraph{open}{inf}{-3/7}{}
+\end{solution}
+c) $\frac{6}{x - 1} \ge 5$
+> \begin{solution}
+The inequality $6/(x - 1) \ge 5$ can hold only if $x > 1$, becuase otherwise
+$6/(x - 1)$ is undefined or negative. Therefore, the inequality will be
+preserved if we multiply both sides by $(x - 1)$.
+$$
+\begin{aligned}
+\frac{6}{x - 1} &\ge 5\\
+6 &\ge 5x - 5\\
+11 &\ge 5x\\
+\frac{11}{5} &\ge x
+\end{aligned}
+$$
+The solution set is the half-open interval $(1, 11/5] \quad$
+\intervalgraph{open}{closed}{1}{11/5}
+\end{solution}
+\end{proof}
+
+# Absolute Value
+
+$$
+\begin{aligned}
+|x| = \begin{cases}&\quad x, \quad x \ge 0\\&-x, \quad x < 0.\end{cases}
+\end{aligned}
+$$
+
+## Example 2
+
+\begin{proof}
+$|3| = 3, \quad |0| = 0, \quad |-5| = -(-5) = 5, \quad |-|a|| = |a|$
+\end{proof}
+
+Notice that $|x| \ge 0$ for every real number $x$, and $|x| = 0$ if and only if
+$x = 0$.
+
+Since the symbol $\sqrt{a}$ always denotes the _nonnegative_ square root of $a$,
+an alternate definition of $|x|$ is
+
+$$
+|x| = \sqrt{x^2}
+$$
+
+Geometrically, $|x|$ represents the distance from $x$ to the origin $0$ on the
+real line. More generally
+
+$$
+|x - y| = \text{ the distance between x and y}
+$$
+
+\begin{tcolorbox}
+\textbf{Absolute Value Properties}
+\begin{enumerate}
+\item $|-a| = |a| \quad$ A number and its negative have the same absolute
+value.\newline
+\item $|ab| = |a||b| \quad$ The absolute value of a product is the product of
+the absolute values.\newline
+\item $\left|\frac{a}{b}\right| = \frac{|a|}{|b|} \quad$ The absolute value of a
+quotient is the quotient of the absolute values.\newline
+\item $|a + b| \le |a| + |b| \quad$ \textbf{The triangle inequality} The
+absolute value of the sum of two numbers is less than or equal to the sum of
+their
+absolute values.\newline
+\end{enumerate}
+\end{tcolorbox}
+
+## Example 3
+
+\begin{proof}
+$$
+\begin{aligned}
+|-3 + 5| &= |2| = 2 < |-3| + |5| = 8\\
+|3 + 5| &= |8| = |3| + |5|\\
+|-3 - 5| &= |-8| = 8 = |-3| + |-5|
+\end{aligned}
+$$
+\end{proof}
+
+## Example 4
+
+Solve the equation $|2x - 3| = 7$.
+
+\begin{proof}
+The equation says that $2x - 3 = \pm7$, so there are two possibilities:
+\begin{solution}
+$$
+\begin{aligned}
+2x - 3 &= 7 & 2x - 3 &= -7\\
+2x &= 10 & 2x &= -4\\
+x &= 5 & x &= -2
+\end{aligned}
+$$
+The solutions of $|2x - 3| = 7$ are $x = 5$ and $x = -2$.
+\end{solution}
+\end{proof}
+
+# Inequalities Involving Absolute Values
+
+\begin{tcolorbox}
+If $D$ is any positive number, then
+\begin{equation}
+\begin{aligned}
+|a| &< D \quad &\Leftrightarrow \quad -D < a < D\\
+\end{aligned}
+\end{equation}
+\begin{equation}
+\begin{aligned}
+|b| &\le D \quad &\Leftrightarrow \quad -D \le a \le D
+\end{aligned}
+\end{equation}
+\end{tcolorbox}
+
+## Example 5
+
+Solve the inequality $|x - 5| < 9$ and grpah the solution set on the real line.
+
+\begin{solution}
+$$
+\begin{aligned}
+|x - 5| &< 9\\
+-9 < x - 5 &< 9\\
+-9 + 5 < x &< 9 + 5\\
+-4 < x &< 14
+\end{aligned}
+$$
+The solution set is the open interval $(-4, 14)$.
+\intervalgraph{open}{open}{-4}{14}
+\end{solution}
+
+## Example 6
+
+Solve the inequality $\left|5 - \frac{2}{x}\right| < 1$.
+
+\begin{solution}
+We have
+$$
+\begin{aligned}
+\left|5 - \frac{2}{x} \right| < 1 &\Leftrightarrow -1 < 5 - \frac{2}{x} < 1\\
+\quad &\Leftrightarrow -6 < -\frac{2}{x} < -4\\
+\quad &\Leftrightarrow 3 > \frac{1}{x} > 2\\
+\quad &\Leftrightarrow \frac{1}{3} < x < \frac{1}{2}
+\end{aligned}
+$$
+Notice how the various rules for inequalities were used here. Multiplying by a
+negative number reverses the inequality. So does taking reciprocals in an
+inequality in which both sides are positive. The original inequality holds if
+and only if $(1/3) < x < (1/2)$. The solution set is the open interval $(1/3,
+1/2)$.
+\end{solution}
+
+## Example 7
+
+Solve the inequality and graph the solution set
+
+\begin{multicols}{2}
+\begin{enumerate}[label=\textbf{\alph*})]
+\item $|2x - 3| \le 1$
+\item $|2x - 3| \ge 1$
+\end{enumerate}
+\end{multicols}
+
+\begin{solution}
+\begin{enumerate}[label=\textbf{\alph*})]
+\item
+$$
+\begin{aligned}
+|2x - 3| &\le 1\\
+-1 \le 2x - 3 &\le 1\\
+2 \le 2x &\le 4\\
+1 \le x &\le 2
+\end{aligned}
+$$
+The solution set is the closed interval $[1,2]$
+\intervalgraph{closed}{closed}{1}{2}
+\item
+$$
+\begin{aligned}
+|2x - 3| \ge 1\\
+2x - 3 &\ge 1 \quad \text{or} \quad &-(2x - 3) &\ge 1\\
+2x - 3 &\ge 1 \quad \text{or} \quad &2x - 3 &\le -1\\
+x - \frac{3}{2} &\ge \frac{1}{2} \quad \text{or}
+    \quad &x - \frac{3}{2} &\le - \frac{1}{2}\\
+x &\ge 2 \quad \text{or} \quad &x &\le 1
+\end{aligned}
+$$
+\end{enumerate}
+The solution set is $(-\infty, 1]\cup[2, \infty)$
+\intervalgraph{inf}{closed}{}{1} \intervalgraph{closed}{inf}{2}{}
+\end{solution}
+
+# Exercises
+
+## Decimal Representations
+
+1. Express 1/9 as a repeating decimal, using a bar to indicate the repeating
+   digits. What are the decimal representations of 2/9? 3/9? 8/9?
+
+> \begin{answer}
+$$
+\begin{aligned}
+\overline{111}\\
+\overline{333}\\
+\overline{888}
+\end{aligned}
+$$
+\end{answer}
+
+2. Express 1/11 as a repeating decimal, using a bar to indicate the repeating
+   digits. What are the decimal representations of 2/11? 3/11? 9/11?
+
+> \begin{answer}
+$$
+\begin{aligned}
+\overline{0.090909}\\
+\overline{0.181818}\\
+\overline{0.272727}\\
+\overline{0.818181}
+\end{aligned}
+$$
+\end{answer}
+
+## Inequalities
+
+3. If $2 < x < 6$, which of the following statements about $x$ are necessarily
+   true, and which are not necessarily true?
+
+> \begin{tasks}(2)
+\task $0 < x < 4$
+\task $0 < x - 2 < 4$
+\task $1 < \frac{x}{2} < 3$
+\task $\frac{1}{6} < \frac{1}{x} < \frac{1}{2}$
+\task $1 < \frac{6}{x} < 3$
+\task $|x - 4| < 2$
+\task $-6 < -x < 2$
+\task $-6 < -x < -2$
+\end{tasks}
+
+> \begin{answer} Assume $2 < x < 6$
+\begin{enumerate}[label=\alph*)]
+\item Not necessarily true. Let $x = 5$; this satisfies $2 < x < 6$, but $5
+\ngtr 4$, so $0 < x < 4$ fails.
+\item True. Add 2 to all sides.
+\item True. Multiply all terms by 2.
+\item True. Its the inverse of the statement.
+\item True. Divide by 6 to get the inverse of the statement.
+\item True.
+    $|x - 4| < 2 \Rightarrow -2 < x - 4 < 2 \Rightarrow 2 < x < 6$.
+\item Necessarily True. $-6 < -x < 2 \Rightarrow -2 < x < 6$.
+\item True. $-6 < -x < -2 \Rightarrow 2 < x < 6$.
+\end{enumerate}
+\end{answer}
+
+4. If $-1 < y - 5 < 1$, which of the following statements about $y$ are
+   necessarily true, and which are not necessarily true?
+
+> \begin{tasks}(2)
+\task $4 < y < 6$
+\task $-6 < y < -4$
+\task $y > 4$
+\task $y < 6$
+\task $0 < y - 4 < 2$
+\task $2 < \frac{y}{2} < 3$
+\task $\frac{1}{6} < \frac{1}{y} < \frac{1}{4}$
+\task $|y - 5| < 1$
+\end{tasks}
+
+> \begin{answer} Assume $-1 < y - 5 < 1 \Rightarrow 4 < y < 6$
+\begin{enumerate}[label=\alph*)]
+\item True. This is the same interval.
+\item Not True. $y < -4 \Rightarrow y < 4$.
+\item Not Necessarily True. Let $y = 7$; this satisfies $y > 4$, but $7 > 6$,
+    so $y > 4$ fails.
+\item Not Necessarily True. Let $y = 3$; this satisfies $y < 6$, but $4 > 3$,
+    so $y < 6$ fails.
+\item True. $0 < y - 4 < 2 \Rightarrow 4 < y < 6$.
+\item True. $2 < \frac{y}{2} < 3 \Rightarrow 4 < y < 6$.
+\item True. Its the inverse of the statement.
+\item True. $|y - 5| < 1 \Rightarrow -1 < y - 5 < 1 \Rightarrow 4 < y < 6$.
+\end{enumerate}
+\end{answer}
