@@ -1,0 +1,780 @@
+---
+title: 1.3 Target Values and Formal Definition of Limits
+output:
+  pdf_document:
+    toc: true
+    includes:
+      in_header: "../preamble.tex"
+---
+
+```{r setup, message=F, echo=F}
+library(ggplot2)
+library(patchwork)
+library(latex2exp)
+
+plot_interval <- function(a, b, x0, label_a = "a", type = "open",
+                          label_b = "b", label_x0 = TeX("$x_0$")) {
+
+    stopifnot(a < x0, x0 < b)
+
+    pch_a <- pch_b <- switch(type,
+        "open"        = 1,
+        "closed"      = 19,
+        "open-closed" = c(1, 19),
+        "closed-open" = c(19, 1)
+    )
+
+    # for the mixed cases, split into two values
+    if (type == "open-closed") { pch_a <- 1;  pch_b <- 19 }
+    if (type == "closed-open") { pch_a <- 19; pch_b <- 1  }
+
+    plot(NULL, xlim = c(a - 0.5, b + 0.5), ylim = c(-0.5, 0.5),
+        xlab = "", ylab = "", axes = FALSE)
+
+    # interval line
+    segments(a, 0, b, 0, lwd = 2)
+
+    # open circles at endpoints
+    points(a, 0, pch = pch_a, cex = 2)
+    points(b, 0, pch = pch_b, cex = 2)
+
+    # filled point at x0
+    points(x0, 0, pch = 19, cex = 2, col = "red")
+
+    # labels
+    text(a,  -0.2, label_a,  cex=1.2)
+    text(b,  -0.2, label_b,  cex=1.2)
+    text(x0, -0.2, label_x0, cex=1.2, col = "red")
+}
+
+epsilon_delta_plot <- function(f, x0, L, epsilon, a, b, f_label, title, zoom=2) {
+    delta_left <- abs(x0 - a)
+    delta_right <- abs(b - x0)
+    delta <- min(delta_left, delta_right)
+    xlim <- c(a-delta_left*zoom, b+delta_right*zoom)
+    ylim <- c(L-epsilon-epsilon*zoom,L+epsilon+epsilon*zoom)
+
+    x_range <- c(x0 - 3 * delta, x0 + 3 * delta)
+    x <- seq(x_range[1], x_range[2], length.out = 500)
+    y <- f(x)
+    df <- data.frame(x = x, y = y)
+
+    ggplot(df, aes(x, y)) +
+      # epsilon band
+      annotate("rect",
+        xmin = -Inf, xmax = Inf,
+        ymin = L - epsilon, ymax = L + epsilon,
+        fill = "blue", alpha = 0.1
+      ) +
+      # delta band
+      annotate("rect",
+        xmin = x0 - delta, xmax = x0 + delta,
+        ymin = -Inf, ymax = Inf,
+        fill = "red", alpha = 0.1
+      ) +
+      geom_line(linewidth = 1) +
+      # epsilon lines
+      geom_hline(yintercept = L + epsilon, linetype = "dashed", color = "blue") +
+      geom_hline(yintercept = L - epsilon, linetype = "dashed", color = "blue") +
+      geom_hline(yintercept = L, linetype = "dotted", color = "blue") +
+      # delta lines
+      geom_vline(xintercept = x0 + delta, linetype = "dashed", color = "red") +
+      geom_vline(xintercept = x0 - delta, linetype = "dashed", color = "red") +
+      geom_vline(xintercept = x0, linetype = "dotted", color = "red") +
+      # labels
+      annotate("text", x = x_range[1], y = L + epsilon,
+               label = paste("L + e =", L + epsilon), vjust = -1, hjust = 0, color = "blue") +
+      annotate("text", x = x_range[1], y = L - epsilon,
+               label = paste("L - e =", L - epsilon), vjust =  1, hjust = 0, color = "blue") +
+      annotate("text", x = x0 + delta, y = min(y),
+               label = paste("x0 + d =", x0 + delta), hjust = 1, color = "red") +
+      annotate("text", x = x0 - delta, y = min(y),
+               label = paste("x0 - d =", x0 - delta), hjust = 1, color = "red") +
+      labs(title = title,
+           subtitle = paste("e =", epsilon, "  d =", round(delta, 2)),
+           x = "x", y = f_label) +
+      theme_minimal() +
+      coord_cartesian(xlim = xlim, ylim = ylim)
+}
+
+```
+
+# Centering Intervals About a Point
+
+In Exercises 1-6, sketch the interval (a,b) on the x-axis with the point $x_0$
+inside. Then find a value of $\delta > 0$ such that for all $x$, $0 < |x - x_0|
+< \delta \Rightarrow a < x < b$.
+
+1. a = 1, b = 7, $x_0 = 5$
+
+> $\delta = \min {(|1 - 5|, |7 - 5|)} = \min {(4, 2)} = 2$.
+
+```{r problem 1, out.width="35%", echo=F}
+plot_interval(a=1, b=7, x0=5)
+```
+
+---
+
+2. a = 1, b = 7, $x_0 = 2$
+
+> $\delta = \min {(|1 - 2|, |7 - 2|)} = \min {(1, 5)} = 5$.
+
+```{r problem 2, out.width="35%", echo=F}
+plot_interval(a=1, b=7, x0=2)
+```
+
+---
+
+3. a = -7/2, b = -1/2, $x_0 = -3$
+
+> $\delta = \min {(|-7/2 - -3|, |-1/2 - -3|)} = \min {(1/2, 5/2)} = 1/2$.
+
+```{r problem 3, out.width="35%", echo=F}
+plot_interval(a=-7/2, b=-1/2, x0=-3)
+```
+
+---
+
+4. a = -7/2, b = -1/2, $x_0 = -3/2$
+
+> $\delta = \min {(|-7/2 - -3/2|, |-1/2 - -3/2|)} = \min {(4/2, 1)} = 1$
+
+```{r problem 4, out.width="35%", echo=F}
+plot_interval(a=-7/2, b=-1/2, x0=-3/2)
+```
+
+---
+
+5. a = 4/9, b = 4/7, $x_0 = 1/2$
+
+> $\delta = \min {(|4/9 - 1/2|, |4/7 - 1/2|)} = \min {(1/18, 1/14)} = 1/18$.
+
+```{r problem 5, out.width="8%", echo=F}
+plot_interval(a=4/9, b=4/7, x0=1/2)
+```
+
+---
+
+6. a = 2.7591, b = 3.2391, $x_0 = 3$
+
+> $\delta = \min {(|2.7591 - 3|, |3.2391 - 3|)} = \min {(0.2409, 0.2391)} =
+  .2391$.
+
+```{r problem 6, out.width="15%", echo=F}
+plot_interval(a=2.7591, b=3.2391, x0=3)
+```
+
+# Finding Deltas Graphically
+
+In Exercises 7 - 14, use the graphs to find a $\delta > 0$ such that for all $x$
+$$ 0 < |x - x_0| < \delta \Rightarrow |f(x) - L| < \epsilon $$
+
+7.
+
+```{r problem 7, echo=F}
+epsilon_delta_plot(function(x) 2 * x - 4, x0 = 5, L = 6,
+                   epsilon = .2, a = 4.9, b = 5.1, f_label = "f(x)", title = "")
+```
+
+$$
+\begin{aligned}
+f(x)     &= 2x - 4 \\
+x_0      &= 5 \\
+L        &= 6 \\
+\epsilon &= 0.2
+\end{aligned}
+$$
+
+8.
+
+```{r problem 8, echo=F}
+epsilon_delta_plot(
+    function(x) -(3/2) * x + 3, x0 = -3, L = 7.5,
+    epsilon = .15, a = -3.1, b = -2.9, f_label="f(x)", title="")
+```
+
+$$
+\begin{aligned}
+f(x) &= -\frac{3}{2}x + 3 \\
+x_0  &= -3 \\
+L    &= 7.5 \\
+\epsilon &= 0.15
+\end{aligned}
+$$
+
+9.
+
+```{r problem 9, echo=F}
+epsilon_delta_plot(
+    function(x) sqrt(x), x0 = 1, L = 1, epsilon = 1/4, a = 9/16, b = 25/16,
+    f_label="f(x)", title="")
+```
+
+$$
+\begin{aligned}
+f(x) &= \sqrt{x} \\
+x_0  &= 1 \\
+L    &= 1 \\
+\epsilon &= \frac{1}{4}
+\end{aligned}
+$$
+
+10.
+
+```{r problem 10, echo=F}
+epsilon_delta_plot(
+    function(x) 2 * sqrt(x + 1), x0 = 3, L = 4, epsilon = .2,
+    a = 2.61, b = 3.41, f_label="f(x)", title="")
+```
+
+$$
+\begin{aligned}
+f(x) &= 2 \sqrt{x + 1} \\
+x_0  &= 3 \\
+L    &= 4 \\
+\epsilon &= 0.2
+\end{aligned}
+$$
+
+# Finding Deltas Algebraically
+
+Each of Exercises 15-30 gives a function $f(x)$ and numbers $L$, $x_0$, and
+$epsilon > 0$. In each case, find an open interval about $x_0$ on which the
+inequality $|f(x) - L| < \epsilon$ holds. Then give a value for $\delta > 0$
+such that for all $x$ satisfying $0 < |x - x_0| < \delta$ the inequality $|f(x)
+- L| < \epsilon$ holds.
+
+15. $f(x) = x + 1, L = 5, x_0 = 4, \epsilon = 0.01$
+
+$$
+\begin{aligned}
+|f(x) - L| &< \epsilon \\
+|x + 1 - 5| &< 0.01 \\
+-0.01 < x - 4 &< 0.01 \\
+`r 4 - 0.01` < x &< `r 4 + 0.01`
+\end{aligned}
+$$
+
+> The inequality holds for the open interval $(`r 4 - 0.01`, `r 4 + 0.01`)$.
+
+> For all $x$ satisfying $0 < |x - x_0| < \delta$, we choose $\delta = \epsilon
+  = 0.01$.
+
+---
+
+16. $f(x) = 2x - 2, L = -6, x_0 = -2, \epsilon = 0.02$
+
+$$
+\begin{aligned}
+|2x - 2| &< 0.02 \\
+2|x - 1| &< 0.02 \\
+0.01 < x - 1 &< 0.01 \\
+`r 1 - 0.01` < x &< `r 1 + 0.01`
+\end{aligned}
+$$
+
+> The inequality holds for the open interval $(`r 1 - 0.01`, `r 1 + 0.01`)$.
+
+> For all $x$ satisfying $0 < |x - x_0| < \delta$, we choose $\delta =
+  \frac{\epsilon}{2} = 0.01$.
+
+---
+
+17. $f(x) = \sqrt{x + 1}, L = 1, x_0 = 0, \epsilon = 0.1$
+
+$$
+\begin{aligned}
+|\sqrt{x + 1} - 1| < 0.1 \\
+-0.1 < \sqrt{x + 1} - 1 < 0.1 \\
+`r 1 - 0.1` < \sqrt{x + 1} < `r 1 + 0.1` \\
+`r round((1 - .1)^2, 2)` < x + 1 < `r round((1 + .1)^2, 2)` \\
+`r round((1 - .1)^2 - 1, 2)` < x < `r round((1 + .1)^2 - 1, 2)`
+\end{aligned}
+$$
+
+> The inequality holds for the open interval
+  $(`r abs(round((1 - .1)^2 - 1, 2))`, `r abs(round((1 + .1)^2 - 1, 2))`)$.
+
+> For all $x$ satisfying $0 < |x - 0| = |x| < \delta$, we choose $\delta = \min
+  {(|0 - `r abs(round((1 - .1)^2 - 1, 2))`|, |`r abs(round((1 + .1)^2 - 1, 2))` - 0|)} =
+  `r min(abs(0 - round((1 - .1)^2 - 1, 2)), abs(round((1 + .1)^2, 2) - 0))`$.
+
+---
+
+18. $f(x) = \sqrt{x}, L = 1/2, x_0 = 1/4, \epsilon = 0.1$
+
+$$
+\begin{aligned}
+|\sqrt{x} - 1/2| < 0.1 \\
+-0.1 < \sqrt{x} - 1/2< 0.1 \\
+.4 < \sqrt{x} < .6 \\
+.16 < x < .36
+\end{aligned}
+$$
+
+> The inequality holds for the open interval $(.16, .36)$.
+
+The distance from $x_0 = 1/4 = .25$ to each endpoint:
+$(.25 - .16, .36 - .25) = (.09, .11)$. $\delta = \min {(.09, .11)} = .09$.
+
+# More on Formal Limits
+
+Prove the limit statements in Exercises 37-50.
+
+<!-- Exercise 37 -->
+
+37. $\lim_{x \rightarrow 4} (9 - x) = 5$
+
+> We need to show that for every $\epsilon > 0$, there exists $\delta > 0$ such
+that: $$0 < |x - 4| < \delta \Rightarrow |(9 - x) - 5| < \epsilon.$$
+
+> #### Scratch work
+  First simplify the expression: $$|(9 - x) - 5| = |4 - x| = |x - 4|.$$
+
+> So we need $|x - 4| < \epsilon$, which means we can simply choose $\delta =
+\epsilon$.\newline
+
+> \begin{proof}
+Given $\epsilon > 0$, choose $\delta = \epsilon$. Then for all $x$ satisfying $0
+< |x - 4| < \delta$ $$|(9 - x) - 5| = |4 - x| = |x - 4| < \delta = \epsilon.$$
+Therefore $$\lim_{x \rightarrow 4} (9 - x) = 5.$$
+\end{proof}
+
+```{r exercise 37, echo=F}
+epsilon <- 0.3
+epsilon_delta_plot(
+    f = function(x) 9 - x,
+    x0 = 4, L = 5,
+    epsilon = epsilon,
+    a = 4 - epsilon, b = 4 + epsilon,
+    f_label = "9 - x",
+    title = TeX("$\\lim_{x \\rightarrow 4} (9 - x) = 5$")
+)
+```
+
+<!-- Exercise 38 -->
+
+38. $\lim_{x \rightarrow 3} (3x - 7) = 2$.
+
+> We need to show that for every $\epsilon > 0$, there exists a $\delta > 0$
+  such that: $$0 < |x - 3| < \delta \Rightarrow |(3x - 7) - 2| < \epsilon.$$
+
+> #### Scratch work
+$$|(3x - 7) - 2| = |3x - 9| = 3|x - 3|.$$
+
+> Choose $\delta = \epsilon/3$.\newline
+
+> \begin{proof}
+Given $\epsilon > 0$, choose $\delta = \epsilon/3$. Then for all $x$ satisfying
+$0 < |x - 3| < \delta$ $$|(3x - 7) - 2| = |3x - 9| = 3|x - 3| < 3\delta =
+3(\epsilon/3) = \epsilon.$$ Therefore $$\lim_{x \rightarrow 3} (3x - 7) = 2$$.
+\end{proof}
+
+```{r exercise 38, echo=F}
+epsilon <- 0.3
+epsilon_delta_plot(
+    f = function(x) 3 * x - 7,
+    x0 = 3, L = 2,
+    epsilon = epsilon, a = 3 - epsilon / 3, b = 3 + epsilon / 3,
+    f_label = "3x - 7",
+    title = TeX("$\\lim_{x \\rightarrow 3} 3x - 7 = 2$")
+)
+```
+
+<!-- Exercise 39 -->
+
+39. $\lim_{x \rightarrow 9} \sqrt{x - 5} = 2$
+
+> We need to show that for every $\epsilon > 0$, there exists a $\delta > 0$
+  such that: $$0 < |x - 9| < \delta \Rightarrow |\sqrt{x - 5} - 2| < \epsilon.$$
+
+> #### Scratch work
+Simplify the right side by rationalizing:
+
+> $$
+\begin{aligned}
+|\sqrt{x - 5} - 2| =
+  |\sqrt{x - 5} - 2| \cdot \frac{|\sqrt{x - 5} + 2|}{|\sqrt{x - 5} + 2|} =
+  \frac{|x - 9|}{|\sqrt{x - 5} + 2}
+\end{aligned}
+$$
+
+> Since $|\sqrt{x - 5} + 2| \ge 2$ for all $x \ge 5$, we have:
+
+$$
+\frac{|x - 9|}{|\sqrt{x - 5} + 2} \le \frac{|x - 9|}{2}
+$$
+
+> So we need $\frac{|x - 9|}{2} < \epsilon$, i.e. $|x - 9| < 2\epsilon$. Choose
+  $\delta = 2\epsilon$.\newline
+
+> \begin{proof}
+Given $\epsilon > 0$, choose $\delta = 2\epsilon$. Then for all $x$ satisfying
+$0 < |x - 9| < \delta$ $$|\sqrt{x - 5} - 2| = \frac{|x - 9|}{|\sqrt{x - 5} + 2|}
+\le \frac{|x - 9|}{2} < \frac{\delta}{2} = \frac{2\epsilon}{2} = \epsilon.$$
+Therefore $$\lim_{x \rightarrow 9} \sqrt{x - 5} = 2.$$
+\end{proof}
+
+```{r exercise 39, echo=F}
+epsilon <- 0.3
+epsilon_delta_plot(
+    f = function(x) sqrt(x - 5),
+    x0 = 9, L = 2,
+    epsilon = epsilon, a = 9 - 2 * epsilon, b = 9 + 2 * epsilon,
+    f_label = TeX("$\\sqrt{x - 5}$"),
+    title = TeX("$\\lim_{x \\rightarrow 9} \\sqrt{x - 5} = 2$")
+)
+```
+
+<!-- Exercise 40 -->
+
+40. $\lim_{x \rightarrow 0} \sqrt{4 - x} = 2$
+
+> We need to show that for every $\epsilon > 0$, there exists a $\delta > 0$
+  such that: $$0 < |x - 0| = |x| < \delta \Rightarrow |\sqrt{4 - x} - 2| <
+  \epsilon.$$
+
+> #### Scratch work
+  Simplyfying the right side by rationalizing:
+
+> $$
+\begin{aligned}
+  |\sqrt{4 - x} - 2| \cdot \frac{|\sqrt{4 - x} + 2|}{|\sqrt{4 - x} + 2|} =
+  \frac{|x|}{|\sqrt{4 - x} + 2|}
+\end{aligned}
+$$
+
+> Since $|\sqrt{4 - x} + 2| \ge 2$ for all $x \le 4$, we have:
+
+$$
+\frac{|x|}{|\sqrt{4 - x} + 2|} \le \frac{|x|}{2}
+$$
+
+> So we need $\frac{|x|}{2} < \epsilon$, i.e. $|x| < 2\epsilon$. Choose $\delta
+  = 2\epsilon$.\newline
+
+> \begin{proof}
+Given $\epsilon > 0$, choose $\delta = 2\epsilon$. Then for all $x$ satisfying
+$0 < |x| < \delta$ $$ |\sqrt{4 - x} - 2| = \frac{|x|}{|\sqrt{4 - x} + 2|} \le
+\frac{|x|}{2} < \frac{\delta}{2} = \frac{2\epsilon}{2} = \epsilon.$$ Therefore
+$$\lim_{x \rightarrow 0} \sqrt{4 - x} = 2.$$
+\end{proof}
+
+```{r exercise 40, echo=F}
+epsilon <- 0.3
+epsilon_delta_plot(
+    f = function(x) sqrt(4 - x),
+    x0 = 0, L = 2,
+    epsilon = epsilon, a = 0 - 2 * epsilon, b = 0 + 2 * epsilon,
+    f_label = TeX("$\\sqrt{4 - x}$"),
+    title = TeX("$\\lim_{x \\rightarrow 0} \\sqrt{4 - x} = 2$")
+)
+```
+
+<!-- Exercise 41 -->
+
+41. $\lim_{x \rightarrow 1} f(x) = 1$ if $f(x) = \begin{cases} x^2, & x \ne 1 \\
+    2, & x = 1\end{cases}$
+
+> We need to show that given $\epsilon > 0$ there exists a $\delta > 0$ such
+  that for all $x$ $$0 < |x - 1| < \delta \Rightarrow |f(x) - 1| < \epsilon.$$
+
+> #### Scratch work
+Solve the inequality
+
+> $$
+\begin{aligned}
+|x^2 - 1| < \epsilon &\\
+- \epsilon < x^2 - 1 < \epsilon &\\
+1 - \epsilon < x^2 < 1 + \epsilon &\\
+\sqrt{1 - \epsilon} < |x| < \sqrt{1 + \epsilon}
+  & \quad \quad \text{assume }\epsilon < 1 \\
+\sqrt{1 - \epsilon} < x < \sqrt{1 + \epsilon}.
+\end{aligned}
+$$
+
+> The inequality $|f(x) - 1| < \epsilon$ holds for all $x \ne 1$ in the open
+interval $(\sqrt{1 - \epsilon}, \sqrt{1 + \epsilon})$.
+
+> We choose $\delta = \min {1 - \sqrt{1 - \epsilon}, \sqrt{1 + \epsilon} -
+  1}$.\newline
+
+> \begin{proof}
+Given $\epsilon > 0$, assume WLOG $\epsilon < 1$ (if $\epsilon \le 1$ any
+$\delta \le 1$ works). Choose: $$\delta = \min{1 - \sqrt{1 - \epsilon}, \sqrt{1
++ \epsilon} - 1}.$$ Then for all $x$ satisfying $0 < |x - 1| < \delta$, we have
+ $x \ne 1$ so $f(x) = x^2$. Then:
+$$
+\begin{aligned}
+|x - 1| < \delta \le - \sqrt{1 - \epsilon} \Rightarrow x > \sqrt{1 - \epsilon}
+\Rightarrow x^2 > 1 - \epsilon \\\\
+|x - 1| < \delta \le \sqrt{1 + \epsilon} + 1 \Rightarrow x < \sqrt{1 + \epsilon}
+\Rightarrow x^2 < 1 + \epsilon
+\end{aligned}
+$$
+Combining: $$1 - \epsilon < x^2 < 1 + \epsilon \Rightarrow |x^2 - 1| <
+\epsilon$$
+Therefore: $$|f(x) - 1| = |x^2 - 1| < \epsilon$$
+Hence $\lim_{x \rightarrow 1} f(x) = 1$.
+\end{proof}
+
+```{r exercise 41, echo=F}
+epsilon <- 0.3
+epsilon_delta_plot(
+    f = function(x) x^2,
+    x0 = 1, L = 1,
+    epsilon = epsilon,
+    a = 1 - round(1 - sqrt(1 - epsilon), 2), b = 1 + round(1 - sqrt(1 - epsilon), 2),
+    f_label = "f(x)",
+    title = TeX("$\\lim_{x \\rightarrow 1} f(x) = 1$ if $f(x) = x^2 (x \\ne 1)$ or $2 (x = 1)$")
+)
+```
+
+<!-- Exercise 42 -->
+
+42. $\lim_{x \rightarrow -2} f(x) = 4 \quad \text{if} \quad f(x) = \begin{cases} x^2, & x \ne -2
+    \\ 1, & x = -2\end{cases}$
+
+> We need to show that given $\epsilon > 0$ there exists a $\delta > 0$ such
+  that for all $x$ $$0 < |x + 2| < \delta \Rightarrow |f(x) - 4| < \epsilon.$$
+
+> #### Scratch work
+Solve the inequality
+
+> $$
+\begin{aligned}
+|x^2 - 4| < \epsilon &\\
+-\epsilon < x^2 - 4 < \epsilon &\\
+4 - \epsilon < x^2 < 4 + \epsilon &\\
+\sqrt{4 - \epsilon} < x < \sqrt{4 + \epsilon}
+    & \quad \text{we want } x \rightarrow -2 \\
+- \sqrt{4 + \epsilon} < x < - \sqrt{4 - \epsilon} &\\
+\end{aligned}
+$$
+
+> The inequality $|f(x) - 4| < \epsilon$ holds for all $x \ne -2$ in the open
+  interval $(-\sqrt{4 - \epsilon}, -\sqrt{4 + \epsilon})$.
+
+> We choose
+
+> $$
+\begin{aligned}
+\delta &= \min {(-2 - (-\sqrt{4 - \epsilon}), -\sqrt{4 - \epsilon} - (-2))} \\
+       &= \min {(\sqrt{4 - \epsilon} - 2, 2 - \sqrt{4 - \epsilon})}
+\end{aligned}
+$$\newline
+
+>\begin{proof}
+Given $\epsilon > 0$, assume WLOG $\epsilon < 4$ (if $\epsilon \le$ 4 any $\delta
+\le 4$ works). Choose $$\delta = \min {(-2 - \sqrt{4 + \epsilon}, -2 + \sqrt{4 -
+\epsilon})}.$$ Then for all $x$ satisfying $0 < |x + 2| < \delta$, we have $x
+\ne -2$ so $f(x) = x^2$. Then:
+$$
+\begin{aligned}
+|x + 2| < \delta \le - \sqrt{4 - \epsilon} \Rightarrow x > \sqrt{4 - \epsilon}
+\Rightarrow x^2 > 4 - \epsilon\\\\
+|x + 2| < \delta \le \sqrt{4 + \epsilon} + 4 \Rightarrow x < \sqrt{4 + \epsilon}
+\Rightarrow x^2 < 4 + \epsilon
+\end{aligned}
+$$
+Combining: $$4 - \epsilon < x^2 < 4 + \epsilon \Rightarrow |x^2 - 4| <
+\epsilon$$
+Therefore: $$|f(x) - 4| = |x^2 - 4| < \epsilon$$
+Hence $\lim_{x \rightarrow -2} f(x) = 4$.
+\end{proof}
+
+```{r exercise 42, echo=F}
+epsilon <- 0.3
+epsilon_delta_plot(
+    f = function(x) x^2,
+    x0 = -2, L = 4,
+    epsilon = epsilon,
+    a = -2 - round(sqrt(4 + epsilon) - 2, 2), b = -2 + round(sqrt(4 + epsilon) - 2, 2),
+    f_label = "f(x)",
+    title = TeX("$\\lim_{x \\rightarrow -2} f(x) = 1$ if $f(x) = x^2 (x \\ne 1)$ or $2 (x = 1)$")
+)
+```
+
+<!-- Exercise 43 -->
+
+43. $\lim_{x \rightarrow 1} \frac{1}{x} = 1$
+
+>  We need to show that given $epsilon > 0$ there exists a $\delta > 0$ such
+   that for all $x$ $$0 < |x - 1| < \delta \Rightarrow \left|\frac{1}{x} -
+   1\right| < \epsilon$$
+
+> #### Scratch work
+Simplify the left side:
+
+$$
+\left|\frac{1}{x} - 1 \right| = \left|\frac{1 - x}{x}\right|
+  = \frac{|x - 1|}{|x|}
+$$
+
+> We need to bound $\frac{1}{|x|}$ from above. Assume $\delta \le 1/2$, so that
+  $|x - 1| < 1/2$, which gives:
+
+$$
+\frac{1}{2} < x < \frac{3}{2} \Rightarrow |x| > \frac{1}{2} \Rightarrow
+  \frac{1}{|x|} < 2
+$$
+
+Therefore: $$\frac{|x - 1|}{|x|} < 2|x - 1|$$
+
+So we need $2|x - 1| < \epsilon$, i.e. $|x-1| < \epsilon/2$. Choose:
+$$\delta = \min{\left(\frac{1}{2}, \frac{\epsilon}{2}\right)}$$
+
+\begin{proof}
+Given $\epsilon > 0$, choose $\delta = \min{\left(\frac{1}{2},
+\frac{\epsilon}{2}\right)}.$ Then for all $x$ satisfying $0 < |x - 1| < \delta$:
+Since $\delta \le 1/2$ we have $|x - 1| < 1/2$, so $x > 1/2$ and thus
+$\frac{1}{|x|} < 2$. Therefore:
+$$\left|\frac{1}{x} - 1\right| = \frac{|x - 1|}{|x|} < 2|x-1| < 2\delta
+  \le 2 \cdot \frac{\epsilon}{2} = \epsilon$$ Hence $\lim_{x \rightarrow
+  1}{\frac{1}{x}} = 1.$
+\end{proof}
+
+```{r problem 43, echo=F}
+epsilon <- 0.3
+epsilon_delta_plot(
+    f = function(x) 1/x,
+    x0 = 1, L = 1,
+    epsilon = epsilon, a = .5, b = epsilon/2,
+    f_label = "f(x)",
+    title = TeX("$\\lim_{x \\rightarrow 1} \\frac{1}{x} = 1$"),
+    zoom = 5
+)
+```
+
+44. $\lim_{x -> \sqrt{3}}{\frac{1}{x^2}} = 1$
+
+> We need to show that for every $\epsilon > 0$, there exists $\delta > 0$ such
+  that:
+
+> $$0 < |x - \sqrt{3}| < \delta \Rightarrow \left|\frac{1}{x^2} -
+  \frac{1}{3}\right| < \epsilon$$
+
+> #### Scratch work
+Simplify the left side
+
+> $$\left|\frac{1}{x^2} - \frac{1}{3}\right| = \left|\frac{3 - x^2}{3x^2}\right|
+    = \frac{|3 - x^2|}{3x^2} = \frac{|x - \sqrt{3}||x + \sqrt{3}|}{3x^2}$$
+
+> We need to bound $\frac{|x + \sqrt{3}|}{3x^2}$ from above. Assume $\delta \le
+  1$, so $|x - \sqrt{3}| < 1$, which gives: $$\sqrt{3} - 1 < x < \sqrt{3} + 1$$
+
+> From this we get upper and lower bounds:
+
+> * $|x + \sqrt{3}| < 2 \sqrt{3} + 1$
+> * $x > \sqrt{3} - 1 \Rightarrow x^2 > (\sqrt{3} - 1)^2 = 4 - 2 \sqrt{3}
+     \Rightarrow \frac{1}{x^2} < \frac{1}{4 - 2\sqrt{3}}$
+
+> Therefore: $$\frac{|x - \sqrt{3}||x + \sqrt{3}|}{3x^2} < 
+               \frac{(2\sqrt{3} + 1)}{3(4 - 2\sqrt{3})}|x - \sqrt{3}|$$
+
+> Let $M = \frac{2\sqrt{3} + 1}{3(4 - 2\sqrt{3})}$. So we need $M|x - \sqrt{3}|
+  < \epsilon$, i.e. $|x - \sqrt{3}| < \epsilon/M$. Choose:
+  $$\delta = \min{\left(1, \frac{\epsilon}{M}\right)}$$
+
+> \begin{proof}
+Given $\epsilon > 0$, choose $\delta = \min{\left(1, \frac{\epsilon}{M}\right)}$
+where $M = \frac{2\sqrt{3} + 1}{3(4 - 2\sqrt{3})}$. Then for all $x$ satisfying
+$0 < |x - \sqrt{3}| < \delta$:  
+Since $\delta \le 1$ we have $\sqrt{3} - 1 < x < \sqrt{3} + 1$, so $|x +
+\sqrt{3}| < 2\sqrt{3} + 1$ and $x^2 > 4 - 2\sqrt{3}$. Therefore:
+$$\left|\frac{1}{x^2}-\frac{1}{3}\right| = \frac{|x - \sqrt{3}||x +
+\sqrt{3}|}{3x^2} < \frac{(2\sqrt{3} + 1)}{3(4 - 2\sqrt{3})}|x - \sqrt{3}| <
+M\delta \le M \cdot \frac{\epsilon}{M} = \epsilon$$
+Hence $\lim_{x \rightarrow \sqrt{3}}{\frac{1}{x^2}} = \frac{1}{3}$.
+\end{proof}
+
+---
+
+45. $\lim_{x \rightarrow -3} \frac{x^2 - 9}{x + 3} = -6$
+
+> We need to show that for every $\epsilon > 0$, there exists $\delta > 0$ such
+  that:
+  $$0 < |x - (-3)| < \delta \Longrightarrow\left|\frac{x^2 - 9}{x + 3} -
+     (-6)\right| < \epsilon$$
+
+> #### Scratch work
+  Simplify the expression:
+  $$\left|\frac{x^2 - 9}{x + 3} + 6\right| = \left|\frac{x^2 + 6x + 9}{x +
+  3}\right| = \left|\frac{(x + 3)^2}{x+3}\right| = |x + 3|$$
+
+> We need $|x + 3| < \epsilon$. We can choose $\delta = \epsilon$.\newline
+
+> \begin{proof}
+Given $\epsilon > 0$, choose $\delta = \epsilon$. Then for all $x$ satisfying $0
+< |x + 3| < \delta$ $$\left|\frac{x^2 - 9}{x+3} + 6\right| = \left|\frac{x^2 +
+6x + 9}{x + 3}\right| = |x + 3| < \delta = \epsilon.$$ Therefore $$\lim_{x
+\rightarrow -3}\frac{x^2 - 9}{x + 3} = -6.$$
+\end{proof}
+
+---
+
+46. $\lim_{x \rightarrow 1} \frac{x^2 - 1}{x - 1} = 2$
+
+> We need to show that for every $\epsilon > 0$, there exists $\delta > 0$ such
+  that:
+  $$0 < |x - 1| < \delta \Longrightarrow \left|\frac{x^2 - 1}{x - 1} - 2\right|
+  < \epsilon$$
+
+> #### Scratch work
+  Simplify $$\left|\frac{x^2 - 1}{x - 1} - 2\right| = \left|\frac{(x + 1)(x -
+  1)}{x - 1} - 2\right| = |x - 1|$$
+
+> We need $|x - 1| < \epsilon$. We can choose $\delta = \epsilon$.\newline
+
+> \begin{proof}
+Give $\epsilon > 0$, choose $\delta = \epsilon$. Then for all $x$ satisfying $0
+< |x - 1| < \delta$ $$\left|\frac{x^2 - 1}{x - 1} - 2\right| = \left|\frac{(x -
+1)(x + 1)}{x - 1} - 2\right| = |x + 1 - 2| = |x - 1| < \delta = \epsilon.$$
+Therefore $$\lim_{x \rightarrow 1} \frac{x^2 - 1}{x - 1} = 2$$.
+\end{proof}
+
+# Theory and Examples
+
+51. Define what it means to say that $\lim_{x \rightarrow 2} f(x) = 5$.
+
+> For every $\epsilon > 0$, there exists a $\delta > 0$ such that for all $x$:
+  $$0 < |x - 2| < \delta \Longrightarrow |f(x) - 5| < \epsilon$$
+
+> In plain language: we can make $f(x)$ as close to $5$ as we like by taking $x$
+  sufficiently close to $2$ (but not equal to $2$).
+
+---
+
+52. Define what it means to say that $\lim_{x \rightarrow 0} g(x) = k$.
+
+> For every $\epsilon > 0$, there exists a $\delta > 0$ such that for all $x$:
+  $$0 < |x| < \delta \Longrightarrow |g(x) - k| < \epsilon$$
+
+> In plain language: we can make $g(x)$ as close to $k$ as we like by taking $x$
+  sufficiently close to zero (but not equal to zero).
+
+---
+
+53. A wrong statement about limits. Show by example that the following statement
+    is wrong.
+
+>> The number $L$ is the limit of $f(x)$ as $x$ approaches $x_0$ if $f(x)$ gets
+   closer to $L$ as $x$ approaches $x_0$.
+
+> Explain why the function in your example does not have the given value of $L$
+  as a limit as $x \rightarrow x_0$.
+
+>> Take $f(x) = x$ with $x_0 = 0$ and $L = -1$. As $x \rightarrow 0, f(x) = x$
+   gets __closer to $-1$__: $$|f(0.1) - (-1)| = 1.1, |f(0.01) - (-1)| = 1.01,
+   |f(0.001) - (-1)| = 1.001$$. The values are indeed getting closer to $-1$ as
+   $x \rightarrow 0$. But clearly $\lim_{x \rightarrow 0} x = 0 \ne 1$.
+
+>> ### Why the statement is wrong
+
+>> The statement only requires $f(x)$ to get __closer__ to $L$, meaning $|f(x) -
+   L|$ decreases as $x \rightarrow x_0$. But "closer" does not mean "close
+   enough." The formal definition requires that we can make $|f(x) - L|$
+   __arbitrarily small__--less than any $\epsilon > 0$--by taking $x$
+   sufficiently close to $x_0$. In the example, $|f(x) - (-1)|$ decreases as $x
+   \rightarrow 0$ but never gets below 1, so for $\epsilon = 0.5$ no $\delta$
+   can satisfy the formal definition with $L = -1$.
