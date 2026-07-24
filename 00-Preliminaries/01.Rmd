@@ -8,9 +8,117 @@ output:
       in_header: "../preamble.tex"
 ---
 
+---
+
+# Error patterns to focus on
+
+## Confusing "necessarily true" with "identical," and testing coutnerexamples from the wrong set.
+
+(Task 7, Problem 4 parts c/d)
+
+You initially checked whether two intervals were _equal_ rather than whether the
+given interval was a _subset_ of the candidate's interval. Related to this, when
+looking for counterexamples, you sometimes picked test values _outside_ the
+given interval, which can never disprove necessity.
+
+_Fix_: Before testing, fix the rule: a counterexample must always come from
+__within the given condition__. Ask "is every element of the given set also in
+the candidate set?"--never check for exact equality, and never test a point
+outside the assumption.
+
+## Bracket/strictness mismatches between the inequality and the interval notation
+
+(#6, #36, #47 twice)
+
+Non-strict inequalities ($\le$, $\ge$) need closed brackets; strict ones ($<$,
+$>$) need open brackets $-$ and $\pm\infty$ always get a parenthesis, never a
+bracket, regardless of the inequality. When merging two conditions with
+_different_strictness (like #47), each surviving endpoint keeps the strictness
+of whichever single condition produced it.
+
+_Fix_: After finishing the algebra, do a dedicated final pass just checking each
+interval endpoint against its orginating inequality--treat it as a separate step
+from solving.
+
+## Sign-dropping in absolute value case splits
+
+(#42 first attempt, part of #47)
+
+When splitting $|A| \ge c$ or $|A| \le c$ into two cases, a $-c$ occasionally
+got written as $+c$.
+
+_Fix_: Always write the case template explicitly before substituting: $|A| \ge c
+\Leftrightarrow A \ge c \land A \le -c$. Don't skip straight to numbers.
+
+## Product/quotient sign-rule errors
+
+(#41 first attempt)
+
+Treat "$AB < 0$" as "both factors negative" instead of "factors have opposite
+signs."
+
+_Fix_: Memorize: same signs $\rightarrow$ positive product; opposite signs
+$\rightarrow$ negative product. Always write out both opposite-sign cases
+explicitly rather than reasoning informally.
+
+## Logical connective misuse ($\land$ vs. $\lor$, $\Leftrightarrow$ vs. $=$)
+
+(#44, #46)
+
+Used AND where OR was needed (absolute value equation cases), and used
+$\Leftrightarrow$ where a plain equality chain was intended.
+
+_Fix_: Before writing a connective, ask "am I stating two things that are equal,
+or one thing implying another, or a case split where only one needs to hold?"
+Equalities get $=$; case splits from $|A| = c$ get $\lor$; only use
+$\Rightarrow$ when one statement's truth forces another's.
+
+## Multiplying/dividing an inequality by an expression of unknown sign
+
+(#49, #50)-- Your most consequential and recurring error type.
+
+Cleared denominators or took reciprocals without first splitting into sign
+cases, silently assuming positivity and losing solution branches.
+
+_Fix_: Whenever a variable expression multiplies or divides both sides of an
+inequality, __stop and ask: could this expression be negative?__ If yes, split
+into cases _before_ clearing denominators--never combine the case-split with an
+already-cleared equation (this caused the leftover unconditional line in your
+first #49 revision).
+
+## Boundary/edge cases treated loosely
+
+(#43 initially excluded $a = 0$)
+
+_Fix_: When a problem asks "for which values does X hold," explicitly test
+boundary points (0, endpoints, asymptotes) rather than just describing open
+regions.
+
+## Graphing-code domain bugs
+
+(#49 missing $+1$ term, #50 domain not spanning all solution branches or
+vertical asymptotes)
+
+_Fix_: Before writing `seq()`/`plot()` calls, identify vertical
+asymptotes/undefined points first, and split the domain into separate segments
+around them--this should be a fixed first step, not an afterthought.
+
+## The single biggest theme to focus on
+
+Operations that are only valid under a hidden assumption (multiplying by a
+possibly-negative quantity, taking reciprocals, matching bracket strictness,
+picking counterexamples from the right set). In nearly every error, the fix was
+the same discipline--__pause before an algebraic shortcut and ask what condition
+makes it valid, then either verify that condition holds or split into cases.__
+This is worth making a standing habit, since it accounts for the majority of the
+substantive (non-typo) mistakes above.
+
+# Summary of Topics
+
 This section reviews real numbers, inequalities, intervals, and absolute values.
 
-# Real Numbers and the Real Line
+
+## Real Numbers and the Real Line
 
 Much of calculus is based on properties of the real number system. __Real
 numbers__ are numbers that can be expressed as decimals, such as
@@ -45,7 +153,7 @@ text(points, rep(-0.2, length(points)), labels = labels, cex = 0.7)
 The symbol $\mathbb{R}$ donotes either the real number system or, equivalently,
 the real line.
 
-# Properties of Real Numbers
+## Properties of Real Numbers
 
 The properties of the real number system fall into three categories: algebraic
 properties, order properties, and completeness. The algebraic properties say
@@ -79,7 +187,7 @@ precisely. Roughly speaking, it says that there are enough real numbers to
 "gaps" in it. Many of the theorems of calculus would fail if the real number
 system were not complete, and the nature of the connection is important.
 
-# Subsets of $\mathbb{R}$
+## Subsets of $\mathbb{R}$
 
 We distinguish three special subsets of real numbers.
 
@@ -115,7 +223,7 @@ Real numbers that are not rational are called __irrational numbers__. They are
 characterized by having nonterminating and nonrepeating decimal expansions:
 $\pi$, $\sqrt{2}$, $\sqrt[3]{5}$, and $\log_{10}{3}$.
 
-# Intervals
+## Intervals
 
 \begin{tcolorbox}
 \begin{itemize}
@@ -140,9 +248,9 @@ $\pi$, $\sqrt{2}$, $\sqrt[3]{5}$, and $\log_{10}{3}$.
 \end{itemize}
 \end{tcolorbox}
 
-# Solving Inequalities
+## Solving Inequalities
 
-## Example 1
+### Example 1
 
 Solve the following inequalities and graph their solution sets on the real line.
 
@@ -192,7 +300,7 @@ The solution set is the half-open interval $(1, 11/5] \quad$
 \end{solution}
 \end{proof}
 
-# Absolute Value
+## Absolute Value
 
 $$
 \begin{aligned}
@@ -200,7 +308,7 @@ $$
 \end{aligned}
 $$
 
-## Example 2
+### Example 2
 
 \begin{proof}
 $|3| = 3, \quad |0| = 0, \quad |-5| = -(-5) = 5, \quad |-|a|| = |a|$
@@ -239,7 +347,7 @@ absolute values.\newline
 \end{enumerate}
 \end{tcolorbox}
 
-## Example 3
+### Example 3
 
 \begin{proof}
 $$
@@ -251,7 +359,7 @@ $$
 $$
 \end{proof}
 
-## Example 4
+### Example 4
 
 Solve the equation $|2x - 3| = 7$.
 
@@ -269,7 +377,7 @@ The solutions of $|2x - 3| = 7$ are $x = 5$ and $x = -2$.
 \end{solution}
 \end{proof}
 
-# Inequalities Involving Absolute Values
+## Inequalities Involving Absolute Values
 
 \begin{tcolorbox}
 If $D$ is any positive number, then
@@ -285,7 +393,7 @@ If $D$ is any positive number, then
 \end{equation}
 \end{tcolorbox}
 
-## Example 5
+### Example 5
 
 Solve the inequality $|x - 5| < 9$ and grpah the solution set on the real line.
 
@@ -302,7 +410,7 @@ The solution set is the open interval $(-4, 14)$.
 \intervalgraph{open}{open}{-4}{14}
 \end{solution}
 
-## Example 6
+### Example 6
 
 Solve the inequality $\left|5 - \frac{2}{x}\right| < 1$.
 
@@ -323,7 +431,7 @@ and only if $(1/3) < x < (1/2)$. The solution set is the open interval $(1/3,
 1/2)$.
 \end{solution}
 
-## Example 7
+### Example 7
 
 Solve the inequality and graph the solution set
 
@@ -380,16 +488,18 @@ $$
 $$
 \end{answer}
 
+---
+
 2. Express 1/11 as a repeating decimal, using a bar to indicate the repeating
    digits. What are the decimal representations of 2/11? 3/11? 9/11?
 
 > \begin{answer}
 $$
 \begin{aligned}
-\overline{0.090909}\\
-\overline{0.181818}\\
-\overline{0.272727}\\
-\overline{0.818181}
+0.\overline{090909}\\
+0.\overline{181818}\\
+0.\overline{272727}\\
+0.\overline{818181}
 \end{aligned}
 $$
 \end{answer}
@@ -417,6 +527,15 @@ $$
 \item True. Add 2 to all sides.
 \item True. Multiply all terms by 2.
 \item True. Its the inverse of the statement.
+$$
+\begin{aligned}
+&\frac{1}{6} < \frac{1}{x} < \frac{1}{2}\\
+&\frac{1}{6} < \frac{1}{x} \land \frac{1}{x} < \frac{1}{2}\\
+&\frac{1}{6} < \frac{1}{x} \Leftrightarrow 6 > x\\
+&\frac{1}{x} < \frac{1}{2} \Leftrightarrow x > 2\\
+&6 > x \land x > 2 \Leftrightarrow 2 < x < 6
+\end{aligned}
+$$
 \item True. Divide by 6 to get the inverse of the statement.
 \item True.
     $|x - 4| < 2 \Rightarrow -2 < x - 4 < 2 \Rightarrow 2 < x < 6$.
@@ -424,6 +543,8 @@ $$
 \item True. $-6 < -x < -2 \Rightarrow 2 < x < 6$.
 \end{enumerate}
 \end{answer}
+
+---
 
 4. If $-1 < y - 5 < 1$, which of the following statements about $y$ are
    necessarily true, and which are not necessarily true?
@@ -443,13 +564,914 @@ $$
 \begin{enumerate}[label=\alph*)]
 \item True. This is the same interval.
 \item Not True. $y < -4 \Rightarrow y < 4$.
-\item Not Necessarily True. Let $y = 7$; this satisfies $y > 4$, but $7 > 6$,
-    so $y > 4$ fails.
-\item Not Necessarily True. Let $y = 3$; this satisfies $y < 6$, but $4 > 3$,
-    so $y < 6$ fails.
+\item True. $y > 4$ is directly implied by $4 < y < 6$.
+\item True. $y < 6$ is directly implied by $4 < y < 6$.
 \item True. $0 < y - 4 < 2 \Rightarrow 4 < y < 6$.
 \item True. $2 < \frac{y}{2} < 3 \Rightarrow 4 < y < 6$.
-\item True. Its the inverse of the statement.
+\item True. Its the inverse of the statement (see 3b for deriviation of logic).
 \item True. $|y - 5| < 1 \Rightarrow -1 < y - 5 < 1 \Rightarrow 4 < y < 6$.
 \end{enumerate}
+\end{answer}
+
+In Exercises 5--12, solve the inequalities and graph the solution sets.
+
+---
+
+5. $-2x > 4$
+
+> \begin{answer}
+$$
+\begin{aligned}
+-2x &> 4\\
+x &< -2
+\end{aligned}
+$$
+The interval is $(-\infty, -2)$,
+    \intervalgraph{inf}{open}{}{-2}
+\end{answer}
+
+---
+
+6. $8 -3x \ge 5$
+
+> \begin{answer}
+$$
+\begin{aligned}
+8 - 3x &\ge 5\\
+-3x &\ge -3\\
+x &\le 1
+\end{aligned}
+$$
+The interval is $(-\infty, 1]$,
+    \intervalgraph{inf}{closed}{}{1}
+\end{answer}
+
+---
+
+7. $5x - 3 \le 7 - 3x$
+
+> \begin{answer}
+$$
+\begin{aligned}
+5x - 3 &\le 7 - 3x\\
+8x &\le 10\\
+x &\le \frac{10}{8}
+\end{aligned}
+$$
+The interval is $(-\infty, `r 5/4`]$,
+    \intervalgraph{inf}{closed}{}{`r 5/4`}
+\end{answer}
+
+---
+
+8. $3(2 - x) > 2(3 + x)$
+
+> \begin{answer}
+$$
+\begin{aligned}
+6 - 3x &> 6 + 2x\\
+-3x &> 2x\\
+0 &> 5x\\
+x &< 0
+\end{aligned}
+$$
+The interval is $(-\infty, 0)$,
+    \intervalgraph{inf}{open}{}{0}
+\end{answer}
+
+---
+
+9. $2x - \frac{1}{2} \ge 7x + \frac{7}{6}$
+
+> \begin{answer}
+$$
+\begin{aligned}
+2x - \frac{1}{2} &\ge 7x + \frac{7}{6}\\
+2x - \frac{3}{6} &\ge 7x + \frac{7}{6}\\
+-5x &\ge \frac{10}{6}\\
+x &\le -\frac{1}{3}
+\end{aligned}
+$$
+The interval is $\left(-\infty, -\frac{1}{3}\right]$,
+    \intervalgraph{inf}{closed}{}{-1/3}
+\end{answer}
+
+---
+
+10. $\frac{6 - x}{4} < \frac{3x - 4}{2}$
+
+> \begin{answer}
+$$
+\begin{aligned}
+\frac{6 - x}{4} &< \frac{3x - 4}{2}\\
+6 - x &< 2(3x - 4)\\
+6 - x &< 6x - 8\\
+14 &< 7x\\
+x &> 2
+\end{aligned}
+$$
+The interval is $(2, \infty)$,
+    \intervalgraph{open}{inf}{2}{}
+\end{answer}
+
+---
+
+11. $\frac{4}{5}(x - 2) < \frac{1}{3}(x - 6)$
+
+> \begin{answer}
+$$
+\begin{aligned}
+\frac{12}{15}(x - 2) &< \frac{5}{15}(x - 6)\\
+12x - 24 &< 5x - 30\\
+12x &< 5x - 6\\
+7x &< -6\\
+x &< -\frac{6}{7}
+\end{aligned}
+$$
+The interval is $\left(-\infty, -\frac{6}{7}\right)$,
+    \intervalgraph{inf}{open}{}{-6/7}
+\end{answer}
+
+---
+
+12. $-\frac{x + 5}{2} \le \frac{12 + 3x}{4}$
+
+> \begin{answer}
+$$
+\begin{aligned}
+-\frac{x + 5}{2} &\le \frac{12 + 3x}{4}\\
+-2x - 10 &\le 12 + 3x\\
+-5x &\le 22\\
+x &\le -\frac{22}{5}
+\end{aligned}
+$$
+The interval is $\left(-\infty, -22/5\right]$,
+    \intervalgraph{inf}{closed}{}{-22/5}
+\end{answer}
+
+## Absolute Value
+
+Solve the equations in Exercises 13--18.
+
+---
+
+13. $|y| = 3$
+
+> \begin{answer}
+$$
+\begin{aligned}
+|y| &= 3\\
+y &= \pm3
+\end{aligned}
+$$
+\end{answer}
+
+---
+
+14. $|y - 3| = 7$
+
+> \begin{answer}
+$$
+\begin{aligned}
+|y - 3| &= 7\\
+|y| + |-3| &= 7\\
+|y| + 3 &= 7\\
+|y| &= 4\\
+y &= \pm4
+\end{aligned}
+$$
+\end{answer}
+
+---
+
+15. $|2t + 5| = 4$
+
+> \begin{answer}
+$$
+\begin{aligned}
+|2t + 5| &= 4\\
+2t + 5 = 4 &\quad 2t + 5 = -4\\
+2t = -1 &\quad 2t = -9\\
+t = -\frac{1}{2} &\quad t = -\frac{9}{2}
+\end{aligned}
+$$
+\end{answer}
+
+---
+
+16. $|1 - t| = 1$
+
+> \begin{answer}
+$$
+\begin{aligned}
+|1 - t| &= 1\\
+1 - t = 1 &\quad 1 - t = -1\\
+t = 0 &\quad t = 2
+\end{aligned}
+$$
+\end{answer}
+
+---
+
+17. $|8 - 3s| = \frac{9}{2}$
+
+> \begin{answer}
+$$
+\begin{aligned}
+|8 - 3s| &= \frac{9}{2}\\
+8 - 3s = \frac{9}{2} &\quad 8 - 3s = -\frac{9}{2}\\
+3s = \frac{7}{2} &\quad 3s = \frac{25}{2}\\
+s = \frac{7}{6} &\quad s = \frac{25}{6}
+\end{aligned}
+$$
+\end{answer}
+
+---
+
+18. $\left|\frac{s}{2} - 1\right| = 1$
+
+> \begin{answer}
+$$
+\begin{aligned}
+\left|\frac{s}{2} - 1\right| &= 1\\
+\frac{s}{2} - 1 = 1 &\quad \frac{s}{2} - 1 = -1\\
+s = 4 &\quad s = 0
+\end{aligned}
+$$
+\end{answer}
+
+---
+
+Solve the inequalities in Exercises 19--34, expressing the solution sets as
+intervals or unions of intervals. Also, graph each solution set on the real
+line.
+
+19. $|x| < 2$
+
+> \begin{answer}
+$$
+\begin{aligned}
+|x| &< 2\\
+-2 &< x < 2\\
+\end{aligned}
+$$
+The interval $(-2, 2)$ \intervalgraph{open}{open}{-2}{2}
+\end{answer}
+
+---
+
+20. $|x| \le 2$
+
+> \begin{answer}
+$$
+\begin{aligned}
+|x| &\le 2\\
+-2 &\le x \le 2\\
+\end{aligned}
+$$
+The interval $[-2, 2]$ \intervalgraph{closed}{closed}{-2}{2}
+\end{answer}
+
+---
+
+21. $|t - 1| \le 3$
+
+> \begin{answer}
+$$
+\begin{aligned}
+|t - 1| &\le 3\\
+-3 &\le t - 1 \le 3\\
+-2 &\le t \le 4
+\end{aligned}
+$$
+The interval $[-2, 4]$ \intervalgraph{closed}{closed}{-2}{4}
+\end{answer}
+
+---
+
+22. $|t + 2| < 1$
+
+> \begin{answer}
+$$
+\begin{aligned}
+|t + 2| &< 1\\
+-1 &< t + 2 < 1\\
+-3 &< t < -1
+\end{aligned}
+$$
+The interval $(-3, -1)$ \intervalgraph{open}{open}{-3}{-1}
+\end{answer}
+
+---
+
+23. $|3y - 7| < 4$
+
+> \begin{answer}
+$$
+\begin{aligned}
+|3y - 7| &< 4\\
+-4 &< 3y - 7 < 4\\
+3 &< 3y < 11\\
+1 &< y < \frac{11}{3}
+\end{aligned}
+$$
+The interval $\left(1, \frac{11}{3}\right)$ \intervalgraph{open}{open}{1}{11/3}
+\end{answer}
+
+---
+
+24. $|2y + 5| < 1$
+
+> \begin{answer}
+$$
+\begin{aligned}
+|2y + 5| &< 1\\
+-1 &< 2y + 5 < 1\\
+-6 &< 2y < -4\\
+-3 &< y < -2\\
+\end{aligned}
+$$
+The interval $(-3, -2)$ \intervalgraph{open}{open}{-3}{-2}
+\end{answer}
+
+---
+
+25. $\left|\frac{z}{5} - 1\right| \le 1$
+
+> \begin{answer}
+$$
+\begin{aligned}
+\left|\frac{z}{5} - 1\right| &\le 1\\
+-1 &\le \frac{z}{5} -1 \le 1\\
+0 &\le \frac{z}{5} \le 2\\
+0 &\le z \le 10
+\end{aligned}
+$$
+The interval $[0, 10]$ \intervalgraph{closed}{closed}{0}{10}
+\end{answer}
+
+---
+
+26. $\left|\frac{3}{2}z - 1\right| \le 2$
+
+> \begin{answer}
+$$
+\begin{aligned}
+\left|\frac{3}{2}z - 1\right| &\le 2\\
+-2 &\le \frac{3}{2}z - 1 \le 2\\
+-1 &\le \frac{3}{2}z \le 3\\
+-2 &\le 3z \le 6\\
+-\frac{2}{3} &\le z \le 2
+\end{aligned}
+$$
+The interval $\left[-\frac{2}{3}, 2\right]$
+    \intervalgraph{closed}{closed}{-2/3}{2}
+\end{answer}
+
+---
+
+27. $\left|3 - \frac{1}{x}\right| < \frac{1}{2}$
+
+> \begin{answer}
+$$
+\begin{aligned}
+\left|3 - \frac{1}{x}\right| &< \frac{1}{2}\\
+-\frac{1}{2} &< 3 - \frac{1}{x} < \frac{1}{2}\\
+-\frac{7}{2} &< -\frac{1}{x} < -\frac{5}{2}\\
+\frac{5}{2} &< x < \frac{7}{2}
+\end{aligned}
+$$
+The interval $(5/2, 7/2)$ \intervalgraph{open}{open}{5/2}{7/2}
+\end{answer}
+
+---
+
+28. $\left|\frac{2}{x} - 4\right| < 3$
+
+> \begin{answer}
+$$
+\begin{aligned}
+\left|\frac{2}{x} - 4\right| &< 3\\
+-3 &< \frac{2}{x} - 4 < 3\\
+1 &< \frac{2}{x} < 7\\
+\frac{1}{2} &< \frac{1}{x} < \frac{7}{2}\\
+\frac{2}{7} &< x < 2
+\end{aligned}
+$$
+The interval $\left(\frac{2}{7}, 2\right)$
+    \intervalgraph{open}{open}{2/7}{2}
+\end{answer}
+
+---
+
+29. $|2s| \ge 4$
+
+> \begin{answer}
+$$
+\begin{aligned}
+|2s| &\ge 4\\
+2s \le -4 &\quad 2s \ge 4\\
+s \le -2 &\quad s \ge 2
+\end{aligned}
+$$
+The intervals $(-\infty, -2]\cup[2, -\infty)$
+    \intervalgraph{inf}{closed}{}{-2} \intervalgraph{closed}{inf}{2}{}
+\end{answer}
+
+---
+
+30. $|s + 3| \ge \frac{1}{2}$
+
+> \begin{answer}
+$$
+\begin{aligned}
+|s + 3| &\ge \frac{1}{2}\\
+s + 3 \le -\frac{1}{2} &\quad s + 3 \ge \frac{1}{2}\\
+s \le -\frac{7}{2} &\quad s \ge -\frac{5}{2}
+\end{aligned}
+$$
+The intervals $\left(-\infty, -\frac{7}{2}\right]
+    \cup\left[-\frac{5}{2}, \infty\right)$
+    \intervalgraph{inf}{closed}{}{-5/2} \intervalgraph{closed}{inf}{-7/2}{}
+\end{answer}
+
+---
+
+31. $|1 - x| > 1$
+
+> \begin{answer}
+$$
+\begin{aligned}
+|1 - x| &> 1\\
+1 - x < -1 &\quad 1 - x > 1\\
+x > 2 &\quad x < 0
+\end{aligned}
+$$
+The intervals $(-\infty, 0)\cup(2, \infty)$
+    \intervalgraph{inf}{open}{}{0} \intervalgraph{open}{inf}{2}{}
+\end{answer}
+
+---
+
+32. $|2 - 3x| > 5$
+
+> \begin{answer}
+$$
+\begin{aligned}
+|2 - 3x| &> 5\\
+2 - 3x < -5 &\quad 2 - 3x > 5\\
+-3x < -7 &\quad -3x > 3\\
+x > \frac{7}{3} &\quad x < 1
+\end{aligned}
+$$
+The intervals $(-\infty, 1)\cup(7/3, \infty)$
+    \intervalgraph{inf}{open}{}{7/3} \intervalgraph{open}{inf}{1}{}
+\end{answer}
+
+---
+
+33. $\left|\frac{r + 1}{2}\right| \ge 1$
+
+> \begin{answer}
+$$
+\begin{aligned}
+\left|\frac{r + 1}{2}\right| \ge 1\\
+\frac{r + 1}{2} \le -1 &\quad \frac{r + 1}{2} \ge 1\\
+r + 1 \le -2 &\quad r + 1 \ge 2\\
+r \le -3 &\quad r \ge 1
+\end{aligned}
+$$
+The intervals $(-\infty, -3]\cup[1, \infty)$
+    \intervalgraph{inf}{closed}{}{-3} \intervalgraph{closed}{inf}{1}{}
+\end{answer}
+
+---
+
+34. $\left|\frac{3r}{5} - 1\right| > \frac{2}{5}$
+
+> \begin{answer}
+$$
+\begin{aligned}
+\left|\frac{3r}{5} - 1\right| &> \frac{2}{5}\\
+\frac{3r}{5} - 1 < -\frac{2}{5} &\quad \frac{3r}{5} - 1 > \frac{2}{5}\\
+\frac{3r}{5} < \frac{3}{5} &\quad \frac{3r}{5} > \frac{7}{5}\\
+3r < 3 &\quad 3r > 7\\
+r < 1 &\quad r > \frac{7}{3}
+\end{aligned}
+$$
+The intervals $(-\infty, 1)\cup(7/3, \infty)$
+    \intervalgraph{inf}{open}{}{1} \intervalgraph{open}{inf}{7/3}{}
+\end{answer}
+
+## Quadratic Inequalities
+
+Solve the inequalities in Exercises 35--42. Express the solution sets as
+intervals or unions of intervals and graph them. Use the result $\sqrt{a^2} =
+|a|$ as appropriate.
+
+35. $x^2 < 2$
+
+> \begin{answer}
+$$
+\begin{aligned}
+x^2 &< 2\\
+\sqrt{x^2} &< \sqrt{2}\\
+|x| &< \sqrt{2}\\
+-\sqrt{2} &< x < \sqrt{2}
+\end{aligned}
+$$
+The intervals $(-\sqrt{2}, \sqrt{2})$
+    \intervalgraph{open}{open}{-\sqrt{2}}{\sqrt{2}}
+\end{answer}
+
+---
+
+36. $4 \le x^2$
+
+> \begin{answer}
+$$
+\begin{aligned}
+4 &\le x^2\\
+\sqrt{4} &\le \sqrt{x^2}\\
+2 &\le |x|\\
+x \le -2 &\quad x \ge 2
+\end{aligned}
+$$
+The intervals $(-\infty, -2]\cup[2, \infty)$
+    \intervalgraph{inf}{closed}{}{-2} \intervalgraph{closed}{inf}{2}{}
+\end{answer}
+
+---
+
+37. $4 < x^2 < 9$
+
+> \begin{answer}
+$$
+\begin{aligned}
+4 &< x^2 < 9\\
+\sqrt{4} &< \sqrt{x^2} < \sqrt{9}\\
+2 &< |x| < 3\\\\
+|x| > 2 &\Rightarrow x < -2 \lor x > 2\\
+|x| < 3 &\Rightarrow -3 < x < 3\\
+x < -2 \land -3 < x < 3 &\Leftrightarrow -3 < x < -2\\
+x > 2 \land -3 < x < 3 &\Leftrightarrow 2 < x < 3
+\end{aligned}
+$$
+The intervals $(-3, -2)\cup(2, 3)$
+  \intervalgraph{open}{open}{-3}{-2} \intervalgraph{open}{open}{2}{3}
+\end{answer}
+
+---
+
+38. $\frac{1}{9} < x^2 < \frac{1}{4}$
+
+> \begin{answer}
+$$
+\begin{aligned}
+\frac{1}{9} < &x^2 < \frac{1}{4}\\
+\sqrt{\frac{1}{9}} < &\sqrt{x^2} < \sqrt{\frac{1}{4}}\\
+\frac{1}{3} < |x| &\land |x| < \frac{1}{2}\\\\
+\frac{1}{3} < |x| &\Leftrightarrow x < -\frac{1}{3} \lor x > \frac{1}{3}\\
+|x| < \frac{1}{2} &\Leftrightarrow -\frac{1}{2} < x < \frac{1}{2}\\
+x < -\frac{1}{3} \land -\frac{1}{2} < x < \frac{1}{2} &\Leftrightarrow
+    -\frac{1}{2} < x < -\frac{1}{3}\\
+x > \frac{1}{3} \land -\frac{1}{2} < x < \frac{1}{2} &\Leftrightarrow
+    \frac{1}{3} < x < \frac{1}{2}
+\end{aligned}
+$$
+The intervals $(-\frac{1}{2}, -\frac{1}{3})\cup(\frac{1}{3}, \frac{1}{2})$
+    \intervalgraph{open}{open}{-1/2}{-1/3} \intervalgraph{open}{open}{1/3}{1/2}
+\end{answer}
+
+---
+
+39. $(x - 1)^2 < 4$
+
+> \begin{answer}
+$$
+\begin{aligned}
+(x - 1)^2 &< 4\\
+\sqrt{(x - 1)^2} &< \sqrt{4}\\
+|x - 1| &< 2\\
+-2 &< x - 1 < 2\\
+-1 &< x < 3
+\end{aligned}
+$$
+The interval $(-1, 3)$
+    \intervalgraph{open}{open}{-1}{3}
+\end{answer}
+
+---
+
+40. $(x + 3)^2 < 2$
+
+> \begin{answer}
+$$
+\begin{aligned}
+(x + 3)^2 &< 2\\
+\sqrt{(x + 3)^2} &< \sqrt{2}\\
+|x + 3| &< \sqrt{2}\\
+-\sqrt{2} &< x + 3 < \sqrt{2}\\
+-\sqrt{2} - 3 &< x < \sqrt{2} - 3
+\end{aligned}
+$$
+The interval $(-\sqrt{2}-3, \sqrt{2}-3)$
+    \intervalgraph{open}{open}{-\sqrt{2}-3}{\sqrt{2}-3}
+\end{answer}
+
+41. $x^2 - x < 0$
+
+> \begin{answer}
+This problem can be solved via factoring or completing the square:\newline
+\textbf{Method I (Factoring)}
+$$
+\begin{aligned}
+x^2 - x &< 0\\
+x(x - 1) &< 0\\
+x < 0 \land x - 1 > 0 &\lor x > 0 \land x - 1 < 0\\
+x < 0 \land x > 1 &\lor x > 0 \land x < 1\\
+\text{only the second case is logical}&\\
+0 < x < 1
+\end{aligned}
+$$
+\textbf{Method II (Complete the square)}
+$$
+\begin{aligned}
+x^2 - x &< 0\\
+\left(x - \frac{1}{2}\right)^2 - \frac{1}{4} &< 0\\
+\left(x - \frac{1}{2}\right)^2 &< \frac{1}{4}\\
+\sqrt{\left(x - \frac{1}{2}\right)^2} &< \sqrt{\frac{1}{4}}\\
+\left|x - \frac{1}{2}\right| &< \frac{1}{2}\\
+-\frac{1}{2} < x - \frac{1}{2} < \frac{1}{2}\\
+0 < x < 1
+\end{aligned}
+$$
+The interval $(0, 1)$
+    \intervalgraph{open}{open}{0}{1}
+\end{answer}
+
+42. $x^2 - x - 2 \ge 0$
+
+> \begin{answer}
+$$
+\begin{aligned}
+x^2 - x - 2 &\ge 0\\
+\left(x - \frac{1}{2}\right)^2 - 2 - \frac{1}{4} &\ge 0\\
+\left(x - \frac{1}{2}\right)^2 - \frac{9}{4} &\ge 0\\
+\left(x - \frac{1}{2}\right)^2 &\ge \frac{9}{4}\\
+\sqrt{\left(x - \frac{1}{2}\right)^2} &\ge \sqrt{\frac{9}{4}}\\
+\left|x - \frac{1}{2}\right| &\ge \frac{3}{2}\\
+x - \frac{1}{2} \ge \frac{3}{2} &\lor x - \frac{1}{2} \le -\frac{3}{2}\\
+x \ge 2 &\lor x \le -1
+\end{aligned}
+$$
+The intervals $(-\infty, -1]\cup[2, \infty)$
+    \intervalgraph{inf}{closed}{}{-1} \intervalgraph{closed}{inf}{2}{}
+\end{answer}
+
+---
+
+## Theory and Examples
+
+43. Do not fall into the trap $|-a| = a$. For what real numbers $a$ is this
+    equation true? For what real numbers is it false?
+
+> \begin{answer}
+This will hold true for all positive real numbers or zero, and is false for all
+negative real numbers.
+\end{answer}
+
+---
+
+44. Solve the equation $|x - 1| = 1 - x$.
+
+> \begin{answer}
+$$
+\begin{aligned}
+|x - 1| &= 1 - x\\
+|x - 1| &= (1 - x)\\
+&\Rightarrow x - 1 \le 0 (\text{since } |A| = -A \Leftrightarrow A \le 0)\\
+&\Rightarrow x \le 1
+\end{aligned}
+$$
+\end{answer}
+
+---
+
+45. __A proof of the triangle inequality.__ Give the reason justifying each of
+    the numbered steps in the following proof of the triangle inequality.
+
+$$
+\begin{aligned}
+|a + b|^2 &= (a + b)^2\\
+&= a^2 + 2ab + b^2\\
+&\le a^2 + 2|a||b| + b^2\\
+&\le |a|^2 + 2|a||b| + |b|^2\\
+&= (|a| + |b|)^2\\
+|a + b| &\le |a| + |b|
+\end{aligned}
+$$
+
+> \begin{answer}
+Step-by-step breakdown.
+\begin{enumerate}
+\item $\sqrt{x^2} = |x| \Rightarrow \sqrt{x^2}^2 = |x|^2 \Rightarrow x^2 =
+    |x|^2$.
+\item $= a^2 + 2ab + b^2$. Binomial expansion of $(a + b)^2$.
+\item $\le a^2 + 2|a||b| + b^2$. Because $ab \le |a||b|$. If $ab$ have opposite
+    signs, the value is negative. When $ab$ have the same sign or one is zero,
+    then the two sides are equal.
+\item $\le |a|^2 + 2|a||b| + |b|^2$. Because $\sqrt{x^2} = |x| \Rightarrow
+    \sqrt{x^2}^2 = |x|^2 \Rightarrow x^2 = |x|^2$.
+\item $= (|a| + |b|)^2$. Factor $|a|^2 + 2|a||b| + |b|^2$.
+\item $|a + b| \le |a| + |b|$. Take the square root of both sides, which
+preserves the inequality since both sides are non-negative, and use $\sqrt{x^2}
+= |x|$.
+\end{enumerate}
+\end{answer}
+
+---
+
+46. Prove that $|ab| = |a||b|$ for any numbers $a$ and $b$.
+
+> \begin{answer}
+$$
+\begin{aligned}
+|ab| = \sqrt{(ab)^2} = \sqrt{a^2 b^2} = \sqrt{a^2} \sqrt{b^2} = |a||b|
+\end{aligned}
+$$
+\end{answer}
+
+---
+
+47. If $|x| \le 3$ and $x > -\frac{1}{2}$, what can you say about $x$?
+
+> \begin{answer}
+There are two restrictions on the value of $x$.
+$$
+\begin{aligned}
+-3 \le x \le 3 \land x > -\frac{1}{2} \Rightarrow -\frac{1}{2} < x \le 3.
+\end{aligned}
+$$
+\end{answer}
+
+---
+
+48. Graph the inequality $|x| + |y| \le 1$.
+
+> \begin{answer}
+Here is the logic.
+\begin{enumerate}[label=Step \arabic*:]
+\item Split by sign, since $|x|$ and $|y|$ each depend on sign. There are four
+      regions (quadrants) to consider, based on the signs of $x$ and $y$:
+    \begin{itemize}
+    \item \textbf{Quadrant I} ($x \ge 0, y \ge 0$): $|x| = x,|y| = y$, so the
+        inequality becomes $x + y \le 1$.
+    \item \textbf{Quadrant II} ($x \le 0, y \ge 0$): $|x| = -x,|y| = y$, so it
+        becomes $-x + y \le 1$.
+    \item \textbf{Quadrant III} ($x \le 0, y \le 0$): $|x| = -x,|y| = -y$, so it
+        becomes $-x-y \le 1$.
+    \item \textbf{Quadrant IV} ($x \ge 0, y \le 0$): $|x| = x,|y| = -y$, so it
+        becomes $x - y \le 1$.
+    \end{itemize}
+\item Each linear inequality is a half-plane. In each quadrant, $|x| + |y| \le
+      1$ reduces to an ordinary linear inequality, so within that quadrant the
+      boundary $|x| + |y| = 1$ is a straight line segment:
+    \begin{itemize}
+    \item Quadrant I: $x + y = 1$--a line through (1,0) and (0,1).
+    \item Quadrant II: $-x + y = 1$--a line through (0,1) and (-1,0).
+    \item Quadrant III: $-x-y=1$--a line through (-1,0) and (0,-1).
+    \item Quadrant IV: $x - y=1$--a line through (0, -1) and (1,0).
+    \end{itemize}
+\item Stich the four segments together. Each pice is a straight edge connecting
+      two adjacent axis intercepts: $(1,0) \rightarrow (0,1) \rightarrow (-1,0)
+      \rightarrow (0,-1) \rightarrow (1,0)$. Four straight edges meeting at four
+      vertices is exactly a \textbf{diamond} (a square rotated $45^{\circ}$),
+      which is why the boundary in the code is the `polygon()` with those four
+      vertices.
+\item Why "$\le$" fills the interior. In each quadrant, the inequality is
+      (linear expression) $\le 1$, which describes the half-plane
+      \textbf{containing the origin} (since plugging in $x=y=0$ gives $0 \le 1$,
+      true). So the solution set is everything the diamond, consistent with
+      filling the polygon rather than just drawing its outline.
+\end{enumerate}
+\end{answer}
+
+```{r ex48, echo=F, fig.height=4, fig.width=4}
+x <- seq(-1.5, 1.5, length.out = 400)
+y <- seq(-1.5, 1.5, length.out = 400)
+
+plot(0, 0, type = "n", xlim = c(-1.5, 1.5), ylim = c(-1.5, 1.5),
+     xlab = "x", ylab = "y", asp = 1)
+abline(h = 0, v = 0, col = "gray")
+
+# The boundary |x| + |y| = 1 is a diamond (rotated square)
+# with vertices at (1,0), (0,1), (-1, 0), (0,-1)
+vertices_x <- c(1, 0, -1, 0, 1)
+vertices_y <- c(0, 1, 0, -1, 0)
+
+polygon(vertices_x, vertices_y, col = "lightblue", border = "blue", lwd = 2)
+```
+
+---
+
+49. GRAPHER
+
+> a) Graph the functions $f(x) = x/2$ and $g(x) = 1 + (4/x)$ together to
+  identify the values of $x$ for which
+$$
+\begin{aligned}
+\frac{x}{2} > 1 + \frac{4}{x}.
+\end{aligned}
+$$
+
+> b) Confirm your findings in (a) algebraically.
+
+```{r ex49, echo=F, fig.height=4, fig.width=4}
+x.1 <- seq(-5, -0.1, length.out = 500)
+x.2 <- seq(0.1, 5, length.out = 500)
+f.1 <- x.1 / 2; g.1 <- 1 + 4 / x.1
+f.2 <- x.2 / 2; g.2 <- 1 + 4 / x.2
+plot(0, 0, type = "n", xlim = c(-5, 5), ylim = c(-5, 5),
+    xlab = "x", ylab = "y", asp = 1)
+abline(h = 0, v = 0, col = "gray")
+lines(x.1, f.1);lines(x.1, g.1, col = "red")
+lines(x.2, f.2);lines(x.2, g.2, col = "red")
+```
+
+> \begin{answer}
+$$
+\begin{aligned}
+\frac{x}{2} &> 1 + \frac{4}{x}\\
+x &> 2 + \frac{8}{x}\\
+\end{aligned}
+$$
+\begin{enumerate}
+\item[Case $x>0$:] multiplying by $2x$ (positive) preserves the inequality:
+$$
+\begin{aligned}
+x^2 > 2x + 8 \Rightarrow (x - 4)(x + 2) > 0
+    \Rightarrow x > 4 \lor x < -2
+\end{aligned}
+$$
+\item[Case $x<0$:] multiplying by $2x$ (negative) reverses the inequality:
+$$
+\begin{aligned}
+x^2 > 2x + 8 \Rightarrow (x - 4)(x + 2) < 0
+    \Rightarrow -2 < x < 4
+\end{aligned}
+$$
+\end{enumerate}
+Combining both cases: $(-2, 0)\cup(4, \infty)$.
+    \intervalgraph{open}{open}{-2}{0} \intervalgraph{open}{inf}{4}{}
+\end{answer}
+
+50. GRAPHER
+
+> a) Graph the function $f(x) = \frac{3}{x-1}$ and $g(x) = \frac{2}{x + 1}$
+  together to identify the values of $x$ for which
+
+$$
+\begin{aligned}
+\frac{3}{x - 1} < \frac{2}{x + 1}
+\end{aligned}
+$$
+
+```{r ex50, echo=F, fig.height=4, fig.width=4}
+x.1 <- seq(-10, -1.1, length.out = 300)
+x.2 <- seq(-0.9, 0.9, length.out = 300)
+x.3 <- seq( 1.1,  10, length.out = 300)
+f.1 <- 3 / (x.1 - 1);g.1 <- 2 / (x.1 + 1)
+f.2 <- 3 / (x.2 - 1);g.2 <- 2 / (x.2 + 1)
+f.3 <- 3 / (x.3 - 1);g.3 <- 2 / (x.3 + 1)
+plot(0, 0, type = "n", xlim = c(-10, 10), ylim = c(-10, 10),
+    xlab = "x", ylab = "y")
+abline(h = 0, v = 0, col = "gray")
+abline(v = c(-1, 1), col = "gray", lty = 2)
+lines(x.1, f.1);lines(x.1, g.1, col = "red")
+lines(x.2, f.2);lines(x.2, g.2, col = "red")
+lines(x.3, f.3);lines(x.3, g.3, col = "red")
+```
+
+\begin{answer}
+$$
+\begin{aligned}
+\frac{3}{x - 1} &< \frac{2}{x + 1}\\
+\frac{3}{x - 1} - \frac{2}{x + 1} &< 0\\
+\frac{3(x + 1) - 2(x - 1)}{(x - 1)(x + 1)} &< 0\\
+\frac{x + 5}{x^2 - 1} &< 0
+\end{aligned}
+$$
+We have four reagions:
+\begin{itemize}
+\item $x < -5$: numerator $-$, denominator $+$ (since $|x| > 1$) $\rightarrow$
+    quotient $-$ $\rightarrow$ \textbf{satisfies} $< 0$.
+\item $-5 < x < -1$: numerator $+$, denominator $+$ $\rightarrow$ quotient $+$
+    $\rightarrow$ fails.
+\item $-1 < x < 1$: numerator $+$, denominator $-$ (since $x^2 < 1$)
+    $\rightarrow$ quotient $-$ $\rightarrow$ \textbf{satisfies} $< 0$.
+\item $x > 1$: numerator $+$, denominator $+$ $\rightarrow$ quotient $+$
+    $\rightarrow$ fails.
+\end{itemize}
+The solution set is $(-\infty, -5)\cup(-1, 1)$
 \end{answer}
