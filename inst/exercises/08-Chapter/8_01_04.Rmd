@@ -1,0 +1,407 @@
+---
+title: Chapter 8.1 Limits of Sequences of Numbers
+subtitle: Theory and Examples; Exercises 31 - 54
+output: pdf_document
+---
+
+In Exercises 31-34, determine if the sequence is nondecreasing and if it is
+bounded from above.
+
+---
+
+31. $a_n = \frac{3n+1}{n+1}$
+
+Rewriting the formula shows how $a_n$ changes with $n$:
+
+$$
+\begin{aligned}
+a_n &= \frac{3n + 1}{n + 1} \\
+    &= \frac{3 (n + 1) - 2}{n + 1} \\
+    &= 3 - \frac{2}{n + 1}
+\end{aligned}
+$$
+
+```{r exercise_31_graph, out.width="55%", fig.align="center", echo=FALSE}
+knitr::include_graphics("../../figures/08-Chapter/8-01-p31.png")
+```
+
+Since $\frac{2}{n+1}$ decreases as $n$ increases, $a_n$ increases:
+$$
+a_{n+1} - a_n = \frac{2}{n+1} - \frac{2}{n+2} = \frac{2}{(n+1)(n+2)} > 0,
+$$
+so $a_n \le a_{n+1}$ for all $n$ and the sequence is nondecreasing. Since
+$\frac{2}{n+1} > 0$, $a_n < 3$ for all $n$, so the sequence is bounded from
+above by 3.
+
+---
+
+32. $a_n = \frac{(2n + 3)!}{(n + 1)!}$
+
+Below is a log scale graph of the sequence. We use log scale because the terms
+grow so quickly.
+
+```{r exercise_32_graph, out.width="55%", fig.align="center", echo=FALSE}
+knitr::include_graphics("../../figures/08-Chapter/8-01-p32.png")
+```
+
+To simplify the expression we recognize that a larger factorial contains every
+smaller one as a factor, so the smaller one cancels.
+
+$$
+(2n + 3)! = (2n+3)(2n+2)\cdots(n+3)(n+2)\cdot\underbrace{(n+1)(n)\cdots 2\cdot 1}_{(n+1)!}
+$$
+
+The $(n+1)!$ cancels with the denominator, leaving the product of the whole
+numbers from $n+2$ to $2n+3$:
+
+$$
+a_n = \frac{(2n+3)!}{(n+1)!} = (n+2)(n+3)\cdots(2n+3) = \prod_{k=n+2}^{2n+3} k
+$$
+
+That product has $(2n+3) - (n+2) + 1 = n + 2$ factors.
+
+To see whether the sequence is nondecreasing, compare consecutive terms.
+
+Replacing $n$ with $n + 1$ gives $a_{n+1} = \frac{(2n+5)!}{(n+2)!}$. Dividing
+by $a_n$ means multiplying by its reciprocal, and then the factorials pair up:
+
+$$
+\frac{a_{n+1}}{a_n}
+= \frac{(2n+5)!}{(n+2)!} \cdot \frac{(n+1)!}{(2n+3)!}
+= \underbrace{\frac{(2n+5)!}{(2n+3)!}}_{(2n+5)(2n+4)} \cdot
+\underbrace{\frac{(n+1)!}{(n+2)!}}_{1/(n+2)}
+= \frac{(2n+5)(2n+4)}{n+2}
+$$
+
+- __Top pair:__ $(2n+5)!$ is $(2n+3)!$ times the next two numbers, $2n+4$ and
+  $2n+5$, so the quotient is $(2n+5)(2n+4)$.
+- __Bottom pair:__ $(n+2)!$ is $(n+1)!$ times $(n+2)$, so the quotient is $\frac{1}{n+2}$.
+- __Last step:__ factor $2n + 4 = 2(n+2)$, and the $n+2$ cancels:
+
+$$
+\frac{a_{n+1}}{a_n} = \frac{(2n+5) \cdot 2(n+2)}{n+2} = 2(2n+5)
+$$
+
+Since $\frac{a_{n+1}}{a_n} = 2(2n+5) > 1$ and every term is positive, $a_n <
+a_{n+1}$ for all $n$, so the sequence is nondecreasing. It is not bounded from
+above: $a_n$ is a product of whole numbers whose smallest factor is $n+2$, so
+$a_n \ge n + 2$, which grows without bound.
+
+---
+
+33. $a_n = \frac{2^n 3^n}{n!}$
+
+```{r exercise_33_graph, out.width="55%", fig.align="center", echo=FALSE}
+knitr::include_graphics("../../figures/08-Chapter/8-01-p33.png")
+```
+
+Simplification steps:
+
+1. __Combine the powers.__ The two powers in the numerator can be combined
+   because they share a common exponent: $$a_n = \frac{2^n 3^n}{n!} =
+   \frac{6^n}{n!}$$
+
+2. __Take the ratio.__ Ratios work better than differences when there are
+   factorials. Pair the powers with each other and the factorials with each
+   other:
+   $$
+   \begin{aligned}
+   \frac{a_{n+1}}{a_n}
+   &= \frac{6^{n+1}}{(n+1)!}\cdot\frac{n!}{6^n} \\
+   &= \underbrace{\frac{6^{n+1}}{6^n}}_{6}\cdot
+      \underbrace{\frac{n!}{(n+1)!}}_{1/(n+1)}   \\
+   &= \frac{6}{n+1}
+   \end{aligned}
+   $$
+
+3. __Compare the ratio with 1.__ We want to find where the ratio crosses 1:
+   - If $n < 5$, then $\frac{6}{n+1} > 1$, so the terms increase.
+   - If $n = 5$, the ratio is exactly 1, so $a_6 = a_5$.
+   - If $n > 5$, then $\frac{6}{n+1} < 1$, so the terms decrease.
+
+__Conclusion:__ Since $a_{n+1}/a_n = \frac{6}{n+1} < 1$ for $n > 5$, the terms
+decrease after $a_6$ (for example, $a_7 < a_6$), so the sequence is not
+nondecreasing. It is bounded from above: the terms increase up to $a_5 = a_6 =
+\frac{6^5}{5!} = 64.8$ and decrease after that, so $a_n \le 64.8$ for all $n$.
+
+---
+
+34. $a_n = 2 - \frac{2}{n} - \frac{1}{2^n}$
+
+```{r exercise_34_graph, out.width="55%", fig.align="center", echo=FALSE}
+knitr::include_graphics("../../figures/08-Chapter/8-01-p34.png")
+```
+
+Since both $\frac{2}{n}$ and $\frac{1}{2^n}$ decrease as $n$ increases, $a_n$ increases:
+$$
+\begin{aligned}
+a_{n+1} - a_n &= \left(\frac{2}{n} - \frac{2}{n+1}\right)
+               + \left(\frac{1}{2^n} - \frac{1}{2^{n+1}}\right) \\
+              &= \frac{2}{n(n+1)} + \frac{1}{2^{n+1}} > 0,
+\end{aligned}
+$$
+so $a_n \le a_{n+1}$ for all $n$ and the sequence is nondecreasing. Since
+$\frac{2}{n} > 0$ and $\frac{1}{2^n} > 0$, $a_n < 2$ for all $n$. Therefore
+the sequence is bounded from above by 2.
+
+---
+
+Which of the sequences in Exercises 35-40 converge, and which diverge? Give
+reasons for your answers.
+
+---
+
+35. $a_n = 1 - \frac{1}{n}$
+
+```{r exercise_35_graph, out.width="55%", fig.align="center", echo=FALSE}
+knitr::include_graphics("../../figures/08-Chapter/8-01-p35.png")
+```
+
+Since $\frac{1}{n}$ decreases as $n$ increases, $a_n$ increases:
+$$
+a_{n+1} - a_n = \frac{1}{n} - \frac{1}{n+1} = \frac{1}{n(n+1)} > 0.
+$$
+This means $a_n \le a_{n+1}$ for all $n$ and the sequence is nondecreasing.
+Since $\frac{1}{n} > 0$, $a_n < 1$ for all $n$. Therefore the sequence is
+bounded from above by 1.
+
+A nondecreasing sequence that is bounded from above converges, and since
+$\frac{1}{n} \to 0$, $\{a_n\}$ converges to $1 - 0 = 1$.
+
+---
+
+36. $a_n = n - \frac{1}{n}$
+
+```{r exercise_36_graph, out.width="55%", fig.align="center", echo=FALSE}
+knitr::include_graphics("../../figures/08-Chapter/8-01-p36.png")
+```
+
+Both parts push $a_n$ upward: $n$ increases, and since $\frac{1}{n}$ decreases,
+subtracting it takes away less each time:
+$$
+\begin{aligned}
+a_{n+1} - a_n &= \left(n + 1 - \frac{1}{n+1}\right)
+    - \left(n - \frac{1}{n}\right) \\
+              &= 1 + \frac{1}{n} - \frac{1}{n+1} \\
+              &= 1 + \frac{1}{n(n+1)} > 0,
+\end{aligned}
+$$
+so the sequence is nondecreasing. It is not bounded from above: since
+$\frac{1}{n} \le 1$, we have $a_n \ge n - 1$, which grows without bound.
+Therefore $\{a_n\}$ diverges to $\infty$.
+
+---
+
+37. $a_n = \frac{2^n - 1}{2^n}$
+
+```{r exercise_37_graph, out.width="55%", fig.align="center", echo=FALSE}
+knitr::include_graphics("../../figures/08-Chapter/8-01-p37.png")
+```
+
+We can simplify the sequence:
+$$
+a_n = \frac{2^n - 1}{2^n} = 1 - \frac{1}{2^n}
+$$
+Since $\frac{1}{2^n}$ decreases as $n$ increases, $a_n$ increases:
+$$
+a_{n+1} - a_n = \frac{1}{2^n} - \frac{1}{2^{n+1}} = \frac{1}{2^{n+1}} > 0,
+$$
+so the sequence is nondecreasing. Since $\frac{1}{2^n} > 0$, $a_n < 1$ for all
+$n$, so the sequence is bounded from above by 1. A nondecreasing sequence that
+is bounded from above converges, and since $\frac{1}{2^n} \to 0$, its limit is
+$1 - 0 = 1$.
+
+---
+
+38. $a_n = \frac{2^n - 1}{3^n}$
+
+```{r exercise_38_graph, out.width="55%", fig.align="center", echo=FALSE}
+knitr::include_graphics("../../figures/08-Chapter/8-01-p38.png")
+```
+
+We can simplify the sequence:
+$$
+a_n = \frac{2^n - 1}{3^n} = \left(\frac{2}{3}\right)^n - \left(\frac{1}{3}\right)^n
+$$
+Since $\left(\frac{2}{3}\right)^n \to 0$ and $\left(\frac{1}{3}\right)^n \to 0$
+(each is $r^n$ with $\lvert r \rvert < 1$),
+$$
+\lim_{n\to\infty} a_n = 0 - 0 = 0,
+$$
+so the sequence converges to $0$. Note that $\{a_n\}$ is not nondecreasing
+($a_3 < a_2$), so Theorem 1 does not apply here; the limit laws give the answer
+directly.
+
+---
+
+39. $a_n = ((-1)^n + 1)\left(\frac{n + 1}{n}\right)$
+
+```{r exercise_39_graph, out.width="55%", fig.align="center", echo=FALSE}
+knitr::include_graphics("../../figures/08-Chapter/8-01-p39.png")
+```
+
+This sequence diverges. In order to see why, we will decompose the sequence
+into its odd and even subsequences:
+
+$$
+\begin{aligned}
+a_n &= ((-1)^n + 1)\left(\frac{n+1}{n}\right) = 2\left(\frac{n+1}{n}\right) = 2 +
+    \frac{2}{n} \to 2 &\quad n \text{ is even} \\
+a_n &= ((-1)^n + 1)\left(\frac{n+1}{n}\right) = 0 \left(\frac{n+1}{n}\right) = 0
+    &\quad n \text{ is odd}
+\end{aligned}
+$$
+
+The odd subsequence converges to $0$ and the even subsequence converges to $2$.
+A convergent sequence only has one limit, so $\{a_n\}$ diverges.
+
+---
+
+40. The first term of a sequence is $x_1 = \cos(1)$. The next terms are $x_2 =
+    x_1$ or $\cos(2)$, whichever is larger; and $x_3 = x_2$ or $\cos(3)$,
+    whichever is larger (farther to the right). In general,
+    $$
+    x_{n+1} = \max\{x_n, \cos(n + 1)\}.
+    $$
+
+```{r exercise_40_graph, out.width="55%", fig.align="center", echo=FALSE}
+knitr::include_graphics("../../figures/08-Chapter/8-01-p40.png")
+```
+
+Each term is the larger of the previous term and a new cosine value, so
+$$
+x_{n+1} = \max\{x_n, \cos(n+1)\} \ge x_n,
+$$
+and the sequence is nondecreasing. Every term is one of the values $\cos k$,
+and $\cos k \le 1$, so $x_n \le 1$ for all $n$ and the sequence is bounded from
+above by 1. By Theorem 1, $\{x_n\}$ converges.
+
+The terms stay at $\cos 1 \approx 0.540$ until $x_6 = \cos 6 \approx 0.960$,
+then increase in occasional steps (at $n = 19, 25, 44, \ldots$) whenever $\cos
+n$ is larger than every earlier value. The figure suggests the limit is $1$.
+
+---
+
+41. __Nonincreasing sequences.__ A sequence $\{a_n\}$ in which $a_n \ge
+    a_{n+1}$ for every $n$ is called a __nonincreasing sequence.__ A sequence
+    $\{a_n\}$ is __bounded from below__ if there is a number $M$ with $M \le
+    a_n$ for every $n$. Such a number $M$ is called a __lower bound__ for the
+    sequence. Deduce from Theorem 1 that a nonincreasing sequence that is
+    bounded from below converges and that a nonincreasing sequence that is not
+    bounded from below diverges.
+
+Let $\{a_n\}$ be nonincreasing and define $b_n = -a_n$. Multiplying $a_n \ge
+a_{n+1}$ by $-1$ gives $b_n \le b_{n+1}$, so $\{b_n\}$ is nondecreasing.
+
+__Bounded from below.__ Suppose $M \le a_n$ for every $n$. Then $b_n = -a_n \le
+-M$, so $\{b_n\}$ is bounded from above. By Theorem 1, $\{b_n\}$ converges to
+its least upper bound, call it $L$. Then $a_n = -b_n \to -L$, so $\{a_n\}$
+converges. Since $-L$ is the greatest lower bound of $\{a_n\}$ (negating
+reverses the order, so the least upper bound of $\{-a_n\}$ is the negative of
+the greatest lower bound of $\{a_n\}$), a convergent nonincreasing sequence
+converges to its greatest lower bound.
+
+__Not bounded from below.__ If $\{a_n\}$ has no lower bound, then $\{b_n\}$ has
+no upper bound: if $b_n \le K$ for all $n$, then $a_n \ge -K$, so $-K$ would be
+a lower bound for $\{a_n\}$. By Theorem 1, a nondecreasing sequence that is not
+bounded from above diverges, so $\{b_n\}$ diverges. Therefore $\{a_n\}$
+diverges too: if $a_n \to A$, then $b_n = -a_n \to -A$, contradicting the
+divergence of $\{b_n\}$.
+
+A nonincreasing sequence of real numbers converges if and only if it is bounded
+from below. If a nonincreasing sequence converges, it converges to its greatest
+lower bound.
+
+---
+
+Using the conclusion of Exercise 41, determine which of the sequences in
+Exercises 42-46 converge and which diverge.
+
+---
+
+42. $a_n = \frac{n + 1}{n}$
+
+```{r exercise_42_graph, out.width="55%", fig.align="center", echo=FALSE}
+knitr::include_graphics("../../figures/08-Chapter/8-01-p42.png")
+```
+
+We can simplify the sequence:
+$$
+a_n = \frac{n + 1}{n} = 1 + \frac{1}{n}
+$$
+Since $\frac{1}{n}$ decreases as $n$ increases, $a_n$ decreases:
+$$
+a_{n+1} - a_n = \frac{1}{n+1} - \frac{1}{n} = -\frac{1}{n(n+1)} < 0.
+$$
+This means $a_n \ge a_{n+1}$ for all $n$ and the sequence is nonincreasing.
+Since $\frac{1}{n} > 0$, $a_n > 1$ for all $n$, so the sequence is bounded from
+below by 1. By Exercise 41, a nonincreasing sequence that is bounded from below
+converges to its greatest lower bound. Since $a_n = 1 + \frac{1}{n}$ gets
+arbitrarily close to $1$, that bound is $1$, so $\{a_n\}$ converges to $1$.
+
+---
+
+43. $a_n = \frac{1 + \sqrt{2n}}{\sqrt{n}}$
+
+---
+
+44. $a_n = \frac{1 - 4^n}{2^n}$
+
+---
+
+45. $a_n = \frac{4^{n+1} + 3^n}{4^n}$
+
+---
+
+46. $a_1 = 1, a_{n+1} = 2a_n - 3$
+
+---
+
+47. __The sequence $\{n/(n+1)\}$ has a least upper bound of 1.__ Show that if $M$
+    is a number less than 1, then the terms of $\{n/(n+1)\}$ eventually exceed
+    $M$. That is, $M < 1$ there is an integer $N$ such that $n/(n+1) > M$
+    whenever $n > N$. Since $n/(n+1) < 1$ for every $n$, this proves that $1$
+    is a least upper bound for $\{n/(n+1)\}$.
+
+---
+
+48. __Uniqueness of least upper bounds.__ Show that if $M_1$ and $M_2$ are
+    least upper bounds for the sequence $\{a_n\}$, then $M_1 = M_2$. That is, a
+    sequence cannot have two different least upper bounds.
+
+---
+
+49. Is it true that a sequence $\{a_n\}$ of positive numbers must converge if
+    it is bounded from above? Give reasons for your answer.
+
+---
+
+50. Prove that if $\{a_n\}$ is a convergence sequence, then to every positive
+    number $\varepsilon$ there corresponds an integer $N$ such that for all $m$
+    and $n$,
+    $$
+    m > N \qquad \text{and} \qquad n > N \quad \Rightarrow \quad |a_m - a_n| < \varepsilon
+    $$
+
+---
+
+51. __Uniqueness of limits.__ Prove that limits of sequences are unique. That
+    is, show that if $L_1$ and $L_2$ are numbers such that $a_n \rightarrow
+    L_1$ and $a_n \rightarrow L_2$, then $L_1 = L_2$.
+
+---
+
+52. __Limits and subsequences.__ Prove that if two subsequences of a sequence
+    $\{a_n\}$ have different limits $L_1 \ne L_2$, then $\{a_n\}$ diverges.
+
+---
+
+53. For a sequence $\{a_n\}$ the terms of even index are denoted by $a_{2k}$
+    and the terms of odd index by $a_{2k+1}$. Prove that is $a_{2k} \rightarrow
+    L$ and $a_{2k+1} \rightarrow L$, then $a_n \rightarrow L$.
+
+---
+
+54. Prove that a sequence $\{a_n\}$ converges to $0$ if and only if the sequence of absolute values $\{|a_n|\}$ converges to $0$.
+
+---

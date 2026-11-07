@@ -1,0 +1,230 @@
+---
+title: Chapter 8.1 Limits of Sequences of Numbers
+subtitle: Finding Terms of a Sequence; Exercises 1-12
+output: pdf_document
+---
+
+Each of Exercies 1-6 gives a formula for the $n$th term $a_n$ of a sequence
+$\{a_n\}$. Find the values of $a_1, a_2, a_3$, and $a_4$.
+
+1. $a_n = \frac{1 - n}{n^2}$
+
+$$
+\begin{aligned}
+a_1 = \frac{1 - 1}{1^2} &= 0 \\\\
+a_2 = \frac{1 - 2}{2^2} &= -\frac{1}{4} \\\\
+a_3 = \frac{1 - 3}{3^2} &= -\frac{2}{9} \\\\
+a_4 = \frac{1 - 4}{4^2} &= -\frac{3}{16}
+\end{aligned}
+$$
+
+```{r exercise_1, out.width="55%", fig.align="center", echo=FALSE}
+knitr::include_graphics("../../figures/08-Chapter/8-01-p01.png")
+```
+
+2. $a_n = \frac{1}{n!}$
+
+$$
+\begin{aligned}
+a_1 = \frac{1}{1!} &= 1 \\\\
+a_2 = \frac{1}{2!} &= \frac{1}{2} \\\\
+a_3 = \frac{1}{3!} &= \frac{1}{6} \\\\
+a_4 = \frac{1}{4!} &= \frac{1}{24}
+\end{aligned}
+$$
+
+```{r exercise_2, out.width="55%", fig.align="center", echo=FALSE}
+knitr::include_graphics("../../figures/08-Chapter/8-01-p02.png")
+```
+
+3. $a_n = \frac{(-1)^{n+1}}{2n - 1}$
+
+$$
+\begin{aligned}
+a_1 = \frac{(-1)^{1 + 1}}{2(1) - 1} &= 1 \\\\
+a_2 = \frac{(-1)^{2 + 1}}{2(2) - 1} &= -\frac{1}{3} \\\\
+a_3 = \frac{(-1)^{3 + 1}}{2(3) - 1} &= \frac{1}{5} \\\\
+a_4 = \frac{(-1)^{4 + 1}}{2(4) - 1} &= -\frac{1}{7}
+\end{aligned}
+$$
+
+```{r exercise_3, out.width="55%", fig.align="center", echo=FALSE}
+knitr::include_graphics("../../figures/08-Chapter/8-01-p03.png")
+```
+
+4. $a_n = 2 + (-1)^n$
+
+$$
+\begin{aligned}
+a_1 = 2 + (-1)^1 &= 1 \\\\
+a_2 = 2 + (-1)^2 &= 3 \\\\
+a_3 = 2 + (-1)^3 &= 1 \\\\
+a_4 = 2 + (-1)^4 &= 3
+\end{aligned}
+$$
+
+```{r exercise_4, out.width="55%", fig.align="center", echo=FALSE}
+knitr::include_graphics("../../figures/08-Chapter/8-01-p04.png")
+```
+
+5. $a_n = \frac{2^n}{2^{n+1}}$
+
+$$
+\begin{aligned}
+a_1 = \frac{2^1}{2^{1 + 1}} = \frac{2}{4}   &= \frac{1}{2} \\\\
+a_2 = \frac{2^2}{2^{2 + 1}} = \frac{4}{8}   &= \frac{1}{2} \\\\
+a_3 = \frac{2^3}{2^{3 + 1}} = \frac{8}{16}  &= \frac{1}{2} \\\\
+a_4 = \frac{2^4}{2^{4 + 1}} = \frac{16}{32} &= \frac{1}{2} \\\\
+\end{aligned}
+$$
+
+```{r exercise_5, out.width="55%", fig.align="center", echo=FALSE}
+knitr::include_graphics("../../figures/08-Chapter/8-01-p05.png")
+```
+
+6. $a_n = \frac{2^n - 1}{2^n}$
+
+$$
+\begin{aligned}
+a_1 = \frac{2^1 - 1}{2^1} &= \frac{1}{2} \\\\
+a_2 = \frac{2^2 - 1}{2^2} &= \frac{3}{4} \\\\
+a_3 = \frac{2^3 - 1}{2^3} &= \frac{7}{8} \\\\
+a_4 = \frac{2^4 - 1}{2^4} &= \frac{15}{16} \\\\
+\end{aligned}
+$$
+
+```{r exercise_6, out.width="55%", fig.align="center", echo=FALSE}
+knitr::include_graphics("../../figures/08-Chapter/8-01-p06.png")
+```
+
+
+Each of Exercises 7-12 gives the first term or two of a sequence along with a
+recursion formula for the remaining terms. Write out the first ten terms of the
+sequence.
+
+7. $a_1 = 1, a_{n+1} = a_n + (1/2^n)$
+
+$$
+\begin{aligned}
+&a_1 \quad &= 1 \\\\
+&a_2 = a_1 + (1/2^1) = 1 + 1/2 &= 1 \frac{1}{2} \\\\
+&a_3 = a_2 + (1/2^2) = 3/2 + 1/4 &= 1 \frac{3}{4} \\\\
+&a_4 = a_3 + (1/2^3) = 7/4 + 1/8 &= 1 \frac{7}{8} \\\\
+&a_5 = a_4 + (1/2^4) = 15/8 + 1/16 &= 1 \frac{15}{16} \\\\
+&a_6 = a_5 + (1/2^5) = 31/16 + 1/32 &= 1 \frac{31}{32} \\\\
+&a_7 = a_6 + (1/2^6) = 63/32 + 1/64 &= 1 \frac{63}{64} \\\\
+&a_8 = a_7 + (1/2^7) = 127/64 + 1/128 &= 1 \frac{127}{128} \\\\
+&a_9 = a_8 + (1/2^8) = 255/128 + 1/256 &= 1 \frac{255}{256} \\\\
+&a_{10} = a_9 + (1/2^9) = 511/256 + 1/512 &= 1 \frac{511}{512}
+\end{aligned}
+$$
+
+```{r exercise_7, out.width="55%", fig.align="center", echo=FALSE}
+knitr::include_graphics("../../figures/08-Chapter/8-01-p07.png")
+```
+
+8. $a_1 = 1, a_{n+1} = a_n / (n + 1)$
+
+$$
+\begin{aligned}
+a_1 &= 1 \\\\
+a_2 &= a_1 / (1 + 1) &= 1/2 \\\\
+a_3 &= a_2 / (2 + 1) &= 1/6 \\\\
+a_4 &= a_3 / (3 + 1) &= 1/24 \\\\
+a_5 &= a_4 / (4 + 1) &= 1/120 \\\\
+a_6 &= a_5 / (5 + 1) &= 1/720 \\\\
+a_7 &= a_6 / (6 + 1) &= 1/5040 \\\\
+a_8 &= a_7 / (7 + 1) &= 1/40320 \\\\
+a_9 &= a_8 / (8 + 1) &= 1/362880 \\\\
+a_{10} &= a_9 / (9 + 1) &= 1/3628800
+\end{aligned}
+$$
+
+```{r exercise_8, out.width="55%", fig.align="center", echo=FALSE}
+knitr::include_graphics("../../figures/08-Chapter/8-01-p08.png")
+```
+
+9. $a_1 = 2, a_{n + 1} = (-1)^{n+1}a_n/2$
+
+$$
+\begin{aligned}
+a_1 & \quad &= 2 \\\\
+a_2 &= (-1)^{1 + 1}2/2 &= 1 \\\\
+a_3 &= (-1)^{2 + 1}1/2 &= -\frac{1}{2} \\\\
+a_4 &= (-1)^{3 + 1}(-1/2)/2 &= -\frac{1}{4} \\\\
+a_5 &= (-1)^{4 + 1}(-1/4)/2 &= \frac{1}{8} \\\\
+a_6 &= (-1)^{5 + 1}(1/8)/2 &= \frac{1}{16} \\\\
+a_7 &= (-1)^{6 + 1}(1/16)/2 &= -\frac{1}{32} \\\\
+a_8 &= (-1)^{7 + 1}(-1/32)/2 &= -\frac{1}{64} \\\\
+a_9 &= (-1)^{8 + 1}(-1/64)/2 &= \frac{1}{128} \\\\
+a_{10} &= (-1)^{9 + 1}(1/128)/2 &= \frac{1}{256} \\\\
+\end{aligned}
+$$
+
+```{r exercise_9, out.width="55%", fig.align="center", echo=FALSE}
+knitr::include_graphics("../../figures/08-Chapter/8-01-p09.png")
+```
+
+10. $a_1 = -2, a_{n+1} = na_n/(n+1)$
+
+$$
+\begin{aligned}
+a_1 &= \quad &= -2 \\\\
+a_2 &= (1)(-2)/(1 + 1) &= -1 \\\\
+a_3 &= (2)(-1)/(2 + 1) &= -\frac{2}{3} \\\\
+a_4 &= (3)(-2/3)/(3 + 1) &= -\frac{1}{2} \\\\
+a_5 &= (4)(-1/2)/(4 + 1) &= -\frac{2}{5} \\\\
+a_6 &= (5)(-2/5)/(5 + 1) &= -\frac{1}{3} \\\\
+a_7 &= (6)(-1/3)/(6 + 1) &= -\frac{2}{7} \\\\
+a_8 &= (7)(-2/7)/(7 + 1) &= -\frac{1}{4} \\\\
+a_9 &= (8)(-1/4)/(8 + 1) &= -\frac{2}{9} \\\\
+a_{10} &= (9)(-2/9)/(9 + 1) &= -\frac{1}{5}
+\end{aligned}
+$$
+
+```{r exercise_10, out.width="55%", fig.align="center", echo=FALSE}
+knitr::include_graphics("../../figures/08-Chapter/8-01-p10.png")
+```
+
+11. $a_1 = a_2 = 1, a_{n+2} = a_{n+1} + a_n$
+
+$$
+\begin{aligned}
+a_1 & \quad &= 1 \\\\
+a_2 & \quad &= 1 \\\\
+a_3 &= 1 + 1 &= 2 \\\\
+a_4 &= 2 + 1 &= 3 \\\\
+a_5 &= 3 + 2 &= 5 \\\\
+a_6 &= 5 + 3 &= 8 \\\\
+a_7 &= 8 + 5 &= 13 \\\\
+a_8 &= 13 + 8 &= 21 \\\\
+a_9 &= 21 + 13 &= 34 \\\\
+a_{10} &= 34 + 21 &= 55
+\end{aligned}
+$$
+
+```{r exercise_11, out.width="55%", fig.align="center", echo=FALSE}
+knitr::include_graphics("../../figures/08-Chapter/8-01-p10.png")
+```
+
+12. $a_1 = 2, a_2 = -1, a_{n+2} = a_{n+1}/a_n$
+
+$$
+\begin{aligned}
+a_1 & \quad &= 2 \\\\
+a_2 & \quad &= -1 \\\\
+a_3 & \quad &= -\frac{1}{2} \\\\
+a_4 &= (-1/2)/(-1) &= \frac{1}{2} \\\\
+a_5 &= (1/2)/(-1/2) &= -1 \\\\
+a_6 &= (-1)/(1/2) &= -2 \\\\
+a_7 &= (-2)/(-1) &= 2 \\\\
+a_8 &= (2)/(-2) &= -1 \\\\
+a_9 &= (-1)/(2) &= -\frac{1}{2} \\\\
+a_{10} &= (-1/2)/(-1) &= \frac{1}{2} \\\\
+\end{aligned}
+$$
+
+```{r exercise_12, out.width="55%", fig.align="center", echo=FALSE}
+knitr::include_graphics("../../figures/08-Chapter/8-01-p12.png")
+```
+

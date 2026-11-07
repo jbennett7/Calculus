@@ -1,0 +1,9 @@
+.Rhistory
+.RData
+.Rproj.user/
+*.pdf
+*.png
+*.log
+*.aux
+*.tex
+CLAUDE.md

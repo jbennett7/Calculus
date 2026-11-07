@@ -1,0 +1,24 @@
+---
+title: 1.1 Rates of Change and Limits
+subtitle: Existence of Limits
+output: pdf_document
+---
+
+In Exercises 5 and 6, explain why the limits do not exist.
+
+5. $\lim_{x\to0} \frac{x}{\lvert x \rvert}$
+
+```{r exercise_5, out.width="55%", fig.align="center", echo=FALSE}
+knitr::include_graphics("../../figures/01-Chapter/01-01-p05.png")
+```
+
+> Let $f(x) = \frac{x}{\lvert x \rvert}$. For $x < 0$, $\lvert x \rvert = -x$,
+> so $f(x) = \frac{x}{-x} = -1$. For $x > 0$, $\lvert x \rvert = x$, so $f(x) =
+> 1$. Therefore
+> $$
+> \lim_{x\to0^-} f(x) = -1 \quad\text{and}\quad \lim_{x\to0^+} f(x) = 1.
+> $$
+> Since the one-sided limits are different, $\lim_{x\to0} f(x)$ does not exist.
+> ($f(0)$ is undefined, but that is not the reason; the limit would fail to
+> exist even if $f(0)$ were given a value.)
+

@@ -1,0 +1,130 @@
+---
+title: 1.1 Rates of Change and Limits
+subtitle: Limits from Graphs
+output: pdf_document
+---
+
+1. For the function $g(x)$ graphed here, find the following limits or explain
+   why they do not exist.
+
+```{r exercise_1, out.width="55%", fig.align = "center", echo=FALSE}
+knitr::include_graphics("../../figures/01-Chapter/01-01-p01.png")
+```
+
+Each of the limits is found by observation.
+
+> a. $\lim_{x\to 1} g(x)$
+
+The limit does not exist. From the left $\lim_{x\to 1^-} g(x) = 1$, and from
+the right, $\lim_{x\to 1^+} g(x) = 0$. Since the one-sided limits are
+different, $\lim_{x\to 1} g(x)$ does not exist.
+
+> b. $\lim_{x \to 2} g(x)$
+
+The limit does exist and equals $1$.
+
+> c. $\lim_{x \to 3} g(x)$
+
+The limit exists and equals $0$. The open circle at $(3, 0)$ shows that $g(3)
+\ne 0$, but the limit depends only on the values of $g(x)$ near $x = 3$, not
+$g(3)$ itself.
+
+---
+
+2. For the function $g(t)$ graphed here, find the following limits or explain
+   why they do not exist.
+
+```{r exercise_2, out.width="55%", fig.align = "center", echo=FALSE}
+knitr::include_graphics("../../figures/01-Chapter/01-01-p02.png")
+```
+
+>  a. $\lim_{t \to -2} g(t)$
+
+The limit exists and equals $0$. The open circle at $(-2, 0)$ shows that $g(-2)
+\ne 0$, but the values of $g(t)$ approach $0$.
+
+>  b. $\lim_{t \to -1} g(t)$
+
+The limit exists and is $-1$.
+
+>  c. $\lim_{t \to 0} g(t)$
+
+The limit does not exist. From the left, $\lim_{t\to 0^-} g(t) = -1$, and from
+the right, $\lim_{t\to 0^+} g(t) = 1$. Since the one-sided limits are
+different, $\lim_{t\to 0} g(t)$ does not exist, even though $g(0) = 0$ is
+defined.
+
+---
+
+3. Which of the following statements about the function $y = f(x)$ graphed here
+   are true, and which are false?
+
+```{r exercise_3, out.width="55%", fig.align = "center", echo=FALSE}
+knitr::include_graphics("../../figures/01-Chapter/01-01-p03.png")
+```
+
+> a. $\lim_{x\to0} f(x)$ exists
+
+This statement is true. $\lim_{x\to0} f(x) = 0$ even though $f(0) = 1$ is
+defined.
+
+> b. $\lim_{x\to0} f(x) = 0$
+
+This is true. Both one-sided limits $\lim_{x\to0^-} f(x)$ and $\lim_{x\to0^+}
+f(x)$ equal $0$.
+
+> c. $\lim_{x\to0} f(x) = 1$
+
+This is false. $f(0) = 1$ is defined, but $\lim_{x\to0} f(x) = 0$.
+
+> d. $\lim_{x\to1} f(x) = 1$
+
+This is false. $\lim_{x\to1^-} f(x) = -1$ and $\lim_{x\to1^+} f(x) = 0$, so the
+one-sided limits are different and the limit does not exist.
+
+> e. $\lim_{x\to1} f(x) = 0$
+
+This is false. Even though $f(1) = 0$, the limit does not exist for the same
+reason as in (d).
+
+> f. $\lim_{x\to x_0} f(x)$ exists at every point $x_0$ in $(-1, 1)$.
+
+This is true. At every $x_0 \ne 0$ in $(-1, 1)$, the graph is an unbroken line
+near $x_0$, so the limit exists. At $x_0 = 0$, both one-sided limits equal $0$,
+so the limit exists there too, even though $f(0) = 1$ and $f$ is not continuous
+at $0$.
+
+---
+
+4. Which of the following statements about the function $y = f(x)$ graphed here
+   are true, and which are false?
+
+```{r exercise_4, out.width="55%", fig.align = "center", echo=FALSE}
+knitr::include_graphics("../../figures/01-Chapter/01-01-p04.png")
+```
+
+> a. $\lim_{x\to2} f(x)$ does not exist.
+
+This is false. Both one-sided limits equal $1$, so the limit exists.
+
+> b. $\lim_{x\to2} f(x) = 2$
+
+This is false. The limit is $1$, not $2$.
+
+> c. $\lim_{x\to1} f(x)$ does not exist.
+
+This is true. Approaching from the left, $\lim_{x\to1^-} f(x) = -2$ and
+approaching from the right, $\lim_{x\to1^+} f(x) = 0$. The one-sided limits are
+different and therefore the limit does not exist. Note that $f(1) = 0$, but the
+value at $x = 1$ does not affect the limit.
+
+> d. $\lim_{x\to x_0} f(x)$ exists at every point $x_0$ in $(-1, 1)$.
+
+This is true. The graph is unbroken across $(-1, 1)$. At the corner at $x = 0$,
+both one-sided limits equal $0$, so the limit exists there as well.
+
+> e. $\lim_{x\to x_0} f(x)$ exists at every point $x_0$ in $(1, 3)$.
+
+This is true. On $(1, 3)$ the graph is unbroken except at $x = 2$, where the
+value $f(2) = 0$ lies off the curve. Since $\lim_{x\to 2^-} f(x) = 1$ and
+$\lim_{x\to 2^+} f(x) = 1$, the limit exists at $x = 2$ as well.

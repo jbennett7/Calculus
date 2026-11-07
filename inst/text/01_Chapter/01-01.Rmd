@@ -1,0 +1,99 @@
+---
+title: 1.1 Rates of Change and Limits
+output: pdf_document
+---
+
+# Definition
+
+The __average rate of change__ of $y = f(x)$ with respect to $x$ over the
+interval $[x_1, x_2]$ is
+$$
+\frac{\Delta y}{\Delta x} = \frac{f(x_2) - f(x_1)}{x_2 - x_1}
+  = \frac{f(x_1 + h) - f(x_1)}{h}.
+$$
+
+## Example 1
+
+A rock falls from the top of a 150-ft cliff. What is its average speed (a)
+during the first 2 sec of fall? (b) during the 1-sec interval between second 1
+and second 2?
+
+### Solution
+
+Physical experiments show that a solid object dropped from rest to fall freely
+near the surface of the earth will fall
+$$
+y = 16t^2\ \text{ft}
+$$
+during the first $t$ sec. The average speed of the rock during a given time
+interval is the change in distance $\Delta y$, divided by the length of the
+time interval, $\Delta t$.
+
+a. The first 2 sec: $\frac{\Delta y}{\Delta t} = \frac{16(2)^2 - 16(0)^2}{2 -
+   0} = 32 \frac{\text{ft}}{\text{sec}}$
+
+b. From second 1 to second 2: $\frac{\Delta y}{\Delta t} = \frac{16(2)^2 -
+   16(1)^2}{2 - 1} = 48 \frac{\text{ft}}{\text{sec}}$
+
+## Example 1: Average speeds over short time intervals
+
+Find the speed of the rock at $t = 1$ and $t = 2$ sec.
+
+### Solution
+
+We can calculate the average speed of the rock over a time interval $[t_0, t_0
++ h]$, having length $\Delta t = h$, as
+$$
+\frac{\Delta y}{\Delta t} = \frac{16(t_0 + h)^2 - 16t_0^2}{h}.
+$$
+We cannot use this formula to calculate the "instantaneous" speed at $t_0$ by
+substituting $h = 0$, because we cannot divide by zero. But we _can_ use it to
+calculate average speeds over increasingly short time intervals starting at
+$t_0 = 1$ and $t_0 = 2$. When we do so, we see a pattern.
+
+|Length of time interval $h$ | Average speed over interval of length $h$ starting at $t_0 = 1$ | Average speed over interval of length $h$ starting at $t_0 = 2$ |
+|:---|:---|:---|
+| 1 | 48 | 80 |
+| 0.1 | 33.6 | 65.6 |
+| 0.01 | 32.16 | 64.16 |
+| 0.001 | 32.016 | 64.016 |
+| 0.0001 | 32.0016 | 64.0016 |
+
+The average speed on intervals starting at $t_0 = 1$ seems to approach a
+limiting value of 32 as the length of the interval decreases. This suggests
+that the rock is falling at a speed of $32\ \text{ft/sec}$ at $t_0 = 1$ sec.
+Similarly, the rock's speed at $t_0 = 2$ sec would appear to be $64\
+\text{ft/sec}$.
+
+Geometrically the average rate of change is a secant line.
+
+```{r text_1, out.width="55%", fig.align="center", echo=FALSE}
+knitr::include_graphics("../../figures/01-Chapter/01-01-secant.png")
+```
+
+## Example 3: The average growth rate of a laboratory population
+
+The figure below shows how a population of fruit flies (_Drosophila_) grew in a
+50-day experiment. The number of flies was counted at regular intervals, the
+counted values plotted with respect to time, and the points joined by a smooth
+curve. Find the average growth rate from day 34 to day 45.
+
+### Solution
+
+There were 150 flies on day 23 and 350 flies on day 45. Thus the number of
+flies increased by $340 - 140 = 190$ in $45 - 23 = 22$ days. The average rate
+of change of the population from day 23 to day 45 was
+$$
+\text{Average rate of change:}\quad \frac{\Delta p}{\Delta t} =
+    \frac{340 - 150}{45 - 23} = \frac{190}{22} \approx 8.6\ \text{flies/day}.
+$$
+This average is the slope of the secant through the points $P$ and $Q$ on the
+graph in the figure below.
+
+The average rate of change from day 23 to day 45 calculated in Example 3 does
+not tell us how fast the population was changing on day 23 itself. For that we
+need to examine time intervals closer to the day in question.
+
+```{r example_3, out.width="55%", fig.align="center", echo=FALSE}
+knitr::include_graphics("../../figures/01-Chapter/01-01-flies.png")
+```

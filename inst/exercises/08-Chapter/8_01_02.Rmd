@@ -1,0 +1,88 @@
+---
+title: 8.1 Limits of Sequences of Numbers
+subtitle: Finding a Sequence's Formula; Exercises 13-22
+output: pdf_document
+---
+
+In Exercises 13-22, find a formula for the $n$th term of the sequence.
+
+13. The sequence $1, -1, 1, -1, 1, \ldots$
+
+> 1's with alternating signs, beginning with 1.
+
+$$
+a_n = (-1)^{n + 1}, n \ge 1
+$$
+
+14. The sequence $-1, 1, -1, 1, -1, \ldots$
+
+> 1's with alternating signs, beginning with -1.
+
+$$
+a_n = (-1)^n, n \ge 1
+$$
+
+15. The sequence $1, -4, 9, -16, 25, \ldots$
+
+> Squares of the positive integers, with alternating signs.
+
+$$
+a_n = (-1)^{n + 1}(n^2), n \ge 1
+$$
+
+16. The sequence $1, -\frac{1}{4}, \frac{1}{9}, -\frac{1}{16}, \frac{1}{25}, \cdots$
+
+> Reciprocals of squares of the positive integers, with alternating signs.
+
+$$
+a_n = (-1)^{n + 1}\left(\frac{1}{n}\right)^2, n \ge 1
+$$
+
+17. The sequence $0, 3, 8 ,15, 24, \ldots$
+
+> Squares of the positive integers diminished by 1.
+
+$$
+a_n = n^2-1, n \ge 1
+$$
+
+18. The sequence $-3, -2, -1, 0, 1, \ldots$
+
+> Integers beginning with -3.
+
+$$
+a_n = n, n \ge -3
+$$
+
+19. The sequence $1, 5, 9, 13, 17, \ldots$
+
+> Every other odd positive integer.
+
+$$
+a_n = 4n-3
+$$
+
+20. The sequence $2, 6, 10, 14, 18, \ldots$
+
+> Every other even positive integer
+
+$$
+a_n = 4n-2
+$$
+
+21. The sequence $1, 0, 1, 0, 1, \ldots$
+
+> Alternating 1's and 0's.
+
+$$
+a_n = \frac{1 - (-1)^n}{2}
+$$
+
+22. The sequence $0, 1, 1, 2, 2, 3, 3, 4, \ldots$
+
+> Each positive integer repeated.
+
+$$
+a_n = \frac{2n - 1 + (-1)^n}{4}
+$$
+
